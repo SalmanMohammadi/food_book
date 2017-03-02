@@ -10,6 +10,7 @@ class Recipe(models.Model):
     slug = models.URLField(unique=True)
     views = models.IntegerField(default=0)
     favouritedBy = models.ForeignKey(User)
+    recipeText = models.TextField()
     def __str__(self):
         return self.name
 
