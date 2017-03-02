@@ -10,6 +10,7 @@ class RecipeForm(forms.ModelForm):
 	views = forms.IntegerField(widget=forms.HiddenInput(), initial = 0)
 	likes = forms.IntegerField(widget=forms.HiddenInput(), initial = 0)
 	slug = forms.CharField(widget=forms.HiddenInput(), required = False)
+	recipeText = forms.TextField(widget = forms.TextInput())
 
 	class Meta:
 		model = Recipe

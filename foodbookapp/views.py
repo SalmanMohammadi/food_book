@@ -8,6 +8,8 @@ def index(request):
 	return HttpResponse("FoodBook is LIT!")
 
 
+def new(request):
+	return HttpResponse("FoodBook is LIT!")
 
 
 
