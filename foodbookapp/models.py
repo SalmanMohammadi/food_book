@@ -9,8 +9,9 @@ class Recipe(models.Model):
     title = models.CharField(max_length=128)
     slug = models.URLField(unique=True)
     views = models.IntegerField(default=0)
-    favouritedBy = models.ForeignKey(User)
     recipeText = models.TextField()
+    favouritedBy = models.ForeignKey(User)
+    submittedBy = models.ForeignKey(User, unique = True)
     def __str__(self):
         return self.title
 
