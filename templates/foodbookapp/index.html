@@ -1,0 +1,19 @@
+{% extends 'foodbookapp/base.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+	<h1>The Index Page</h1>
+		{% if recipes %}
+		<ul>
+			{% for recipe in recipes %}
+			<li>
+				<img src="{{ recipe.pictureLink }}">
+			</li>
+			{% endfor %}
+		</ul>
+		{% else %}
+			<strong>There are no categories present.</strong>
+		{% endif %}
+	</div>
+{% endblock %}
+

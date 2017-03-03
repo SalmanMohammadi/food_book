@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html>
+	<head>
+	{% block title_block %}
+		<title>
+			FoodBook 
+		</title>
+		<img src="{% static "images/logo.png" %}"
+		style="width:128px;height:128px;"/>
+	</head>
+	{% endblock %}
+	<body>
+		<div>
+			{% block body_block %}
+				This is body_block's default content.
+			{% endblock %}
+		</div>
+		<div>
+			{% block sidebar_block %}
+				This is the sidebar!
+			{% endblock %}
+		</div>
+	</body>
+</html>

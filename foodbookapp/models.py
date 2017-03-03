@@ -9,9 +9,11 @@ class Recipe(models.Model):
     title = models.CharField(max_length=128)
     slug = models.URLField(unique=True)
     views = models.IntegerField(default=0)
-    recipeText = models.TextField()
+    recipeText = models.TextField(blank = True)
     favouritedBy = models.ForeignKey(User)
-    submittedBy = models.ForeignKey(User, unique = True)
+    picture = models.ImageField(blank = True)
+    pictureLink = models.URLField(blank = True)
+    # submittedBy = models.ForeignKey(User)
     def __str__(self):
         return self.title
 
@@ -24,7 +26,7 @@ class UserProfile(models.Model):
 
 class Tag(models.Model):
     recipe = models.ForeignKey(Recipe)
-    tagTitle = models.CharField(max_length=128)
+    tagTitle = models.CharField(max_length=128, unique = True, default = "")
     def __str__(self):
         return self.tagTitle
 
