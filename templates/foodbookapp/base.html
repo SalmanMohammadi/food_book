@@ -4,24 +4,40 @@
 
 <html>
 	<head>
-	{% block title_block %}
 		<title>
-			FoodBook 
+			{% block title_block %}
+				FoodBook 
+			{% endblock %}
 		</title>
-		<img src="{% static "images/logo.png" %}"
-		style="width:128px;height:128px;"/>
+
+		{% block css_block %}
+		{% endblock %}
+		
+		<link rel="stylesheet" type="text/css" href="{% static "css/basestyle.css" %}">
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+		<script src="{% static "js/foodbook-jquery.js" %}"></script>
+
 	</head>
-	{% endblock %}
+
 	<body>
-		<div>
+		<div class = "logo">
+			<img src="{% static "images/logo.png" %}"/>
+		</div>
+		<div class = "center">
 			{% block body_block %}
 				This is body_block's default content.
 			{% endblock %}
 		</div>
 		<div>
-			{% block sidebar_block %}
-				This is the sidebar!
-			{% endblock %}
+			<div class = "sidebar">
+			  <a href="javascript:void(0)"} class="dropbutton">Index</a>
+			  <div class = "dropdown-content">
+			      <a href="#">Link 1</a>
+			      <a href="#">Link 2</a>
+			      <a href="#">Link 3</a>
+		      </div>
+			</div>
 		</div>
 	</body>
+
 </html>

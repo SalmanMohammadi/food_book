@@ -1,19 +1,26 @@
 {% extends 'foodbookapp/base.html' %}
 {% load staticfiles %}
 
+{% block title_block %}
+	foodbook: Trending Recipes
+{% endblock %}
+
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/imagestyle.css" %}">
+{% endblock %}
+
 {% block body_block %}
 	<h1>The Index Page</h1>
 		{% if recipes %}
 		<ul>
 			{% for recipe in recipes %}
-			<li>
+			<div class = "img">
 				<img src="{{ recipe.pictureLink }}">
-			</li>
+			</div>
 			{% endfor %}
 		</ul>
 		{% else %}
 			<strong>There are no categories present.</strong>
 		{% endif %}
-	</div>
 {% endblock %}
 

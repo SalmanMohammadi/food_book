@@ -1,0 +1,41 @@
+/*Displays the logo in the top left.*/
+div.logo{
+	margin:50px;
+	float:left;
+	width:256px;
+}
+
+div.logo img{
+	width: 100%;
+    height: auto;
+}
+
+/*Displays page content in the center.*/
+div.center {
+	background: #ccc;
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    border:1px solid #ccc;
+}
+
+/*Displays the sidebar as buttons.*/
+div.sidebar{
+	margin-right:25%;
+	float:right;
+	width: 200px;
+}
+
+.sidebar a{
+	margin-bottom: 2px;
+	background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    border: 1px solid red;
+    text-decoration: none; /* Remove underline from links */
+}
+
+.sidebar a:hover{
+	background-color: #ccc; /* Dark grey background on mouse-over */
+}
