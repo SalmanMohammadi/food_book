@@ -1,5 +1,10 @@
 /*Displays the logo in the top left.*/
 div.logo{
+	float:left;
+	padding-left: 100px;
+}
+
+div.logoimg{
 	margin:50px;
 	float:left;
 	width:256px;
@@ -12,7 +17,6 @@ div.logo img{
 
 /*Displays page content in the center.*/
 div.center {
-	background: #ccc;
     margin: auto;
     width: 50%;
     padding: 10px;

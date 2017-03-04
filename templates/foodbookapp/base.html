@@ -21,7 +21,10 @@
 
 	<body>
 		<div class = "logo">
-			<img src="{% static "images/logo.png" %}"/>
+			<div class = "logoimg">
+				<img src="{% static "images/logo.png" %}"/>
+			</div>
+			<h1>foodBook</h1>
 		</div>
 		<div class = "center">
 			{% block body_block %}
@@ -32,10 +35,11 @@
 			<div class = "sidebar">
 			  <a href="javascript:void(0)"} class="dropbutton">Index</a>
 			  <div class = "dropdown-content">
-			      <a href="#">Link 1</a>
-			      <a href="#">Link 2</a>
-			      <a href="#">Link 3</a>
+			      <a href="{% url 'new' %}">New</a>
+			      <a href="#">Trending</a>
+			      <a href="#">Favourited</a>
 		      </div>
+		      <a href="{% url 'about' %}">About</a>
 			</div>
 		</div>
 	</body>

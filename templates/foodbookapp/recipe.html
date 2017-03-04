@@ -1,0 +1,13 @@
+{% extends 'foodbookapp/base.html' %}
+
+{% block title_block %}
+	{{% recipe.title %}}
+{% endblock %}
+
+{% block body_block %}
+	{% if recipe %}
+		<img src="{{% recipe.pictureLink %}}">
+		{{% recipeText %}}
+		
+	{% endif %}
+{% endblock %}
