@@ -1,0 +1,26 @@
+{% extends 'foodbookapp/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Register
+{% endblock %}
+
+
+{% block body_block %}
+	<!-- Default content. -->
+	{% if registered %}
+		Thank you for joining FoodBook!
+		<a href="{% url 'index' %}">Return to the main page.</a><br />
+		
+	{% else %}
+		Hello! Sign up here!
+		<form id="user_form" method="post" action="{% url 'register' %}"
+		enctype="multipart/form-data">
+		
+		{{ user_form.as_p }}
+		{{ profile_form.as_p }}
+		
+		<input type="submit" name="submit" value="Register" />
+		</form>
+	{% endif%}
+{% endblock %}
