@@ -1,0 +1,17 @@
+{% extends 'foodbookapp/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Profile
+{% endblock %}
+
+
+{% block body_block %}
+	{% if user.is_authenticated %}
+		{{ user.username }} Profile</br>
+		My favourites: *Blank*
+	{% else %}
+		You're not logged in. 
+		<a href="{% url 'index' %}">Click here</a> to go back to the homepage
+	{% endif %}
+{% endblock %}

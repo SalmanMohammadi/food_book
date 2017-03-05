@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from foodbookapp.models import Recipe
 from foodbookapp.forms import UserForm, UserProfileForm, RecipeForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 #View for the index page. Defaults to new.
@@ -83,7 +83,7 @@ def user_login(request):
 			if user.is_active: # If the account is valid and active, we log the user in.	
 			# We'll send the user back to the homepage.
 				login(request, user)
-				return HttpResponseRedirect(reverse('new'))
+				return HttpResponseRedirect(reverse('index'))
 			else:
 			# An inactive account was used - no logging in!
 				return HttpResponse("Your account is disabled.")
@@ -95,3 +95,13 @@ def user_login(request):
 		# No context variables to pass to the template system, hence the
 		# blank dictionary object...
 		return render(request, 'foodbookapp/login.html', {})
+
+@login_required
+def user_logout(request):
+	# Since we know the user is logged in, we can now just log them out.
+	logout(request)
+	# Take the user back to the homepage.
+	return HttpResponseRedirect(reverse('index'))
+	
+def user_profile(request):
+	return render(request, 'foodbookapp/profile.html', {})
