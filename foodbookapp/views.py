@@ -1,11 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from foodbookapp.models import Recipe
-from foodbookapp.forms import UserForm, UserProfileForm
+from foodbookapp.forms import UserForm, UserProfileForm, RecipeForm
 
 # Create your views here.
 
-#View for the index /new page
+#View for the index page. Defaults to new.
+def index(request):
+	return new(request)
+
+#View for the /new page
 def new(request):
 	recipe_list = Recipe.objects.all()
 	context_dict = {"recipes": recipe_list}
@@ -26,7 +30,24 @@ def show_recipe(request, recipe_slug):
 
 	return render(request, 'foodbookapp/recipe.html', context_dict)
 
-#View for registration
+# View for adding a category
+#@login_required
+def add_recipe(request):
+	form = RecipeForm()
+
+	if request.method == 'POST':
+		form = RecipeForm(request.POST)
+
+		if form.is_valid():
+			form.save(commit = True)
+			return index(request)
+		else:
+			print(form.errors)
+
+	return render(request, 'foodbookapp/add_recipe.html', {'form': form})
+
+
+#View for registration, the /register page.
 def register(request):
 	registered = False
 	if request.method =='POST':

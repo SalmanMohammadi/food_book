@@ -10,8 +10,11 @@ class RecipeForm(forms.ModelForm):
 	views = forms.IntegerField(widget=forms.HiddenInput(), initial = 0)
 	likes = forms.IntegerField(widget=forms.HiddenInput(), initial = 0)
 	slug = forms.CharField(widget=forms.HiddenInput(), required = False)
-	recipeText = forms.CharField(widget = forms.TextInput())
-
+	
+	recipeText = forms.CharField(widget = forms.TextInput(), 
+		help_text = "Please enter the recipe text.")
+	picture = forms.ImageField(required=False, help_text = "Upload an image of your recipe.")
+	picture = forms.URLField(required=False, help_text = "Submit a url to the image link of.")
 	class Meta:
 		model = Recipe
 		fields = ('title',)
