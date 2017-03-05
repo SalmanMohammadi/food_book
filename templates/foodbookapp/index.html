@@ -15,7 +15,9 @@
 		<ul>
 			{% for recipe in recipes %}
 			<div class = "img">
+				<a href="{% url 'show_recipe' recipe.slug %}">
 				<img src="{{ recipe.pictureLink }}">
+				</a>
 			</div>
 			{% endfor %}
 		</ul>

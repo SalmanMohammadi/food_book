@@ -1,19 +1,23 @@
 from __future__ import unicode_literals
 from django.contrib.auth.models import User
 import uuid
+from django.template.defaultfilters import slugify
 
 from django.db import models
 
 class Recipe(models.Model):
-    recipeID = models.CharField(max_length=128, unique=True)
     title = models.CharField(max_length=128)
     slug = models.URLField(unique=True)
     views = models.IntegerField(default=0)
     recipeText = models.TextField(blank = True)
-    favouritedBy = models.ForeignKey(User)
+    # favouritedBy = models.ForeignKey(User)
     picture = models.ImageField(blank = True)
     pictureLink = models.URLField(blank = True)
     # submittedBy = models.ForeignKey(User)
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Recipe, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.title
 

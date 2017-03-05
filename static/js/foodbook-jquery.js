@@ -1,0 +1,1 @@
+// Handles JQuery for the foodbook app.

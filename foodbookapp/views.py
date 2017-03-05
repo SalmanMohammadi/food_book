@@ -10,15 +10,16 @@ def new(request):
 	context_dict = {"recipes": recipe_list}
 	return render(request, 'foodbookapp/index.html', context_dict)
 
+#View for the /about page.
 def about(request):
 	return render(request, 'foodbookapp/about.html', {})
 
-def show_recipe(request):
+#View for the /recipe/<recipe-name> page.
+def show_recipe(request, recipe_slug):
 	context_dict = {}
-
 	try:
 		recipe = Recipe.objects.get(slug = recipe_slug)
-		context_dict['recipes'] = recipe
+		context_dict['recipe'] = recipe
 	except Recipe.DoesNotExist:
 		context_dict['recipe'] = None
 

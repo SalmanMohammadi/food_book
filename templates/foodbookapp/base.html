@@ -10,6 +10,7 @@
 			{% endblock %}
 		</title>
 
+		<!-- Allows child html files to assign extra css. -->
 		{% block css_block %}
 		{% endblock %}
 		
@@ -20,17 +21,22 @@
 	</head>
 
 	<body>
+		<!-- Holds the logo and the site name. -->
 		<div class = "logo">
 			<div class = "logoimg">
 				<img src="{% static "images/logo.png" %}"/>
 			</div>
 			<h1>foodBook</h1>
 		</div>
+
+		<!-- The main content body of the site. -->
 		<div class = "center">
 			{% block body_block %}
 				This is body_block's default content.
 			{% endblock %}
 		</div>
+		
+		<!-- The sidebar of the site. -->
 		<div>
 			<div class = "sidebar">
 			  <a href="javascript:void(0)"} class="dropbutton">Index</a>
