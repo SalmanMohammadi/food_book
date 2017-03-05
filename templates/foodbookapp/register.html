@@ -9,13 +9,15 @@
 {% block body_block %}
 	<!-- Default content. -->
 	{% if registered %}
-		Thank you for joining FoodBook!
-		<a href="{% url 'index' %}">Return to the main page.</a><br />
+		Thank you for joining FoodBook! You can now log in
+		<a href="{% url 'new' %}">Return to the main page.</a><br />
 		
 	{% else %}
 		Hello! Sign up here!
 		<form id="user_form" method="post" action="{% url 'register' %}"
 		enctype="multipart/form-data">
+		
+		{% csrf_token %}
 		
 		{{ user_form.as_p }}
 		{{ profile_form.as_p }}
