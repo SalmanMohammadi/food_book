@@ -9,16 +9,35 @@ class RecipeForm(forms.ModelForm):
 
 	views = forms.IntegerField(widget=forms.HiddenInput(), initial = 0)
 	likes = forms.IntegerField(widget=forms.HiddenInput(), initial = 0)
-	slug = forms.CharField(widget=forms.HiddenInput(), required = False)
 	
 	recipeText = forms.CharField(widget = forms.TextInput(), 
 		help_text = "Please enter the recipe text.")
 	picture = forms.ImageField(required=False, help_text = "Upload an image of your recipe.")
-	picture = forms.URLField(required=False, help_text = "Submit a url to the image link of.")
+	pictureLink = forms.URLField(required=False, help_text = "Submit a url to the image link of.")
+	print(pictureLink)
 	class Meta:
 		model = Recipe
-		fields = ('title',)
+		exclude = ('slug',)
 
+	#Ensures a correctly formatted url is passed into the model.
+	def clean(self):
+		cleaned_data = self.cleaned_data
+		pictureLink = cleaned_data.get('pictureLink')
+		if pictureLink:
+			if not pictureLink.startswith('http://'):
+				pictureLink = 'http://' + pictureLink 
+
+			if not pictureLink.endswith('.gif'):
+				if pictureLink.endswith('gifv'):
+					pictureLink = pictureLink[:-1]
+
+			cleaned_data['pictureLink'] = pictureLink
+
+		print(pictureLink)
+		return cleaned_data
+
+
+        
 class UserForm(forms.ModelForm):
 	password = forms.CharField(widget = forms.PasswordInput())
 
