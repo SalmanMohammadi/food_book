@@ -14,10 +14,16 @@ class RecipeForm(forms.ModelForm):
 		help_text = "Please enter the recipe text.")
 	picture = forms.ImageField(required=False, help_text = "Upload an image of your recipe.")
 	pictureLink = forms.URLField(required=False, help_text = "Submit a url to the image link of.")
-	print(pictureLink)
+
+
+	def __init__(self, *args, **kwargs):
+		self.user = kwargs.pop('user', None)
+		submittedBy = user
+		super(RecipeForm, self).__init__(*args, **kwargs)
+
 	class Meta:
 		model = Recipe
-		exclude = ('slug',)
+		exclude = ('slug', 'favouritedBy', 'submittedBy')
 
 	#Ensures a correctly formatted url is passed into the model.
 	def clean(self):
@@ -33,7 +39,6 @@ class RecipeForm(forms.ModelForm):
 
 			cleaned_data['pictureLink'] = pictureLink
 
-		print(pictureLink)
 		return cleaned_data
 
 
