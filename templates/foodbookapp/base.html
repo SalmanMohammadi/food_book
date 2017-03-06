@@ -38,13 +38,18 @@
 		
 		<!-- The sidebar of the site. -->
 		<div>
+			{% if user.is_authenticated %}
+				Hello {{ user.username }}
+			{% else %}
+				You're not logged in.
+			{% endif %}
 			<div class = "sidebar">
 				<a href="javascript:void(0)"} class="dropbutton">Index</a>
 				<div class = "dropdown-content">
 					<a href="{% url 'index' %}">New</a>
 					<a href="#">Trending</a>
 					<a href="#">Favourited</a>
-					{% if user.is_authenticated %}
+					{% if user.is_authenticated %}	
 						<a href="{% url 'profile' %}">My Profile</a>
 						<a href="{% url 'logout' %}">Log out</a>
 						<a href="{% url 'add_recipe' %}">Submit Recipe</a>
