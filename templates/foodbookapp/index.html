@@ -1,4 +1,5 @@
 {% extends 'foodbookapp/base.html' %}
+{% load foodbookapp_template_tags %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -16,8 +17,11 @@
 			{% for recipe in recipes %}
 			<div class = "img">
 				<a href="{% url 'show_recipe' recipe.slug %}">
-				<img src="{{ recipe.pictureLink }}">
+				<img class = "recipe" src="#">	
 				</a>
+				<p id = "recipeThumb" style = "display:none;">{% get_thumbnail recipe %}</p>
+				<p id = "recipeGif" style = "display:none;">recipe.pictureLink</p>
+				
 			</div>
 			{% endfor %}
 		</ul>

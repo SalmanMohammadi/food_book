@@ -13,9 +13,8 @@ def index(request):
 
 #View for the /new page
 def new(request):
-	recipe_list = Recipe.objects.all()
-	context_dict = {"recipes": recipe_list}
-	return render(request, 'foodbookapp/index.html', context_dict)
+	recipes = Recipe.objects.all()
+	return render(request, 'foodbookapp/index.html', {'recipes': recipes})
 
 #View for the /about page.
 def about(request):
@@ -30,6 +29,7 @@ def show_recipe(request, recipe_slug):
 	except Recipe.DoesNotExist:
 		context_dict['recipe'] = None
 
+	print(context_dict)
 	return render(request, 'foodbookapp/recipe.html', context_dict)
 
 # View for adding a category

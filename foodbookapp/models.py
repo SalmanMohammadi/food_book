@@ -10,11 +10,10 @@ class Recipe(models.Model):
     slug = models.URLField(unique=True)
     views = models.IntegerField(default=0)
     recipeText = models.TextField(blank = True)
-    favouritedBy = models.ManyToManyField(User, related_name='user_recipe_favourites')
+    # favouritedBy = models.ManyToManyField(User, related_name='user_recipe_favourites')
     picture = models.ImageField(blank = True)
     pictureLink = models.URLField(blank = True)
-    submittedBy = models.ForeignKey(User)
-    
+    # submittedBy = models.ForeignKey(User)
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Recipe, self).save(*args, **kwargs)

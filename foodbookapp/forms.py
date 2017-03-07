@@ -18,7 +18,6 @@ class RecipeForm(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		self.user = kwargs.pop('user', None)
-		submittedBy = user
 		super(RecipeForm, self).__init__(*args, **kwargs)
 
 	class Meta:
@@ -34,7 +33,7 @@ class RecipeForm(forms.ModelForm):
 				pictureLink = 'http://' + pictureLink 
 
 			if not pictureLink.endswith('.gif'):
-				if pictureLink.endswith('gifv'):
+				if pictureLink.endswith('.gifv'):
 					pictureLink = pictureLink[:-1]
 
 			cleaned_data['pictureLink'] = pictureLink
