@@ -14,7 +14,7 @@ class Recipe(models.Model):
     picture = models.ImageField(blank = True)
     pictureLink = models.URLField(blank = True)
     submittedBy = models.ForeignKey(User,null = True)
-    submitDate = models.forms.DateField(null=True)
+    submitDate = models.DateField(null=True)
 	
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
