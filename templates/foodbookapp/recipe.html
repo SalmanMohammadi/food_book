@@ -2,37 +2,44 @@
 
 {% load staticfiles %}
 
-{% block title_block %}
-	{% if recipe %}
-		{{ recipe.title }}
-	{% endif %}
-{% endblock %}
-
 {% block css_block %}
 	<link rel="stylesheet" type="text/css" href="{% static "css/recipestyle.css" %}">
 {% endblock %}
 
 {% block body_block %}
 
+    <div class = "border">
 	{% if recipe %}
+        <div class = "title">
         {% if recipe.title != null%}
-        {{ recipe.title }}
+            {{ recipe.title }}
         {% endif %}
+        </div>
         <br>
-		<img src="{{recipe.pictureLink}}">
-		<br>
+        <div class = "stats">
 		{% if recipe.submittedBy != null%}
 		Submitted by: {{ recipe.submittedBy.username}}
 		{% endif %}
 		Views: {{ recipe.views }}
 		<br>
-		{% if recipe.favouritedBy != null%}
-		Favourites: {{ recipe.favouritedBy.username}}
-		{% endif %}
-        <br>
-        {% if recipe.recipeText != null%}
-        Recipe: {{ recipe.recipeText}}
+        {% if recipe.favouritedBy = null%}
+        Favourites: 0
         {% endif %}
+		{% if recipe.favouritedBy != null%}
+		Favourites: {{ recipe.favouritedBy.username}} <!--change depending on whether its no. of favourites or users -->
+		{% endif %}
+        </div>
+        <br>
+        <div class = "picture">
+		<img src="{{recipe.pictureLink}}">
+        </div>
+		<br>
+        <div class = "text">
+        {% if recipe.recipeText %}
+            Recipe: {{ recipe.recipeText}}
+        {% endif %}
+        </div>
 	{% endif %}
+    </div>
 	
 {% endblock %}

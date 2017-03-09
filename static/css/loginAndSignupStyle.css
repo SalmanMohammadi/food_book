@@ -6,27 +6,12 @@ div.border {
     border-radius: 20px;
 }
 
-
 div.title {
     text-align: center;
-    margin-top: 80px;
+    margin-top: 30px;
+    margin-bottom: 20px;
     font-family: 'Lobster', cursive;
     font-decoration: bold;
     font-size: xx-large;
     text-transform: capitalize;
-}
-
-
-div.picture {
-    margin: auto;
-    width: 50%;
-}
-
-
-div.stats {
-    text-align: center;
-    font-decoration: bold;
-}
-
-div.text {
 }
