@@ -26,7 +26,7 @@ def populate():
 	for r in Recipe.objects.all():
 		print((str(r)))
 
-def add_recipe(title, views, recipeText, pictureLink):
+def add_recipe(title, views, recipeText = None, pictureLink):
 	r = Recipe.objects.get_or_create(title = title)[0]
 	r.views = views
 	r.recipeText = recipeText
@@ -36,5 +36,5 @@ def add_recipe(title, views, recipeText, pictureLink):
 
 #Main method.
 if __name__ == '__main__':
-	print("Starting Rango population script...")
+	print("Starting FoodBook population script...")
 	populate()
