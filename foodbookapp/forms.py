@@ -21,7 +21,7 @@ def __init__(self, *args, **kwargs):
 
 	class Meta:
 		model = Recipe
-		exclude = ('slug', 'favouritedBy', 'submittedBy')
+		exclude = ('slug', 'favouritedBy', 'submittedBy','submitDate')
 
 	#Ensures a correctly formatted url is passed into the model.
 	def clean(self):
