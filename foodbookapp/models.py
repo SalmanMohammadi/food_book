@@ -13,7 +13,7 @@ class Recipe(models.Model):
     favouritedBy = models.ManyToManyField(User, related_name='user_recipe_favourites',blank = True)
     picture = models.ImageField(blank = True)
     pictureLink = models.URLField(blank = True)
-    submittedBy = models.ForeignKey(User,null = True)
+    submittedBy = models.ForeignKey(UserProfile,null = True)
     submitDate = models.DateField(null=True)
 	
     def save(self, *args, **kwargs):
@@ -24,7 +24,7 @@ class Recipe(models.Model):
         return self.title
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User,related_name="userProfile")
     userID = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
     picture = models.ImageField(upload_to = 'profile_images', blank = True)
     def __str__(self):

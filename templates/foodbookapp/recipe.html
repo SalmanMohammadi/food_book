@@ -17,16 +17,18 @@
         </div>
         <br>
         <div class = "stats">
-		{% if recipe.submittedBy != null%}
-		Submitted by: {{ recipe.submittedBy.username}}
+		{% if recipe.submittedBy%}
+			Submitted by: {{ recipe.submittedBy.username}}
 		{% endif %}
 		Views: {{ recipe.views }}
 		<br>
-        {% if recipe.favouritedBy = null%}
+        {% if !recipe.favouritedBy%}
         Favourites: 0
         {% endif %}
 		{% if recipe.favouritedBy != null%}
 		Favourites: {{ recipe.favouritedBy.username}} <!--change depending on whether its no. of favourites or users -->
+		{% if recipe.favouritedBy != null or recipe.favouritedBy != blank%}
+			Favourites: {{ recipe.favouritedBy.username}}
 		{% endif %}
         </div>
         <br>
@@ -37,6 +39,8 @@
         <div class = "text">
         {% if recipe.recipeText %}
             Recipe: {{ recipe.recipeText}}
+        {% if recipe.recipeText != null%}
+			Recipe: {{ recipe.recipeText}}
         {% endif %}
         </div>
 	{% endif %}
