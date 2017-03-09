@@ -4,6 +4,7 @@ import uuid
 from django.template.defaultfilters import slugify
 
 from django.db import models
+from rest_framework import generics # Filtering API
 
 class Recipe(models.Model):
     title = models.CharField(max_length=128)
@@ -41,3 +42,8 @@ class Comment(models.Model):
     def __str__(self):
         return self.commentBody
 
+class UserListView(generics.ListAPIView):
+    queryset = Recipe.objects.all()
+    #serializer_class = UserSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('recipe', 'title')

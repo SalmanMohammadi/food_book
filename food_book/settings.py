@@ -38,7 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'foodbookapp',
+	'crispy_forms',
+	'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',) # Filter Functionality.
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
