@@ -42,7 +42,7 @@ class Comment(models.Model):
     def __str__(self):
         return self.commentBody
 
-class UserListView(generics.ListAPIView):
+class RecipeListView(generics.ListAPIView):
     queryset = Recipe.objects.all()
     #serializer_class = UserSerializer
     filter_backends = (filters.SearchFilter,)
