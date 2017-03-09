@@ -7,13 +7,15 @@ from django.db import models
 
 class Recipe(models.Model):
     title = models.CharField(max_length=128)
-    slug = models.URLField(unique=True)
+    slug = models.SlugField(blank=True)
     views = models.IntegerField(default=0)
     recipeText = models.TextField(blank = True)
-    # favouritedBy = models.ManyToManyField(User, related_name='user_recipe_favourites')
+    favouritedBy = models.ManyToManyField(User, related_name='user_recipe_favourites',blank = True)
     picture = models.ImageField(blank = True)
     pictureLink = models.URLField(blank = True)
-    # submittedBy = models.ForeignKey(User)
+    submittedBy = models.ForeignKey(User,null = True)
+    submitDate = models.DateField(null=True)
+	
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Recipe, self).save(*args, **kwargs)

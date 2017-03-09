@@ -1,17 +1,38 @@
 {% extends 'foodbookapp/base.html' %}
 
+{% load staticfiles %}
+
 {% block title_block %}
 	{% if recipe %}
 		{{ recipe.title }}
 	{% endif %}
 {% endblock %}
 
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/recipestyle.css" %}">
+{% endblock %}
+
 {% block body_block %}
 
 	{% if recipe %}
+        {% if recipe.title != null%}
+        {{ recipe.title }}
+        {% endif %}
+        <br>
 		<img src="{{recipe.pictureLink}}">
 		<br>
-		{{ recipe.recipeText }}
+		{% if recipe.submittedBy != null%}
+		Submitted by: {{ recipe.submittedBy.username}}
+		{% endif %}
+		Views: {{ recipe.views }}
+		<br>
+		{% if recipe.favouritedBy != null%}
+		Favourites: {{ recipe.favouritedBy.username}}
+		{% endif %}
+        <br>
+        {% if recipe.recipeText != null%}
+        Recipe: {{ recipe.recipeText}}
+        {% endif %}
 	{% endif %}
 	
 {% endblock %}

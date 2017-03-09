@@ -36,9 +36,8 @@ def show_recipe(request, recipe_slug):
 #@login_required
 def add_recipe(request):
 	form = RecipeForm()
-
 	if request.method == 'POST':
-		form = RecipeForm(request.POST, user = request.user)
+		form = RecipeForm(data=request.POST,user = request.user)
 		if form.is_valid():
 			form.save(commit = True)
 			return index(request)
