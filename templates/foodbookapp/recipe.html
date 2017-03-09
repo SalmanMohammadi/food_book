@@ -12,6 +12,10 @@
 		<img src="{{recipe.pictureLink}}">
 		<br>
 		{{ recipe.recipeText }}
+		<br>
+		{% if recipe.submittedBy != null%}
+		Submitted by the user: {{ recipe.submittedBy}}
+		{% endif %}
 	{% endif %}
 	
 {% endblock %}
