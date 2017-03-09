@@ -11,8 +11,7 @@
 {% endblock %}
 
 {% block body_block %}
-	<h1>The Index Page</h1>
-		{% if recipes %}
+	{% if recipes %}
 		<ul>
 			{% for recipe in recipes %}
 			<div class = "img">

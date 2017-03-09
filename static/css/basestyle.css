@@ -1,13 +1,13 @@
 /*Displays the logo in the top left.*/
 div.logo{
 	float:left;
-	padding-left: 100px;
+	padding: 0px 10px 10px 10px;
 }
 
 div.logoimg{
-	margin:50px;
+	margin:0px;
 	float:left;
-	width:256px;
+	width:25%;
 }
 
 div.logo img{
@@ -20,26 +20,93 @@ div.center {
     margin: auto;
     width: 50%;
     padding: 10px;
-    border:1px solid #ccc;
+
 }
 
-/*Displays the sidebar as buttons.*/
-div.sidebar{
-	margin-right:25%;
-	float:right;
-	width: 200px;
+/*BOOTSRAP STYLING.*/
+
+/* Space out content a bit */
+body {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
-.sidebar a{
-	margin-bottom: 2px;
-	background-color: #eee; /* Grey background color */
-    color: black; /* Black text color */
-    display: block; /* Make the links appear below each other */
-    padding: 12px; /* Add some padding */
-    border: 1px solid red;
-    text-decoration: none; /* Remove underline from links */
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-right: 1rem;
+  padding-left: 1rem;
 }
 
-.sidebar a:hover{
-	background-color: #ccc; /* Dark grey background on mouse-over */
+/* Custom page header */
+.header {
+  padding-bottom: 1rem;
+  border-bottom: .05rem solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 3rem;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 1.5rem;
+  color: #777;
+  border-top: .05rem solid #e5e5e5;
+}
+
+/* Customize container */
+@media (min-width: 48em) {
+  .container {
+    max-width: 46rem;
+  }
+}
+.container-narrow > hr {
+  margin: 2rem 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: .05rem solid #e5e5e5;
+  margin-top: 80px;
+  background: #92FE9D; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left, #00C9FF , #92FE9D); /*Safari*/
+  background: -moz-linear-gradient(right, #00C9FF, #92FE9D); /*Firefox*/
+  background: linear-gradient(to right, #00C9FF , #92FE9D); /* Standard syntax */
+  font-family: 'Lobster', cursive;
+}
+.jumbotron .btn {
+  padding: .75rem 1.5rem;
+  font-size: 1.5rem;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 3rem 0;
+}
+.marketing p + h4 {
+  margin-top: 1.5rem;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 48em) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 2rem;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
 }
