@@ -17,11 +17,9 @@
 			{% for recipe in recipes %}
 			<div class = "img">
 				<a href="{% url 'show_recipe' recipe.slug %}">
-				<img class = "recipe" src="#">	
+				<img class = "thumb" src="{% get_thumbnail recipe %}">	
+				<img class = "gif" src="{{recipe.pictureLink}}"> 
 				</a>
-				<p id = "recipeThumb" style = "display:none;">{% get_thumbnail recipe %}</p>
-				<p id = "recipeGif" style = "display:none;">recipe.pictureLink</p>
-				
 			</div>
 			{% endfor %}
 		</ul>
