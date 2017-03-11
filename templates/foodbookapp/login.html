@@ -1,13 +1,17 @@
 {% extends 'foodbookapp/base.html' %}
 {% load staticfiles %}
 
-{% block title_block %}
-	Login
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/loginAndSignupStyle.css" %}">
 {% endblock %}
 
 
 {% block body_block %}
-	Hello! Log in here!
+	<div class = "border">
+	<div class = "title">
+		Log in here!
+	</div>
+
 	<form id="login_form" method="post" action="{% url 'login' %}">
 	{% csrf_token %}
 	Username: <input type="text" name="username" value="" size="50" />
@@ -16,4 +20,7 @@
 	<br />
 	<input type="submit" value="submit" />
 	</form>
+	<br>
+	</div>
 {% endblock %}
+

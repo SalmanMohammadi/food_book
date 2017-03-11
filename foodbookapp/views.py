@@ -35,10 +35,9 @@ def show_recipe(request, recipe_slug):
 # View for adding a category
 #@login_required
 def add_recipe(request):
-	form = RecipeForm()
+	form = RecipeForm(user = request.user)
 	if request.method == 'POST':
-
-		form = RecipeForm(request.POST, user = request.user)
+		form = RecipeForm(data=request.POST)
 		if form.is_valid():
 			form.save(commit = False)
 			data = form.cleaned_data

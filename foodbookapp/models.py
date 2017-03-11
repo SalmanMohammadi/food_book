@@ -24,7 +24,11 @@ class Recipe(models.Model):
         return self.title
 
 class UserProfile(models.Model):
+<<<<<<< HEAD
     user = models.OneToOneField(User, related_name = "userprofile")
+=======
+    user = models.OneToOneField(User,related_name="userProfile")
+>>>>>>> 55e1c36632991d5590fb3366ab0793b7128979f5
     userID = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
     picture = models.ImageField(upload_to = 'profile_images', blank = True)
     def __str__(self):

@@ -7,26 +7,26 @@
 
 
 {% block body_block %}
-{% if user.is_authenticated %}
-	<h1>Add a new Recipe.</h1>
-	<div>
-		<form id = "recipe_form" method = "post" action = "{% url 'add_recipe'%}">
-			{% csrf_token %}
-			{% for hidden in form.hidden_fields %}
-				{{ hidden }}
-			{% endfor %}
-			{% for field in form.visible_fields %}
-				{{ field.errors }}
-				{{ field.help_text }}
-				{{ field }}
-			{% endfor %}
-			<input type = "submit" name = "submit" value = "create recipe" />
-		</form>
-	</div>
-{% else%}
-	<h1>Not registered</h1>
-	<div>
-		Sorry! You must be a user to add a recipe. <a href="{% url 'register' %}">Sign Up here!</a>
-	</div>
-{%endif%}
+	{% if user.is_authenticated %}
+		<h1>Add a new Recipe.</h1>
+		<div>
+			<form id = "recipe_form" method = "post" action = "{% url 'add_recipe'%}">
+				{% csrf_token %}
+				{% for hidden in form.hidden_fields %}
+					{{ hidden }}
+				{% endfor %}
+				{% for field in form.visible_fields %}
+					{{ field.errors }}
+					{{ field.help_text }}
+					{{ field }}
+				{% endfor %}
+				<input type = "submit" name = "submit" value = "create recipe" />
+			</form>
+		</div>
+	{% else%}
+		<h1>Not registered</h1>
+		<div>
+			Sorry! You must be a user to add a recipe. <a href="{% url 'register' %}">Sign Up here!</a>
+		</div>
+	{%endif%}
 {% endblock %}
