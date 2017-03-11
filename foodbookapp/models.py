@@ -9,11 +9,11 @@ class Recipe(models.Model):
     title = models.CharField(max_length=128)
     slug = models.SlugField(blank=True)
     views = models.IntegerField(default=0)
-    recipeText = models.TextField(blank = True)
+    recipeText = models.TextField(null = True)
     favouritedBy = models.ManyToManyField(User, related_name='user_recipe_favourites',blank = True)
     picture = models.ImageField(blank = True)
     pictureLink = models.URLField(blank = True)
-    submittedBy = models.ForeignKey(User,null = True)
+    submittedBy = models.ForeignKey(User, null = True)
     submitDate = models.DateField(null=True)
 	
     def save(self, *args, **kwargs):
@@ -24,7 +24,7 @@ class Recipe(models.Model):
         return self.title
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name = "userprofile")
     userID = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
     picture = models.ImageField(upload_to = 'profile_images', blank = True)
     def __str__(self):

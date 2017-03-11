@@ -15,23 +15,19 @@
 {% block body_block %}
 
 	{% if recipe %}
-        {% if recipe.title != null%}
-        {{ recipe.title }}
-        {% endif %}
+        
+       	{{ recipe.title }}
+        
         <br>
 		<img src="{{recipe.pictureLink}}">
 		<br>
-		{% if recipe.submittedBy != null%}
-		Submitted by: {{ recipe.submittedBy.username}}
+		{% if recipe.submittedBy %}
+			Submitted by: {{ recipe.submittedBy}}
 		{% endif %}
-		Views: {{ recipe.views }}
-		<br>
-		{% if recipe.favouritedBy != null%}
-		Favourites: {{ recipe.favouritedBy.username}}
-		{% endif %}
+		Views: {{ recipe.views }}		
         <br>
-        {% if recipe.recipeText != null%}
-        Recipe: {{ recipe.recipeText}}
+        {% if recipe.recipeText %}
+        	Recipe: {{ recipe.recipeText}}
         {% endif %}
 	{% endif %}
 	
