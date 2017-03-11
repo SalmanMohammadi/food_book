@@ -13,8 +13,8 @@ class Recipe(models.Model):
     favouritedBy = models.ManyToManyField(User, related_name='user_recipe_favourites',blank = True)
     picture = models.ImageField(blank = True)
     pictureLink = models.URLField(blank = True)
-    submittedBy = models.ForeignKey(User, null = True)
-    submitDate = models.DateField(null=True)
+    #submittedBy = models.ForeignKey(User, null = True)
+    #submitDate = models.DateField(null=True)
 	
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
