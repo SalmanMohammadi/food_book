@@ -13,14 +13,28 @@
 {% block body_block %}
 	{% if recipes %}
 		<ul>
-			{% for recipe in recipes %}
-			<div class = "img">
-				<a href="{% url 'show_recipe' recipe.slug %}">
-				<img class = "thumb" src="{% get_thumbnail recipe %}">	
-				<!-- <img class = "gif" src="{{recipe.pictureLink}}">  -->
-				</a>
-			</div>
-			{% endfor %}
+			<table class = "img">
+				{% for recipe in recipes %}
+					<tr>
+						<a href="{% url 'show_recipe' recipe.slug %}">
+							<img class = "thumb" onmouseoff="playStatic()" src="{% get_thumbnail recipe %}">
+							<img class = "gif" onmouseover="playGif()" src="{{recipe.pictureLink}}">
+						</a>
+					</tr>
+				{% endfor %}
+			</table>
+			<script>
+				var x = document.getElementsByClassName("thumb");
+				var y = document.getElementsByClassName("gif");
+				playStatic(){
+					x.style.display = "inline";
+					y.style.display = "none";
+				}
+				playGif(){
+					x.style.display = "none";
+					y.style.display = "inline";
+				}
+			</script>
 		</ul>
 		{% else %}
 			<strong>There are no categories present.</strong>
