@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from foodbookapp.models import Recipe
 from foodbookapp.forms import UserForm, UserProfileForm, RecipeForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from foodbookapp.models import Recipe, UserProfile
 # Create your views here.
 
 #View for the index page. Defaults to new.
@@ -29,7 +30,6 @@ def show_recipe(request, recipe_slug):
 	except Recipe.DoesNotExist:
 		context_dict['recipe'] = None
 
-	print(context_dict)
 	return render(request, 'foodbookapp/recipe.html', context_dict)
 
 # View for adding a category
@@ -37,9 +37,16 @@ def show_recipe(request, recipe_slug):
 def add_recipe(request):
 	form = RecipeForm(user = request.user)
 	if request.method == 'POST':
-		form = RecipeForm(data=request.POST,user = request.user) # USER REQUEST DOES NOTHING
+		form = RecipeForm(data=request.POST)
 		if form.is_valid():
-			form.save(commit = True)
+			form.save(commit = False)
+			data = form.cleaned_data
+			recipe = Recipe.objects.get_or_create(title = data["title"],
+				views = data["views"], recipeText = data["recipeText"],
+				picture = data["picture"], pictureLink = data["pictureLink"],
+				submittedBy = request.user)[0]
+			recipe.save()
+
 			return index(request)
 		else:
 			print(form.errors)

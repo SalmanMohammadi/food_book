@@ -19,14 +19,17 @@ def get_images():
 		curRecipe = {}
 		curRecipe["title"] = item.title
 		curRecipe["views"] = item.views
-		curRecipe["pictureLink"] = item.link
+
+		pictureLink = item.link[:-4]
+		if(pictureLink.endswith("h") and len(pictureLink) == 27):
+			pictureLink = pictureLink[:-1]
+		pictureLink = pictureLink + ".gif"  
+		print(pictureLink)
+		curRecipe["pictureLink"] = pictureLink
 		recipes[item.title] = curRecipe
 
 	for r, recipe_data in recipes.items():
-		add_recipe(recipe_data["title"],recipe_data["views"], "",  recipe_data["pictureLink"])
-
-	for r in Recipe.objects.all():
-		print((str(r)))
+		add_recipe(recipe_data["title"],recipe_data["views"], None,  recipe_data["pictureLink"])
 
 def add_recipe(title, views, recipeText, pictureLink):
 	r = Recipe.objects.get_or_create(title = title)[0]

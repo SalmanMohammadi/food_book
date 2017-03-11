@@ -15,16 +15,11 @@ class RecipeForm(forms.ModelForm):
 	picture = forms.ImageField(required=False, help_text = "Upload an image of your recipe.")
 	pictureLink = forms.URLField(required=False, help_text = "Submit a url to the image link of.")	
 
-	def __init__(self, *args, **kwargs):
-		print(kwargs)
-		self.submittedBy = kwargs.pop('user') # DOESN'T WORK FOR SOME REASON
-		super(RecipeForm, self).__init__(*args, **kwargs)
-
 	class Meta:
 		model = Recipe
 		exclude = ('slug', 'favouritedBy', 'submittedBy', 'submitDate')
 
-	#Ensures a correctly formatted url is passed into the model.
+ 	#Ensures a correctly formatted url is passed into the model.
 	def clean(self):
 		cleaned_data = self.cleaned_data
 		pictureLink = cleaned_data.get('pictureLink')
@@ -41,6 +36,10 @@ class RecipeForm(forms.ModelForm):
 		return cleaned_data
 
 
+	class Meta:
+		model = Recipe
+		exclude = ('slug', 'favouritedBy', 'submittedBy', 'submitDate')
+
         
 class UserForm(forms.ModelForm):
 	password = forms.CharField(widget = forms.PasswordInput())
@@ -53,6 +52,6 @@ class UserProfileForm(forms.ModelForm):
 	picture = forms.ImageField(required=False)
 	class Meta:
 		model = UserProfile
-		fields = ('picture',) #'favourites' commented out for now
+		fields = ('picture',) 
 
 
