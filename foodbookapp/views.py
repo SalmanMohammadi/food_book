@@ -59,20 +59,20 @@ def updateRating(request):
 		theRecipe = Recipe.objects.get(id=theRecipeID)
 		
 		#Algorithm to update the ratings
-		raters = theRecipe.raters
-		score = theRecipe.score
-		score = score * raters
-		score + request.POST["score"]
-		raters+=1
-		score = score/raters
-		theRecipe.raters = raters
-		theRecipe.score = score
+		# raters = theRecipe.raters
+		# score = theRecipe.score
+		# score = score * raters
+		# score + request.POST["score"]
+		# raters+=1
+		# score = score/raters
+		theRecipe.raters = 500 #raters
+		theRecipe.score = 3 #score
 		#Algorithm end
-		
 		theRecipe.save()
+		#show_recipe(request, request.POST["theRecipeSlug"])
 		return HttpResponse("Update successful!")
 	except:
-		return HttpResponse("Oh... Update failed...")
+		return HttpResponse("Update failed.")
 
 
 #View for registration, the /register page.

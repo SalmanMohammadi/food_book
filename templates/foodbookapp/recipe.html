@@ -16,8 +16,8 @@
 {% block body_block %}
 
 	{% if recipe %}
-        <div id=recipeID style="display:none;">{{ recipe.id }}</div> <!-- to update rating -->
-		<div id=recipeSlug style="display:none;">{{ recipe.slug }}</div> <!-- to update rating -->
+        <div id="recipeID" style="display:none;">{{ recipe.id }}</div> <!-- to update rating -->
+		<div id="recipeSlug" style="display:none;">{{ recipe.slug }}</div> <!-- to update rating -->
 		
        	{{ recipe.title }}
         <br>
@@ -45,8 +45,8 @@
 		$("#rate").bind('rated', function (event, value) {
 			$('#rateValue').text('You\'ve rated the recipe: ' + value + " out of 5 stars"); 
 			$(document).find("#notRated").hide(); 
-			var theRecipeID = $(document).find("#recipeID").html()
-			var theRecipeSlug = $(document).find("#recipeSlug").html()
+			var theRecipeID = $(document).find("#recipeID").html();
+			var theRecipeSlug = $(document).find("#recipeSlug").html();
 			var data = {"theRecipeID":theRecipeID,"score":value,"theRecipeSlug":theRecipeSlug}
 			$.post("/update_rating/", data, alert("RATING UPDATED MY FRIEND"));
 			});
