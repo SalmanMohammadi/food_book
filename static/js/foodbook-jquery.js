@@ -9,3 +9,4 @@ $(document).ready(function(){
         $(this).find(".gif").hide();
     });
 });	
+

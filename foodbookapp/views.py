@@ -32,8 +32,8 @@ def show_recipe(request, recipe_slug):
 
 	return render(request, 'foodbookapp/recipe.html', context_dict)
 
-# View for adding a category
-#@login_required
+# View for adding a recipe
+@login_required
 def add_recipe(request):
 	form = RecipeForm()
 	if request.method == 'POST':
@@ -51,6 +51,28 @@ def add_recipe(request):
 			print(form.errors)
 
 	return render(request, 'foodbookapp/add_recipe.html', {'form': form})
+
+@login_required
+def updateRating(request):
+	try:
+		theRecipeID = request.POST["theRecipeID"]
+		theRecipe = Recipe.objects.get(id=theRecipeID)
+		
+		#Algorithm to update the ratings
+		raters = theRecipe.raters
+		score = theRecipe.score
+		score = score * raters
+		score + request.POST["score"]
+		raters+=1
+		score = score/raters
+		theRecipe.raters = raters
+		theRecipe.score = score
+		#Algorithm end
+		
+		theRecipe.save()
+		return HttpResponse("Update successful!")
+	except:
+		return HttpResponse("Oh... Update failed...")
 
 
 #View for registration, the /register page.
