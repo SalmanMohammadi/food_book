@@ -15,6 +15,8 @@ class Recipe(models.Model):
     pictureLink = models.URLField(blank = True)
     submittedBy = models.ForeignKey(User, null = True)
     submitDate = models.DateField(null=True)
+    score = models.FloatField(max_length=1, default=0)
+    raters = models.IntegerField(default=0)
 	
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

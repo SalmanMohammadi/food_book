@@ -8,4 +8,4 @@ $(document).ready(function(){
         $(this).find(".thumb").show();
         $(this).find(".gif").hide();
     });
-});
+});	

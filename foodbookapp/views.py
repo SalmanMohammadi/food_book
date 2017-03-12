@@ -46,7 +46,6 @@ def add_recipe(request):
 				picture = data["picture"], pictureLink = data["pictureLink"],
 				submittedBy = request.user)[0]
 			recipe.save()
-
 			return index(request)
 		else:
 			print(form.errors)
@@ -105,8 +104,8 @@ def user_login(request):
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
 	logout(request)
-	# Take the user back to the homepage.
 	return HttpResponseRedirect(reverse('index'))
-	
+
+@login_required
 def user_profile(request):
 	return render(request, 'foodbookapp/profile.html', {})
