@@ -1,17 +1,17 @@
 /*Should display images nicely in a grid. Needs fixing.*/
 
-div.img {
+table.img {
     margin: 10px;
     border: 1px solid #ccc;
     float: left;
     width: 180px;
 }
 
-div.img:hover {
+table.img:hover {
     border: 1px solid #777;
 }
 
-div.img img {
+table.img img {
     width: 100%;
     height: auto;
 }

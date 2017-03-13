@@ -33,8 +33,8 @@ def show_recipe(request, recipe_slug):
 
 	return render(request, 'foodbookapp/recipe.html', context_dict)
 
-# View for adding a category
-#@login_required
+# View for adding a recipe
+@login_required
 def add_recipe(request):
 	form = RecipeForm()
 	if request.method == 'POST':
@@ -47,12 +47,33 @@ def add_recipe(request):
 				picture = data["picture"], pictureLink = data["pictureLink"],
 				submittedBy = request.user, submitDate = datetime.now())[0]
 			recipe.save()
-
 			return index(request)
 		else:
 			print(form.errors)
 
 	return render(request, 'foodbookapp/add_recipe.html', {'form': form})
+
+@login_required
+def updateRating(request):
+	try:
+		theRecipeID = request.POST["theRecipeID"]
+		theRecipe = Recipe.objects.get(id=theRecipeID)
+		
+		#Algorithm to update the ratings
+		# raters = theRecipe.raters
+		# score = theRecipe.score
+		# score = score * raters
+		# score + request.POST["score"]
+		# raters+=1
+		# score = score/raters
+		theRecipe.raters = 500 #raters
+		theRecipe.score = 3 #score
+		#Algorithm end
+		theRecipe.save()
+		#show_recipe(request, request.POST["theRecipeSlug"])
+		return HttpResponse("Update successful!")
+	except:
+		return HttpResponse("Update failed.")
 
 
 #View for registration, the /register page.
@@ -106,8 +127,8 @@ def user_login(request):
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
 	logout(request)
-	# Take the user back to the homepage.
 	return HttpResponseRedirect(reverse('index'))
-	
+
+@login_required
 def user_profile(request):
 	return render(request, 'foodbookapp/profile.html', {})
