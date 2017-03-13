@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from foodbookapp.models import Recipe, UserProfile
+from datetime import datetime
 # Create your views here.
 
 #View for the index page. Defaults to new.
@@ -44,7 +45,7 @@ def add_recipe(request):
 			recipe = Recipe.objects.get_or_create(title = data["title"],
 				views = data["views"], recipeText = data["recipeText"],
 				picture = data["picture"], pictureLink = data["pictureLink"],
-				submittedBy = request.user)[0]
+				submittedBy = request.user, submitDate = datetime.now())[0]
 			recipe.save()
 
 			return index(request)
