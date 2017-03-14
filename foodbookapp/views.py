@@ -53,12 +53,13 @@ def add_recipe(request):
 
 	return render(request, 'foodbookapp/add_recipe.html', {'form': form})
 
-@login_required
-def updateRating(request):
-	try:
-		theRecipeID = request.POST["theRecipeID"]
-		theRecipe = Recipe.objects.get(id=theRecipeID)
-		
+@login_required	
+def update_rating(request):
+	rec_id = request.POST["rec_id"]
+	rec = Recipe.objects.get(id=int(rec_id))
+	rec.raters = 500 #raters
+	rec.score = 1.0 #score
+	rec.save()	
 		#Algorithm to update the ratings
 		# raters = theRecipe.raters
 		# score = theRecipe.score
@@ -66,15 +67,8 @@ def updateRating(request):
 		# score + request.POST["score"]
 		# raters+=1
 		# score = score/raters
-		theRecipe.raters = 500 #raters
-		theRecipe.score = 3 #score
 		#Algorithm end
-		theRecipe.save()
-		#show_recipe(request, request.POST["theRecipeSlug"])
-		return HttpResponse("Update successful!")
-	except:
-		return HttpResponse("Update failed.")
-
+	return HttpResponse("Update successful!")
 
 #View for registration, the /register page.
 def register(request):

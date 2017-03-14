@@ -15,10 +15,6 @@ class RecipeForm(forms.ModelForm):
 	picture = forms.ImageField(required=False, help_text = "Upload an image of your recipe.")
 	pictureLink = forms.URLField(required=False, help_text = "Submit a url to the image link of.")	
 
-	class Meta:
-		model = Recipe
-		exclude = ('slug', 'favouritedBy', 'submittedBy', 'submitDate')
-
  	#Ensures a correctly formatted url is passed into the model.
 	def clean(self):
 		cleaned_data = self.cleaned_data
@@ -35,10 +31,9 @@ class RecipeForm(forms.ModelForm):
 
 		return cleaned_data
 
-
 	class Meta:
 		model = Recipe
-		exclude = ('slug', 'favouritedBy', 'submittedBy', 'submitDate')
+		exclude = ('slug', 'favouritedBy', 'submittedBy', 'submitDate','score','raters')
 
         
 class UserForm(forms.ModelForm):
