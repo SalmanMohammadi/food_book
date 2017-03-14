@@ -1,0 +1,17 @@
+
+div.border {
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    border-radius: 20px;
+}
+
+div.title {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-family: 'Lobster', cursive;
+    font-decoration: bold;
+    font-size: xx-large;
+    text-transform: capitalize;
+}

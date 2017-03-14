@@ -11,20 +11,11 @@ class RecipeForm(forms.ModelForm):
 	likes = forms.IntegerField(widget=forms.HiddenInput(), initial = 0)
 	
 	recipeText = forms.CharField(widget = forms.TextInput(), 
-		help_text = "Please enter the recipe text.")
+		required=False,help_text = "Please enter the recipe text.")
 	picture = forms.ImageField(required=False, help_text = "Upload an image of your recipe.")
-	pictureLink = forms.URLField(required=False, help_text = "Submit a url to the image link of.")
+	pictureLink = forms.URLField(required=False, help_text = "Submit a url to the image link of.")	
 
-
-	def __init__(self, *args, **kwargs):
-		self.user = kwargs.pop('user', None)
-		super(RecipeForm, self).__init__(*args, **kwargs)
-
-	class Meta:
-		model = Recipe
-		exclude = ('slug', 'favouritedBy', 'submittedBy')
-
-	#Ensures a correctly formatted url is passed into the model.
+ 	#Ensures a correctly formatted url is passed into the model.
 	def clean(self):
 		cleaned_data = self.cleaned_data
 		pictureLink = cleaned_data.get('pictureLink')
@@ -40,6 +31,9 @@ class RecipeForm(forms.ModelForm):
 
 		return cleaned_data
 
+	class Meta:
+		model = Recipe
+		exclude = ('slug', 'favouritedBy', 'submittedBy', 'submitDate','score','raters')
 
         
 class UserForm(forms.ModelForm):
@@ -53,6 +47,6 @@ class UserProfileForm(forms.ModelForm):
 	picture = forms.ImageField(required=False)
 	class Meta:
 		model = UserProfile
-		fields = ('picture',) #'favourites' commented out for now
+		fields = ('picture',) 
 
 

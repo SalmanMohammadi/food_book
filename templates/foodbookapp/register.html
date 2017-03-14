@@ -1,18 +1,22 @@
 {% extends 'foodbookapp/base.html' %}
 {% load staticfiles %}
 
-{% block title_block %}
-	Register
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/loginAndSignupStyle.css" %}">
 {% endblock %}
 
 
 {% block body_block %}
 	{% if registered %}
+        <div class = "border">
 		Thank you for joining FoodBook! You can now log in
 		<a href="{% url 'new' %}">Return to the main page.</a><br />
-		
+		</div>
 	{% else %}
-		Hello! Sign up here!
+        <div class = "border">
+        <div class = "title">
+		Sign up here!
+        </div>
 		<form id="user_form" method="post" action="{% url 'register' %}"
 		enctype="multipart/form-data">
 		
@@ -23,5 +27,7 @@
 		
 		<input type="submit" name="submit" value="Register" />
 		</form>
+        <br>
+        </div>
 	{% endif%}
 {% endblock %}
