@@ -9,7 +9,7 @@ register = template.Library()
 
 @register.simple_tag
 def get_thumbnail(recipe):
-	pictureLink = recipe.pictureLink
+	pictureLink = recipe.picture_link
 	if pictureLink.endswith('.gif'):
 		pictureLink = pictureLink[:-4]
 		pictureLink = pictureLink + 'b.jpg'

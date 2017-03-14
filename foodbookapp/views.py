@@ -39,6 +39,7 @@ def add_recipe(request):
 	form = RecipeForm()
 	if request.method == 'POST':
 		form = RecipeForm(data=request.POST)
+
 		if form.is_valid():
 			form.save(commit = False)
 			data = form.cleaned_data
@@ -47,7 +48,7 @@ def add_recipe(request):
 				picture = data["picture"], pictureLink = data["pictureLink"],
 				submittedBy = request.user, submitDate = datetime.now())[0]
 			recipe.save()
-			return index(request)
+			return show_recipe(request, recipe.recipe_slug)
 		else:
 			print(form.errors)
 
@@ -108,19 +109,15 @@ def user_login(request):
 		user = authenticate(username=username, password=password)
 		if user:
 			if user.is_active: # If the account is valid and active, we log the user in.	
-			# We'll send the user back to the homepage.
 				login(request, user)
 				return HttpResponseRedirect(reverse('index'))
 			else:
-			# An inactive account was used - no logging in!
+				# An inactive account was used.
 				return HttpResponse("Your account is disabled.")
-		else:
-			# Bad login details were provided. So we can't log the user in.
+		else: # Bad login details were provided. 
 			print("Invalid login details: {0}, {1}".format(username, password))
 			return HttpResponse("Invalid login details supplied.")
 	else:
-		# No context variables to pass to the template system, hence the
-		# blank dictionary object...
 		return render(request, 'foodbookapp/login.html', {})
 
 @login_required

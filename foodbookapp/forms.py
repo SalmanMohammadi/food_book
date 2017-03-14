@@ -17,7 +17,7 @@ class RecipeForm(forms.ModelForm):
 
 	class Meta:
 		model = Recipe
-		exclude = ('slug', 'favouritedBy', 'submittedBy', 'submitDate')
+		exclude = ('slug', 'favouritedBy', 'submittedBy', 'submitDate', 'score', 'raters')
 
  	#Ensures a correctly formatted url is passed into the model.
 	def clean(self):
