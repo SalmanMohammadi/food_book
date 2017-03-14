@@ -106,7 +106,7 @@ def user_login(request):
 			if user.is_active: # If the account is valid and active, we log the user in.	
 			# We'll send the user back to the homepage.
 				login(request, user)
-				return HttpResponseRedirect(reverse('index'))
+				return HttpResponseRedirect(reverse('home'))
 			else:
 			# An inactive account was used - no logging in!
 				return HttpResponse("Your account is disabled.")
@@ -133,7 +133,7 @@ def favourited(request):
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
 	logout(request)
-	return HttpResponseRedirect(reverse('index'))
+	return HttpResponseRedirect(reverse('home'))
 
 @login_required
 def user_profile(request):

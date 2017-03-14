@@ -17,4 +17,4 @@ urlpatterns = [
 	url(r'^update_rating/$', views.update_rating, name='update_rating'),
 	url(r'^trending/$', views.trending, name='trending'),
 	url(r'^favourited/$', views.favourited, name='favourited'),
-	
+]
