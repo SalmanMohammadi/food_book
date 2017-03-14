@@ -34,16 +34,16 @@
             <nav>
                   <ul class="nav nav-pills float-right">
                         <li class="nav-item">
-                          <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                          <a class="nav-link active" href={% url 'home' %}>Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="{% url 'index' %}">New</a>
+                          <a class="nav-link" href="{% url 'new' %}">New</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="#">Trending</a>
+                          <a class="nav-link" href={% url 'trending' %}>Trending</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Favourited</a>
+                            <a class="nav-link" href="{% url 'favourited' %}">Favourited</a>
                         </li>
                         {% if user.is_authenticated %}
                             <li class="nav-item">

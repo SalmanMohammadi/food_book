@@ -10,13 +10,15 @@ from datetime import datetime
 # Create your views here.
 
 #View for the index page. Defaults to new.
-def index(request):
-	return new(request)
+def home(request):
+	recipes = Recipe.objects.all()
+	return render(request, 'foodbookapp/home.html', {'recipes': recipes})
+	#return new(request)
 
-#View for the /new page
+#View for the new page
 def new(request):
 	recipes = Recipe.objects.all()
-	return render(request, 'foodbookapp/index.html', {'recipes': recipes})
+	return render(request, 'foodbookapp/new.html', {'recipes': recipes})
 
 #View for the /about page.
 def about(request):
@@ -122,6 +124,16 @@ def user_login(request):
 		# No context variables to pass to the template system, hence the
 		# blank dictionary object...
 		return render(request, 'foodbookapp/login.html', {})
+
+def trending(request):
+	
+	
+	return render(request, 'foodbookapp/trending.html')
+
+def favourited(request):
+	
+	
+	return render(request, 'foodbookapp/favourited.html')		
 
 @login_required
 def user_logout(request):
