@@ -10,13 +10,15 @@ from datetime import datetime
 # Create your views here.
 
 #View for the index page. Defaults to new.
-def index(request):
-	return new(request)
+def home(request):
+	recipes = Recipe.objects.all()
+	return render(request, 'foodbookapp/home.html', {'recipes': recipes})
+	#return new(request)
 
-#View for the /new page
+#View for the new page
 def new(request):
 	recipes = Recipe.objects.all()
-	return render(request, 'foodbookapp/index.html', {'recipes': recipes})
+	return render(request, 'foodbookapp/new.html', {'recipes': recipes})
 
 #View for the /about page.
 def about(request):
@@ -54,12 +56,13 @@ def add_recipe(request):
 
 	return render(request, 'foodbookapp/add_recipe.html', {'form': form})
 
-@login_required
-def updateRating(request):
-	try:
-		theRecipeID = request.POST["theRecipeID"]
-		theRecipe = Recipe.objects.get(id=theRecipeID)
-		
+@login_required	
+def update_rating(request):
+	rec_id = request.POST["rec_id"]
+	rec = Recipe.objects.get(id=int(rec_id))
+	rec.raters = 500 #raters
+	rec.score = 1.0 #score
+	rec.save()	
 		#Algorithm to update the ratings
 		# raters = theRecipe.raters
 		# score = theRecipe.score
@@ -67,15 +70,8 @@ def updateRating(request):
 		# score + request.POST["score"]
 		# raters+=1
 		# score = score/raters
-		theRecipe.raters = 500 #raters
-		theRecipe.score = 3 #score
 		#Algorithm end
-		theRecipe.save()
-		#show_recipe(request, request.POST["theRecipeSlug"])
-		return HttpResponse("Update successful!")
-	except:
-		return HttpResponse("Update failed.")
-
+	return HttpResponse("Update successful!")
 
 #View for registration, the /register page.
 def register(request):
@@ -110,7 +106,7 @@ def user_login(request):
 		if user:
 			if user.is_active: # If the account is valid and active, we log the user in.	
 				login(request, user)
-				return HttpResponseRedirect(reverse('index'))
+				return HttpResponseRedirect(reverse('home'))
 			else:
 				# An inactive account was used.
 				return HttpResponse("Your account is disabled.")
@@ -120,11 +116,21 @@ def user_login(request):
 	else:
 		return render(request, 'foodbookapp/login.html', {})
 
+def trending(request):
+	
+	
+	return render(request, 'foodbookapp/trending.html')
+
+def favourited(request):
+	
+	
+	return render(request, 'foodbookapp/favourited.html')		
+
 @login_required
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
 	logout(request)
-	return HttpResponseRedirect(reverse('index'))
+	return HttpResponseRedirect(reverse('home'))
 
 @login_required
 def user_profile(request):

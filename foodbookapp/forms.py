@@ -35,10 +35,9 @@ class RecipeForm(forms.ModelForm):
 
 		return cleaned_data
 
-
 	class Meta:
 		model = Recipe
-		exclude = ('slug', 'favouritedBy', 'submittedBy', 'submitDate')
+		exclude = ('slug', 'favouritedBy', 'submittedBy', 'submitDate','score','raters')
 
         
 class UserForm(forms.ModelForm):

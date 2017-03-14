@@ -32,41 +32,40 @@
 		<!--Menu bar. -->
 		<div class="header">
             <nav>
-                  <ul class="nav nav-pills float-right">
-                        <li class="nav-item">
-                          <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="{% url 'index' %}">New</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">Trending</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Favourited</a>
-                        </li>
-                        {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'profile' %}">My Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logout' %}">Log out</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'add_recipe' %}">Submit Recipe</a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'login' %}">Login</a>
-                            </li>
-                        {%endif%}
-                  </ul>
+                <ul class="nav nav-pills float-right">
+					<li class="nav-item">
+					  <a class="nav-link active" href={% url 'home' %}>Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link" href="{% url 'new' %}">New</a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link" href={% url 'trending' %}>Trending</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'favourited' %}">Favourited</a>
+					</li>
+					{% if user.is_authenticated %}
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'profile' %}">My Profile</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'logout' %}">Log out</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'add_recipe' %}">Submit Recipe</a>
+						</li>
+					{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'register' %}">Sign Up</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'login' %}">Login</a>
+						</li>
+					{%endif%}
+                </ul>
             </nav>
             <div>
-
             	{% if user.is_authenticated %}
 				Hello {{ user.username }}
 			    {% else %}
@@ -76,7 +75,7 @@
         </div>
 
         <div class="jumbotron">
-        <h1 class="display-3">FoodBook</h1>
+			<h1 class="display-3">FoodBook</h1>
         </div>
 
 		<!-- The main content body of the site. -->

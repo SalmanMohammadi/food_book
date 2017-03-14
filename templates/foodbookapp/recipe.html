@@ -16,7 +16,7 @@
 {% block body_block %}
 
 	{% if recipe %}
-        <div id="recipeID" style="display:none;">{{ recipe.id }}</div> <!-- to update rating -->
+        <div id="recID" style="display:none;">{{ recipe.id }}</div> <!-- to update rating -->
 		<div id="recipeSlug" style="display:none;">{{ recipe.slug }}</div> <!-- to update rating -->
 		
        	{{ recipe.title }}
@@ -39,17 +39,18 @@
 	{% if recipe.raters > 0 %}
 		<br> User Rating: {{recipe.score}}
 	{%else%}
-		<div id="notRated"><br>Not yet rated. Why not rate the recipe?</div>
+		<div id="notRated">Not yet rated. Why not rate the recipe?</div>
 	{% endif %}
 	<script type="text/javascript">
 		$("#rate").bind('rated', function (event, value) {
 			$('#rateValue').text('You\'ve rated the recipe: ' + value + " out of 5 stars"); 
-			$(document).find("#notRated").hide(); 
-			var theRecipeID = $(document).find("#recipeID").html();
+			var recID = $(document).find("#recID").html();
 			var theRecipeSlug = $(document).find("#recipeSlug").html();
-			var data = {"theRecipeID":theRecipeID,"score":value,"theRecipeSlug":theRecipeSlug}
-			$.post("/update_rating/", data, alert("RATING UPDATED MY FRIEND"));
+			<!-- var data = {"recID":recID,"score":value,"theRecipeSlug":theRecipeSlug} -->
+			$.post('/foodbookapp/update_rating/', {'rec_id': recID}, function(data){
+				$(document).find("#notRated").hide() <!-- This whole post is breaking somewhere -->
 			});
+		});
 		$("#rate").bind('reset', function () { $('#rateValue').text('You reset your rating'); });
 </script>     
 {% endblock %}
