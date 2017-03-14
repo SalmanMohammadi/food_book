@@ -1,0 +1,16 @@
+{% extends 'foodbookapp/base.html' %}
+{% load foodbookapp_template_tags %}
+{% load staticfiles %}
+
+{% block title_block %}
+	FoodBook: Trending
+{% endblock %}
+
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/imagestyle.css" %}">
+{% endblock %}
+
+{% block body_block %}
+	<p>hello world: favourited page</p>
+{% endblock %}
+
