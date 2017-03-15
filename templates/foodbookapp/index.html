@@ -12,18 +12,18 @@
 
 {% block body_block %}
 	{% if recipes %}
-		<div class="imgBlock">
+		<ul>
 			{% for recipe in recipes %}
-				<div class="img">
-					<a href="{% url 'show_recipe' recipe.slug %}">
-						<img class = "thumb" src="{% get_thumbnail recipe %}">	
-						<!-- <img class = "gif" src="{{recipe.pictureLink}}">  -->
-					</a>
-				</div>
+			<div class = "img">
+				<a href="{% url 'show_recipe' recipe.slug %}">
+				<img class = "thumb" src="{% get_thumbnail recipe %}">	
+				<!-- <img class = "gif" src="{{recipe.pictureLink}}">  -->
+				</a>
+			</div>
 			{% endfor %}
-		</div>
-	{% else %}
-		<strong>There are no categories present.</strong>
-	{% endif %}
+		</ul>
+		{% else %}
+			<strong>There are no categories present.</strong>
+		{% endif %}
 {% endblock %}
 

@@ -12,7 +12,7 @@
 		My favourites: *Blank*
 	{% else %}
 		You're not logged in. 
-		<a href="{% url 'index' %}">Click here</a> to go back to the homepage
+		<a href="{% url 'index' %}">Click here</a> to go back to the indexpage
 	{% endif %}
 	{{user.userprofile.picture}}
 {% endblock %}

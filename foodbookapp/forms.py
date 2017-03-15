@@ -28,7 +28,7 @@ class RecipeForm(forms.ModelForm):
 				pictureLink = 'http://' + pictureLink 
 
 			if not pictureLink.endswith('.gif'):
-				if pictureLink.endswith('.gifv'):
+				if spictureLink.endswith('.gifv'):
 					pictureLink = pictureLink[:-1]
 
 			cleaned_data['pictureLink'] = pictureLink

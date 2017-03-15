@@ -12,7 +12,6 @@ def get_images():
 
 	client = ImgurClient(client_id, client_secret)
 
-	# Example request
 	items = client.subreddit_gallery(subreddit = "GifRecipes")
 	recipes = {}
 	for item in items:
@@ -24,7 +23,7 @@ def get_images():
 		if(pictureLink.endswith("h") and len(pictureLink) == 27):
 			pictureLink = pictureLink[:-1]
 		pictureLink = pictureLink + ".gif"  
-		print(pictureLink)
+
 		curRecipe["pictureLink"] = pictureLink
 		recipes[item.title] = curRecipe
 

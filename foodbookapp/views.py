@@ -7,18 +7,22 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from foodbookapp.models import Recipe, UserProfile
 from datetime import datetime
+from imgurAPI import get_images
 # Create your views here.
 
 #View for the index page. Defaults to new.
-def home(request):
+def index(request, page_name = None):
+	get_images()
+	if(page_name == "new"):
+		recipes = Recipe.objects.sort()
 	recipes = Recipe.objects.all()
-	return render(request, 'foodbookapp/home.html', {'recipes': recipes})
-	#return new(request)
+	return render(request, 'foodbookapp/index.html', {'recipes': recipes})
 
-#View for the new page
-def new(request):
-	recipes = Recipe.objects.all()
-	return render(request, 'foodbookapp/new.html', {'recipes': recipes})
+@login_required
+def favourited(request):
+	recipes = Recipe.objects.get(favourited_by = request.user)
+	print(recipes)
+	return render(request, 'foodbookapp/favourited.html', {'recipe': recipes})		
 
 #View for the /about page.
 def about(request):
@@ -106,7 +110,7 @@ def user_login(request):
 		if user:
 			if user.is_active: # If the account is valid and active, we log the user in.	
 				login(request, user)
-				return HttpResponseRedirect(reverse('home'))
+				return HttpResponseRedirect(reverse('index'))
 			else:
 				# An inactive account was used.
 				return HttpResponse("Your account is disabled.")
@@ -116,21 +120,12 @@ def user_login(request):
 	else:
 		return render(request, 'foodbookapp/login.html', {})
 
-def trending(request):
-	
-	
-	return render(request, 'foodbookapp/trending.html')
-
-def favourited(request):
-	
-	
-	return render(request, 'foodbookapp/favourited.html')		
 
 @login_required
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
 	logout(request)
-	return HttpResponseRedirect(reverse('home'))
+	return HttpResponseRedirect(reverse('index'))
 
 @login_required
 def user_profile(request):

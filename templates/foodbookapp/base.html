@@ -33,19 +33,19 @@
 		<div class="header">
             <nav>
                 <ul class="nav nav-pills float-right">
+                	<li class="nav-item">
+					  <a class="nav-link" href="{% url 'index' %}">Index</a>
 					<li class="nav-item">
-					  <a class="nav-link active" href={% url 'home' %}>Home <span class="sr-only">(current)</span></a>
+					  <a class="nav-link" href="{% url 'index' new %}">New</a>
 					</li>
 					<li class="nav-item">
-					  <a class="nav-link" href="{% url 'new' %}">New</a>
+					  <a class="nav-link" href="#">Trending</a>
 					</li>
-					<li class="nav-item">
-					  <a class="nav-link" href={% url 'trending' %}>Trending</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{% url 'favourited' %}">Favourited</a>
-					</li>
+		
 					{% if user.is_authenticated %}
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'favourited' %}">Favourited</a>
+						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'profile' %}">My Profile</a>
 						</li>

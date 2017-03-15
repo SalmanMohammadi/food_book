@@ -10,7 +10,7 @@ class Recipe(models.Model):
     slug = models.SlugField(blank=True)
     views = models.IntegerField(default=0)
     recipe_text = models.TextField(null = True)
-    favourited_ny = models.ManyToManyField(User, related_name='user_recipe_favourites',blank = True)
+    favourited_by = models.ManyToManyField(User, related_name='user_recipe_favourites',blank = True)
     picture = models.ImageField(blank = True)
     picture_link = models.URLField(blank = True)
     submitted_by = models.ForeignKey(User, null = True)
