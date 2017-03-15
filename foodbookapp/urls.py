@@ -3,9 +3,9 @@
 from django.conf.urls import url
 from foodbookapp import views
 
-
 urlpatterns = [
-	url(r'^$', views.index, name = 'index'),
+	url(r'^$', views.home, name = 'home'),
+	url(r'^home/$', views.home, name = 'home'),
 	url(r'^new/$', views.new, name = 'new'),
 	url(r'^about/$', views.about, name = 'about'),
 	url(r'^recipe/(?P<recipe_slug>[\w\-]+)/$', views.show_recipe, name = 'show_recipe'),
@@ -14,4 +14,7 @@ urlpatterns = [
 	url(r'^login/$', views.user_login, name='login'),
 	url(r'^logout/$', views.user_logout, name='logout'),
 	url(r'^profile/$', views.user_profile, name='profile'),
+	url(r'^update_rating/$', views.update_rating, name='update_rating'),
+	url(r'^trending/$', views.trending, name='trending'),
+	url(r'^favourited/$', views.favourited, name='favourited'),
 ]

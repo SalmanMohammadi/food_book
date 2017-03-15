@@ -2,16 +2,14 @@
 
 div.img {
     margin: 10px;
-    border: 1px solid #ccc;
+    border-spacing: 5px;
     float: left;
-    width: 180px;
+}
+img.thumb{
+	width: 180px;
+	height:180px;
 }
 
-div.img:hover {
+table.img:hover {
     border: 1px solid #777;
-}
-
-div.img img {
-    width: 100%;
-    height: auto;
 }

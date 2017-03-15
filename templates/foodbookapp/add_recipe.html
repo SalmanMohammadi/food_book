@@ -15,11 +15,20 @@
 				{% for hidden in form.hidden_fields %}
 					{{ hidden }}
 				{% endfor %}
-				{% for field in form.visible_fields %}
-					{{ field.errors }}
-					{{ field.help_text }}
-					{{ field }}
-				{% endfor %}
+				<!-- table done by: Jimmy Tang, 2301714t@student.gla.ac.uk -->
+				<table>
+					{% for field in form.visible_fields %}
+						<tr>
+							{{ field.errors }}
+							<th>
+								{{ field.help_text }}
+							</th>
+							<th>
+								{{ field }}
+							</th>
+						</tr>
+					{% endfor %}
+				</table>
 				<input type = "submit" name = "submit" value = "create recipe" />
 			</form>
 		</div>

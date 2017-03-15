@@ -1,20 +1,24 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from foodbookapp.models import Recipe
 from foodbookapp.forms import UserForm, UserProfileForm, RecipeForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from foodbookapp.models import Recipe, UserProfile
+from datetime import datetime
 # Create your views here.
 
 #View for the index page. Defaults to new.
-def index(request):
-	return new(request)
+def home(request):
+	recipes = Recipe.objects.all()
+	return render(request, 'foodbookapp/home.html', {'recipes': recipes})
+	#return new(request)
 
-#View for the /new page
+#View for the new page
 def new(request):
 	recipes = Recipe.objects.all()
-	return render(request, 'foodbookapp/index.html', {'recipes': recipes})
+	return render(request, 'foodbookapp/new.html', {'recipes': recipes})
 
 #View for the /about page.
 def about(request):
@@ -29,23 +33,45 @@ def show_recipe(request, recipe_slug):
 	except Recipe.DoesNotExist:
 		context_dict['recipe'] = None
 
-	print(context_dict)
 	return render(request, 'foodbookapp/recipe.html', context_dict)
 
-# View for adding a category
-#@login_required
+# View for adding a recipe
+@login_required
 def add_recipe(request):
-	form = RecipeForm(user = request.user)
+	form = RecipeForm()
 	if request.method == 'POST':
-		form = RecipeForm(data=request.POST,user = request.user) # USER REQUEST DOES NOTHING
+		form = RecipeForm(data=request.POST)
+
 		if form.is_valid():
-			form.save(commit = True)
-			return index(request)
+			form.save(commit = False)
+			data = form.cleaned_data
+			recipe = Recipe.objects.get_or_create(title = data["title"],
+				views = data["views"], recipeText = data["recipeText"],
+				picture = data["picture"], pictureLink = data["pictureLink"],
+				submittedBy = request.user, submitDate = datetime.now())[0]
+			recipe.save()
+			return show_recipe(request, recipe.recipe_slug)
 		else:
 			print(form.errors)
 
 	return render(request, 'foodbookapp/add_recipe.html', {'form': form})
 
+@login_required	
+def update_rating(request):
+	rec_id = request.POST["rec_id"]
+	rec = Recipe.objects.get(id=int(rec_id))
+	rec.raters = 500 #raters
+	rec.score = 1.0 #score
+	rec.save()	
+		#Algorithm to update the ratings
+		# raters = theRecipe.raters
+		# score = theRecipe.score
+		# score = score * raters
+		# score + request.POST["score"]
+		# raters+=1
+		# score = score/raters
+		#Algorithm end
+	return HttpResponse("Update successful!")
 
 #View for registration, the /register page.
 def register(request):
@@ -79,27 +105,33 @@ def user_login(request):
 		user = authenticate(username=username, password=password)
 		if user:
 			if user.is_active: # If the account is valid and active, we log the user in.	
-			# We'll send the user back to the homepage.
 				login(request, user)
-				return HttpResponseRedirect(reverse('index'))
+				return HttpResponseRedirect(reverse('home'))
 			else:
-			# An inactive account was used - no logging in!
+				# An inactive account was used.
 				return HttpResponse("Your account is disabled.")
-		else:
-			# Bad login details were provided. So we can't log the user in.
+		else: # Bad login details were provided. 
 			print("Invalid login details: {0}, {1}".format(username, password))
 			return HttpResponse("Invalid login details supplied.")
 	else:
-		# No context variables to pass to the template system, hence the
-		# blank dictionary object...
 		return render(request, 'foodbookapp/login.html', {})
+
+def trending(request):
+	
+	
+	return render(request, 'foodbookapp/trending.html')
+
+def favourited(request):
+	
+	
+	return render(request, 'foodbookapp/favourited.html')		
 
 @login_required
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
 	logout(request)
-	# Take the user back to the homepage.
-	return HttpResponseRedirect(reverse('index'))
-	
+	return HttpResponseRedirect(reverse('home'))
+
+@login_required
 def user_profile(request):
 	return render(request, 'foodbookapp/profile.html', {})

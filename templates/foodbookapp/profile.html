@@ -14,4 +14,5 @@
 		You're not logged in. 
 		<a href="{% url 'index' %}">Click here</a> to go back to the homepage
 	{% endif %}
+	{{user.userprofile.picture}}
 {% endblock %}
