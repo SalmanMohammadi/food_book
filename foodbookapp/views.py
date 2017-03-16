@@ -97,8 +97,8 @@ def register(request):
 			user.save()
 			profile = profile_form.save(commit=False)
 			profile.user = user
-			if 'picture' in request.FILES:
-				profile.picture = request.FILES['picture']
+			if 'Picture' in request.FILES:
+				profile.picture = request.FILES['Picture']
 			profile.save()
 			registered = True
 		else:
@@ -122,7 +122,7 @@ def user_login(request):
 			else:
 				# An inactive account was used.
 				return HttpResponse("Your account is disabled.")
-		else: # Bad login details were provided. 
+		else: # Bad login details were provided.
 			print("Invalid login details: {0}, {1}".format(username, password))
 			return HttpResponse("Invalid login details supplied.")
 	else:
