@@ -53,4 +53,7 @@ class UserProfileForm(forms.ModelForm):
 		model = UserProfile
 		fields = ('picture',) 
 
+class addTag(forms.ModelForm):
+	tagName = forms.CharField(max_length=128)
+	
 
