@@ -10,19 +10,25 @@ from datetime import datetime
 from imgurAPI import get_images
 # Create your views here.
 
-#View for the index page. Defaults to new.
-def index(request, page_name = None):
-	get_images()
-	if(page_name == "new"):
-		recipes = Recipe.objects.sort()
+#View for the home page. Defaults to new.
+def home(request, page_name = None):
+	try:
+		get_images()
+	except:
+		print("Unable to connect to API.")
+	print(page_name)
+	# if(page_name == "new"):
+	# 	recipes = Recipe.objects.sort()
+	# else if(page_name == "trending"):
+	# 	recipes = Recipe.objects.sort()
+	# else if(page_name == "favourited"):
+	# 	recipes = Recipe.objects.sort()
 	recipes = Recipe.objects.all()
-	return render(request, 'foodbookapp/index.html', {'recipes': recipes})
+	return render(request, 'foodbookapp/home.html', {'recipes': recipes})
 
 @login_required
 def favourited(request):
-	recipes = Recipe.objects.get(favourited_by = request.user)
-	print(recipes)
-	return render(request, 'foodbookapp/favourited.html', {'recipe': recipes})		
+	home(request, "favourited")
 
 #View for the /about page.
 def about(request):
@@ -30,9 +36,11 @@ def about(request):
 
 #View for the /recipe/<recipe-name> page.
 def show_recipe(request, recipe_slug):
+
 	context_dict = {}
 	try:
 		recipe = Recipe.objects.get(slug = recipe_slug)
+		tags = Tags.objects.get(recipe = recipe)
 		context_dict['recipe'] = recipe
 	except Recipe.DoesNotExist:
 		context_dict['recipe'] = None
@@ -110,7 +118,7 @@ def user_login(request):
 		if user:
 			if user.is_active: # If the account is valid and active, we log the user in.	
 				login(request, user)
-				return HttpResponseRedirect(reverse('index'))
+				return HttpResponseRedirect(reverse('home'))
 			else:
 				# An inactive account was used.
 				return HttpResponse("Your account is disabled.")
@@ -125,7 +133,7 @@ def user_login(request):
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
 	logout(request)
-	return HttpResponseRedirect(reverse('index'))
+	return HttpResponseRedirect(reverse('home'))
 
 @login_required
 def user_profile(request):

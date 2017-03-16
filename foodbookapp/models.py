@@ -13,7 +13,6 @@ class Recipe(models.Model):
     favourited_by = models.ManyToManyField(User, related_name='user_recipe_favourites',blank = True)
     picture = models.ImageField(blank = True)
     pictureLink = models.URLField(blank = True)
-    # submittedBy = models.ForeignKey(UserProfile,null = True)
     submitDate = models.DateField(null=True)
     picture_link = models.URLField(blank = True)
     submitted_by = models.ForeignKey(User, null = True)
@@ -35,7 +34,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Tag(models.Model):
-    recipe = models.ForeignKey(Recipe)
+    recipe = models.ManyToManyField(Recipe)
     tagTitle = models.CharField(max_length=128, unique = True, default = "")
     def __str__(self):
         return self.tagTitle
