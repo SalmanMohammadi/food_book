@@ -41,10 +41,10 @@ def show_recipe(request, recipe_slug):
 	context_dict = {}
 	try:
 		recipe = Recipe.objects.get(slug = recipe_slug)
-		try:
-			tags = Tag.objects.get(recipe = recipe)
-		except Tag.DoesNotExist:
-			context_dict['tags'] = None
+		#try:
+			# tags = Tag.objects.get(recipe = recipe.id)
+		# except Tag.DoesNotExist:
+			# context_dict['tags'] = None
 		context_dict['recipe'] = recipe
 	except Recipe.DoesNotExist:
 		context_dict['recipe'] = None

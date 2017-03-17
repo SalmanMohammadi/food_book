@@ -32,9 +32,12 @@
         	Recipe: {{ recipe.recipeText}}
         {% endif %}
 		<br>
-		{% if recipe.tags %}
-        	Recipe: {{ recipe.tags}}
-        {% endif %}
+		Recipe tags: 
+		{% for tag in recipe.tags.all %}
+			 {{ tag.tagTitle }}
+		{% empty %}
+			None!
+		{% endfor %}
         <div></div>
 	{% endif %}
 

@@ -5,6 +5,11 @@ from django.template.defaultfilters import slugify
 
 from django.db import models
 
+class Tag(models.Model):
+    tagTitle = models.CharField(max_length=128, unique = True, default = "")
+    def __str__(self):
+        return self.tagTitle
+
 class Recipe(models.Model):
     title = models.CharField(max_length=128)
     slug = models.SlugField(blank=True)
@@ -19,6 +24,7 @@ class Recipe(models.Model):
     submit_date = models.DateField(null=True)
     score = models.FloatField(max_length=1, default=0)
     raters = models.IntegerField(default=0)
+    tags = models.ManyToManyField(Tag, related_name='recipe_tags', blank = True)
 	
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
@@ -33,16 +39,10 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-class Tag(models.Model):
-    recipe = models.ManyToManyField(Recipe, related_name='recipe_tags', blank = True)
-    tagTitle = models.CharField(max_length=128, unique = True, default = "")
-    def __str__(self):
-        return self.tagTitle
-
 class Comment(models.Model):
-    commented_by = models.ForeignKey(User)
-    commented_on = models.ForeignKey(Recipe)
-    comment_body = models.CharField(max_length=512)
+    com_user = models.ForeignKey(User)
+    com_recipe = models.ForeignKey(Recipe)
+    com_body  = models.CharField(max_length=512)
     def __str__(self):
         return self.commentBody
 
