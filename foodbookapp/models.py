@@ -34,7 +34,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Tag(models.Model):
-    recipe = models.ManyToManyField(Recipe)
+    recipe = models.ManyToManyField(Recipe, related_name='recipe_tags', blank = True)
     tagTitle = models.CharField(max_length=128, unique = True, default = "")
     def __str__(self):
         return self.tagTitle

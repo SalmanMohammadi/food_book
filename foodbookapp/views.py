@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from foodbookapp.forms import UserForm, UserProfileForm, RecipeForm
+from django.contrib import messages 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from foodbookapp.models import Recipe, UserProfile
+from foodbookapp.models import Recipe, UserProfile, Tag
 from datetime import datetime
 from imgurAPI import get_images
 # Create your views here.
@@ -40,7 +41,10 @@ def show_recipe(request, recipe_slug):
 	context_dict = {}
 	try:
 		recipe = Recipe.objects.get(slug = recipe_slug)
-		tags = Tags.objects.get(recipe = recipe)
+		try:
+			tags = Tag.objects.get(recipe = recipe)
+		except Tag.DoesNotExist:
+			context_dict['tags'] = None
 		context_dict['recipe'] = recipe
 	except Recipe.DoesNotExist:
 		context_dict['recipe'] = None
@@ -121,12 +125,14 @@ def user_login(request):
 				return HttpResponseRedirect(reverse('home'))
 			else:
 				# An inactive account was used.
-				return HttpResponse("Your account is disabled.")
+				print("Your account is disabled")
+				return HttpResponseRedirect(reverse('login'))
 		else: # Bad login details were provided. 
 			print("Invalid login details: {0}, {1}".format(username, password))
-			return HttpResponse("Invalid login details supplied.")
+			messages.error(request, 'Invalid login credentials')
+			return HttpResponseRedirect(reverse('login'))
 	else:
-		return render(request, 'foodbookapp/login.html', {})
+		return render(request, 'foodbookapp/login.html', {'dets':'invalid'})
 
 
 @login_required

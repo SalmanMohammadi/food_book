@@ -11,7 +11,9 @@
 	<div class = "title">
 		Log in here!
 	</div>
-
+	{% for message in messages %}
+		{{message}}
+	{% endfor %}
 	<form id="login_form" method="post" action="{% url 'login' %}">
 	{% csrf_token %}
 	Username: <input type="text" name="username" value="" size="50" />

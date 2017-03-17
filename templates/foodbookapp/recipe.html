@@ -31,7 +31,10 @@
         {% if recipe.recipeText %}
         	Recipe: {{ recipe.recipeText}}
         {% endif %}
-
+		<br>
+		{% if recipe.tags %}
+        	Recipe: {{ recipe.tags}}
+        {% endif %}
         <div></div>
 	{% endif %}
 

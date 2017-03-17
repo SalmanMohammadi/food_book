@@ -54,3 +54,8 @@ class UserProfileForm(forms.ModelForm):
 		fields = ('picture',) 
 
 
+class CommentForm(forms.ModelForm):
+
+	class Meta(object):
+		model = User
+		fields = ('username','password')
