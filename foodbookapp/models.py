@@ -41,8 +41,7 @@ class UserProfile(models.Model):
 
 class Comment(models.Model):
     com_user = models.ForeignKey(User)
-    com_recipe = models.ForeignKey(Recipe)
+    com_recipe = models.ForeignKey(Recipe, related_name='onRecipe')
     com_body  = models.CharField(max_length=512)
     def __str__(self):
-        return self.commentBody
-
+        return self.com_body

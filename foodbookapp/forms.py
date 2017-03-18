@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from foodbookapp.models import Recipe,UserProfile
+from foodbookapp.models import Recipe, UserProfile, Comment, Tag
 
 class RecipeForm(forms.ModelForm):
 	maxLengthTitle = Recipe._meta.get_field('title').max_length
@@ -55,7 +55,8 @@ class UserProfileForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
-
+	comment = forms.CharField(min_length=10)
+	
 	class Meta(object):
-		model = User
-		fields = ('username','password')
+		model = Comment
+		fields = ('comment',)

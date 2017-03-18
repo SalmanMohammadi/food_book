@@ -12,7 +12,9 @@
 		Log in here!
 	</div>
 	{% for message in messages %}
-		{{message}}
+		{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
+			Error: {{message}}
+		{% endif %}
 	{% endfor %}
 	<form id="login_form" method="post" action="{% url 'login' %}">
 	{% csrf_token %}

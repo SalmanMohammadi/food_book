@@ -14,7 +14,6 @@
 {% endblock %}
 
 {% block body_block %}
-
 	{% if recipe %}
         <div id="recID" style="display:none;">{{ recipe.id }}</div> <!-- to update rating -->
 		<div id="recipeSlug" style="display:none;">{{ recipe.slug }}</div> <!-- to update rating -->
@@ -34,13 +33,19 @@
 		<br>
 		Recipe tags: 
 		{% for tag in recipe.tags.all %}
-			 {{ tag.tagTitle }}
+			 {{ tag.tagTitle }},
 		{% empty %}
-			None!
+			none!
 		{% endfor %}
-        <div></div>
 	{% endif %}
-
+	<br />
+	<br />
+	Comments:
+	{% for com in comments %}
+		{{ com.com_body }},
+	{% empty %}
+		no comments yet
+	{% endfor %}
 
 	<br></r>Rate this recipe: <div class="rateit" id="rate"></div>
 	<div>
@@ -62,5 +67,13 @@
 			});
 		});
 		$("#rate").bind('reset', function () { $('#rateValue').text('You reset your rating'); });
-</script>     
+</script>
+
+
+<form id="comment_form" method="post" action=".">
+	{% csrf_token %}
+	<input type="text" name="comment" value="comment here" height="500" />
+	<br />
+	<input type="submit" value="post comment" />
+</form>
 {% endblock %}

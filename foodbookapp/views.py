@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from foodbookapp.forms import UserForm, UserProfileForm, RecipeForm
+from foodbookapp.forms import UserForm, UserProfileForm, RecipeForm, CommentForm
 from django.contrib import messages 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from foodbookapp.models import Recipe, UserProfile, Tag
+from foodbookapp.models import Recipe, UserProfile, Tag, Comment
 from datetime import datetime
 from imgurAPI import get_images
 # Create your views here.
@@ -37,20 +37,39 @@ def about(request):
 
 #View for the /recipe/<recipe-name> page.
 def show_recipe(request, recipe_slug):
-
+	com_form = CommentForm()
 	context_dict = {}
 	try:
 		recipe = Recipe.objects.get(slug = recipe_slug)
-		#try:
-			# tags = Tag.objects.get(recipe = recipe.id)
-		# except Tag.DoesNotExist:
-			# context_dict['tags'] = None
 		context_dict['recipe'] = recipe
+		context_dict['comments'] = Comment.objects.filter(com_recipe = recipe)
+	#DISPLAY ALL COMMENTS
 	except Recipe.DoesNotExist:
 		context_dict['recipe'] = None
+		
+	
+	#if we have a recipe and post a comment/tag
+	if context_dict['recipe'] != None:
+		if request.method == 'POST':
+			com_form = CommentForm(data=request.POST)
+			if com_form.is_valid():
+				com_form.save(commit = False)
+				data = com_form.cleaned_data
+				comment, created = Comment.objects.get_or_create(com_body = data["comment"], com_recipe = recipe, com_user = request.user)
+				comment.save()
+				request.method = 'GET'
+				return show_recipe(request, recipe.slug)
+			else:
+				print(com_form.errors)
 
 	return render(request, 'foodbookapp/recipe.html', context_dict)
 
+		
+		#try:
+			# tags = Tag.objects.get(recipe = recipe.id)
+		# except Tag.DoesNotExist:
+			# context_dict['tags'] = None	
+	
 # View for adding a recipe
 @login_required
 def add_recipe(request):
@@ -129,7 +148,7 @@ def user_login(request):
 				return HttpResponseRedirect(reverse('login'))
 		else: # Bad login details were provided. 
 			print("Invalid login details: {0}, {1}".format(username, password))
-			messages.error(request, 'Invalid login credentials')
+			messages.add_message(request, messages.ERROR, 'Invalid login credentials')
 			return HttpResponseRedirect(reverse('login'))
 	else:
 		return render(request, 'foodbookapp/login.html', {'dets':'invalid'})
