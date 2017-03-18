@@ -1,17 +1,20 @@
 {% extends 'foodbookapp/base.html' %}
 {% load staticfiles %}
 
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/profile.css" %}">
+{% endblock %}
+
 {% block title_block %}
 	Profile
 {% endblock %}
 
-
 {% block body_block %}
 	{% if user.is_authenticated %}
-		{{ user.username }} Profile</br>
-		My favourites: *Blank*
+		<h1 class="profileintro">{{ user.username }}'s Profile</br></h1>
+		<h3 class="faves">My favourites: *Blank*</h3>
 	{% else %}
-		You're not logged in. 
+		<h1 class="profileintro">You're not logged in. </h1>
 		<a href="{% url 'home' %}">Click here</a> to go back to the indexpage
 	{% endif %}
 	{{user.userprofile.picture}}
