@@ -7,7 +7,7 @@ div.logo{
 div.logoimg{
 	margin:0px;
 	float:left;
-	width:25%;
+	width:40%;
 }
 
 div.logo img{
@@ -26,7 +26,6 @@ div.center {
 
 /* Space out content a bit */
 body {
-  padding-top: 1.5rem;
   padding-bottom: 1.5rem;
 }
 
@@ -79,9 +78,11 @@ body {
   font-family: 'Lobster', cursive;
 }
 .jumbotron .btn {
-  padding: .75rem 1.5rem;
+  padding: .75rem .75rem;
   font-size: 1.5rem;
 }
+
+.
 
 /* Supporting marketing content */
 .marketing {
@@ -89,6 +90,11 @@ body {
 }
 .marketing p + h4 {
   margin-top: 1.5rem;
+}
+
+.dropbutton {
+    border: 0px;
+    background-color: #ffffff;
 }
 
 /* Responsive: Portrait tablets and up */
@@ -103,9 +109,17 @@ body {
   /* Space out the masthead */
   .header {
     margin-bottom: 2rem;
+    font-family: 'Lato', sans-serif;
+    color: #000000;
   }
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
+    margin: 0px;
+    padding: 30px 0px 80px 0px;
+  }
+
+  .display-3 {
+    padding: 40px 0 0 0;
   }
 }
