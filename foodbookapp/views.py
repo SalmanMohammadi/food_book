@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from foodbookapp.forms import UserForm, UserProfileForm, RecipeForm, CommentForm
+from foodbookapp.forms import UserForm, UserProfileForm, RecipeForm, CommentForm, TagForm
 from django.contrib import messages 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -38,6 +38,7 @@ def about(request):
 #View for the /recipe/<recipe-name> page.
 def show_recipe(request, recipe_slug):
 	com_form = CommentForm()
+	tag_form = TagForm()
 	context_dict = {}
 	try:
 		recipe = Recipe.objects.get(slug = recipe_slug)
@@ -50,7 +51,7 @@ def show_recipe(request, recipe_slug):
 	
 	#if we have a recipe and post a comment/tag
 	if context_dict['recipe'] != None:
-		if request.method == 'POST':
+		if request.method == 'POST' and 'com_form' in request.POST:
 			com_form = CommentForm(data=request.POST)
 			if com_form.is_valid():
 				com_form.save(commit = False)
@@ -61,7 +62,20 @@ def show_recipe(request, recipe_slug):
 				return show_recipe(request, recipe.slug)
 			else:
 				print(com_form.errors)
-
+		if request.method == 'POST' and 'tag_form' in request.POST:
+			tag_form = TagForm(data=request.POST)
+			if tag_form.is_valid():
+				tag_form.save(commit = False)
+				data = tag_form.cleaned_data
+				tag, created = Tag.objects.get_or_create(tagTitle = data["tag"])
+				tag.save()
+				if tag not in recipe.tags.all():
+					recipe.tags.add(tag)
+					recipe.save()
+				request.method = 'GET'
+				return show_recipe(request, recipe.slug)
+			else:
+				print(tag_form.errors)
 	return render(request, 'foodbookapp/recipe.html', context_dict)
 
 		
@@ -93,11 +107,14 @@ def add_recipe(request):
 
 @login_required	
 def update_rating(request):
-	rec_id = request.POST["rec_id"]
-	rec = Recipe.objects.get(id=int(rec_id))
-	rec.raters = 500 #raters
-	rec.score = 1.0 #score
-	rec.save()	
+	rec_id = request.POST.get('rec_id',False)
+	if rec_id:
+		rec = Recipe.objects.get(recipe_id=rec_id)
+		rs = rec.raters #raters
+		rs = rs + 1
+		rec.raters = rs
+		rec.score = 1.0 #score
+		rec.save()	
 		#Algorithm to update the ratings
 		# raters = theRecipe.raters
 		# score = theRecipe.score
@@ -106,8 +123,7 @@ def update_rating(request):
 		# raters+=1
 		# score = score/raters
 		#Algorithm end
-	return HttpResponse("Update successful!")
-
+	return HttpResponse(rec);
 #View for registration, the /register page.
 def register(request):
 	registered = False
@@ -152,7 +168,6 @@ def user_login(request):
 			return HttpResponseRedirect(reverse('login'))
 	else:
 		return render(request, 'foodbookapp/login.html', {'dets':'invalid'})
-
 
 @login_required
 def user_logout(request):

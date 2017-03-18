@@ -38,8 +38,7 @@ class RecipeForm(forms.ModelForm):
 	class Meta:
 		model = Recipe
 		exclude = ('slug', 'favouritedBy', 'submittedBy', 'submitDate','score','raters')
-
-        
+    
 class UserForm(forms.ModelForm):
 	password = forms.CharField(widget = forms.PasswordInput())
 
@@ -53,10 +52,16 @@ class UserProfileForm(forms.ModelForm):
 		model = UserProfile
 		fields = ('picture',) 
 
-
 class CommentForm(forms.ModelForm):
 	comment = forms.CharField(min_length=10)
 	
 	class Meta(object):
 		model = Comment
 		fields = ('comment',)
+		
+class TagForm(forms.ModelForm):
+	tag = forms.CharField(min_length=3)
+	
+	class Meta(object):
+		model = Tag
+		fields = ('tag',)
