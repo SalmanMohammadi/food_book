@@ -1,3 +1,4 @@
+
 /*Displays the logo in the top left.*/
 div.logo{
     display:inline-block;
@@ -23,6 +24,8 @@ div.center {
     margin: auto;
     width: 55%;
     padding: 40px 10px 40px 10px;
+    background-image: url(images/background1.jpg);
+    background-repeat: no-repeat;
 }
 
 /*BOOTSRAP STYLING.*/
@@ -85,7 +88,7 @@ body {
   font-size: 1.5rem;
 }
 
-.
+
 
 /* Supporting marketing content */
 .marketing {

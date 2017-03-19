@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 {% extends 'foodbookapp/base.html' %}
 
 {% load staticfiles %}
@@ -31,37 +33,53 @@
             {% endif %}
             Views: {{ recipe.views }}
 			<!-- PLACEHOLDER -->
-			<br> Favourites: {{recipe.favourites}}
+			<br>
+				{% if recipe.favourites > 0 %}
+					Favourites: {{recipe.favourites}}
+				{%else%}
+					Favourites: 0
+				{% endif %}
+			<br>
+				{% if recipe.raters > 0 %}
+					Rating: {{recipe.score}}
+				{%else%}
+				<div id="notRated"> Rating: Not yet rated. Why not rate the recipe?</div>
+				{% endif %}
         </div>
         <br>
-        {% if recipe.recipeText %}
-        	Recipe: {{ recipe.recipeText}}
-        {% endif %}
+
+		<br>
+
 
         <div></div>
 	{% endif %}
 
-<div class="recipe-text">
+<!--
 	<br></r>Rate this recipe: <div class="rateit" id="rate"></div>
 	<!--<div>
 		<span id="rateValue">no rating</span><br>
-	</div> -->
-	{% if recipe.raters > 0 %}
-		<br> User Rating: {{recipe.score}}
-	{%else%}
-		<div id="notRated">Not yet rated. Why not rate the recipe?</div>
-	{% endif %}
+	</div>
+
 	<script type="text/javascript">
 		$("#rate").bind('rated', function (event, value) {
 			$('#rateValue').text('You\'ve rated the recipe: ' + value + " out of 5 stars"); 
 			var recID = $(document).find("#recID").html();
 			var theRecipeSlug = $(document).find("#recipeSlug").html();
-			<!-- var data = {"recID":recID,"score":value,"theRecipeSlug":theRecipeSlug} -->
+			<!-- var data = {"recID":recID,"score":value,"theRecipeSlug":theRecipeSlug}
 			$.post('/foodbookapp/update_rating/', {'rec_id': recID}, function(data){
-				$(document).find("#notRated").hide() <!-- This whole post is breaking somewhere -->
+				$(document).find("#notRated").hide() <!-- This whole post is breaking somewhere
 			});
 		});
 		$("#rate").bind('reset', function () { $('#rateValue').text('You reset your rating'); });
-</script>     
-{% endblock %}
-</div>
+	</script>
+	{% endblock %}
+	</div>
+-->
+
+        <br>
+		<br>
+
+<div class="recipe-text">
+        {% if recipe.recipeText %}
+        	Recipe Instructions: {{ recipe.recipeText}}
+        {% endif %}

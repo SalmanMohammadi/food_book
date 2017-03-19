@@ -20,6 +20,7 @@
 		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
 		<script src="{% static "js/foodbook-jquery.js" %}"></script>
 		<script src="{% static "js/jquery.rateit.js" %}"></script>
+
 	</head>
 
 	<body>
@@ -52,10 +53,13 @@
 							<a class="nav-link" href="{% url 'profile' %}">My Profile</a>
 						</li>
 						<li class="nav-item">
+							<a class="nav-link" href="{% url 'add_recipe' %}">Submit Recipe</a>
+						</li>
+					    <li class="nav-item">
 							<a class="nav-link" href="{% url 'logout' %}">Log out</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'add_recipe' %}">Submit Recipe</a>
+							<a class="nav-link" href="{% url 'about' %}">About</a>
 						</li>
 					{% else %}
 						<li class="nav-item">
@@ -63,6 +67,9 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'login' %}">Login</a>
+						</li>
+					    <li class="nav-item">
+							<a class="nav-link" href="{% url 'about' %}">About</a>
 						</li>
 					{%endif%}
                 </ul>
@@ -84,7 +91,6 @@
 		<!-- The main content body of the site. -->
 		<div class = "center">
 			{% block body_block %}
-				This is body_block's default content.
 			{% endblock %}
 		</div>
 		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>

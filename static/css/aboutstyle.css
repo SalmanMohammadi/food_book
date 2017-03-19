@@ -1,24 +1,14 @@
 
-
-.recipe-title {
+.title {
     text-align: center;
-    margin-top: 80px;
+    margin-top: 40px;
     font-family: 'Lobster', cursive;
     font-decoration: bold;
     font-size: xx-large;
     text-transform: capitalize;
 }
 
-
-.recipe-picture {
-    margin: auto;
-    width: 50%;
-}
-
-.recipe-stats {
+.text {
     text-align: center;
-}
-
-.recipe-text {
-    text-align: center;
+    font-style: italic;
 }

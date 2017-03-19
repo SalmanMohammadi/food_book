@@ -1,12 +1,27 @@
+<!DOCTYPE html>
+
 {% extends 'foodbookapp/base.html' %}
+{% load staticfiles %}
 
-{% block title_block %}
-	about
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/aboutstyle.css" %}">
 {% endblock %}
-
 
 {% block body_block %}
-	<!-- Default content. -->
-	<h2>The about page.</h2>
-	<p> Call 9999 9999 for free sex.</p>
+    <div class = "title">
+		About FoodBook
+	</div>
+
+    <div class = "text">
+        Welcome to FoodBook! FoodBook collects and displays recipes in the recently popularised and easy-to-follow video and gif formats. Appealing to chefs and foodies throughout the world, we provide accessible recipes from a variety of cultures. You can search and browse recipes, tag, favourite, comment on and rate recipes, and even contribute your own recipes to our site by registering and signing in.
+        <br>
+        <a href="{% url 'register' %}">Create an account today!</a><br />
+        <br>
+        <br>
+        Created by Salman Mohammadi, Matus Mikus, Jimmy Tang and Laura Moreby.
+
+
+    </div>
 {% endblock %}
+
+
