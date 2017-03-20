@@ -20,20 +20,13 @@ def home(request, page_name = None):
 		# get_images()
 	except exceptions.RequestException as e:
 		print("unable to connect to api.")
-
 	if(page_name == "new"):
-		print(page_name)
 		recipes = Recipe.objects.order_by('submit_date')
 	elif(page_name == "trending"):
 		recipes = Recipe.objects.order_by('-views')
 	else:
-		print("none")
 		recipes = Recipe.objects.all()
 
-	print(Recipe.objects.order_by('submit_date'))
-	print("all")
-	print(Recipe.objects.all())
-	print(recipes)
 	return render(request, 'foodbookapp/home.html', {'recipes': recipes})
 
 @login_required
@@ -158,7 +151,7 @@ def user_login(request):
 		return render(request, 'foodbookapp/login.html', {})
 	return render(request, 'foodbookapp/login.html', {'dets':'invalid'})
 
-
+@login_required
 def fav_recipe(request, type):
 	recipe_id = None
 	if request.method == 'GET':
