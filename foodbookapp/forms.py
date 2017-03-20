@@ -8,16 +8,13 @@ class RecipeForm(forms.ModelForm):
 		help_text="Please enter the recipe name.")
 
 	views = forms.IntegerField(widget=forms.HiddenInput(), initial = 0)
-	likes = forms.IntegerField(widget=forms.HiddenInput(), initial = 0)
-	
-	recipeText = forms.CharField(widget = forms.TextInput(), 
+	favourites = forms.IntegerField(widget=forms.HiddenInput(), initial = 0)
+	slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+	recipe_text = forms.CharField(widget = forms.TextInput(), 
 		required=False,help_text = "Please enter the recipe text.")
-	picture = forms.ImageField(required=False, help_text = "Upload an image of your recipe.")
-	pictureLink = forms.URLField(required=False, help_text = "Submit a url to the image link of.")	
 
-	class Meta:
-		model = Recipe
-		exclude = ('slug', 'favouritedBy', 'submittedBy', 'submitDate', 'score', 'raters')
+	picture = forms.ImageField(required=False, help_text = "Upload an image of your recipe.")
+	picture_link = forms.URLField(required=False, help_text = "Submit a url to the image link.")	
 
  	#Ensures a correctly formatted url is passed into the model.
 	def clean(self):
@@ -37,7 +34,7 @@ class RecipeForm(forms.ModelForm):
 
 	class Meta:
 		model = Recipe
-		exclude = ('slug', 'favouritedBy', 'submittedBy', 'submitDate','score','raters')
+		exclude = ('favourited_by', 'submitted_by', 'score','raters', 'submit_date', )
 
         
 class UserForm(forms.ModelForm):

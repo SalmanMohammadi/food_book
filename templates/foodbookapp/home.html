@@ -23,7 +23,13 @@
 			{% endfor %}
 		</ul>
 		{% else %}
-			<strong>There are no categories present.</strong>
+			<strong>
+				{% if error_messages %}
+					{{error_messages}}
+				{% else %}
+					No recipes present.
+				{% endif %}
+			</strong>
 		{% endif %}
 {% endblock %}
 

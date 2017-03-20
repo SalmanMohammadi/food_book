@@ -1,19 +1,17 @@
 from __future__ import unicode_literals
 from django.contrib.auth.models import User
-import uuid
 from django.template.defaultfilters import slugify
 
 from django.db import models
 
 class Recipe(models.Model):
     title = models.CharField(max_length=128)
-    slug = models.SlugField(blank=True)
+    slug = models.SlugField(blank=True, unique=True)
     views = models.IntegerField(default=0)
     recipe_text = models.TextField(null = True)
     favourited_by = models.ManyToManyField(User, related_name='user_recipe_favourites',blank = True)
+    favourites = models.IntegerField(default = 0)
     picture = models.ImageField(blank = True)
-    pictureLink = models.URLField(blank = True)
-    submitDate = models.DateField(null=True)
     picture_link = models.URLField(blank = True)
     submitted_by = models.ForeignKey(User, null = True)
     submit_date = models.DateField(null=True)
@@ -29,7 +27,14 @@ class Recipe(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
+    slug = models.SlugField(blank = True)
     picture = models.ImageField(upload_to = 'profile_images', blank = True)
+
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.user.username)
+        super(UserProfile, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.user.username
 

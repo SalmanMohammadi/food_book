@@ -1,10 +1,13 @@
 {% extends 'foodbookapp/base.html' %}
+{% load foodbookapp_template_tags %}
 
 {% load staticfiles %}
 
 {% block title_block %}
 	{% if recipe %}
 		{{ recipe.title }}
+	{% else %}
+		404 Not Found
 	{% endif %}
 {% endblock %}
 
@@ -14,26 +17,32 @@
 {% endblock %}
 
 {% block body_block %}
-
 	{% if recipe %}
         <div id="recID" style="display:none;">{{ recipe.id }}</div> <!-- to update rating -->
 		<div id="recipeSlug" style="display:none;">{{ recipe.slug }}</div> <!-- to update rating -->
 		
        	{{ recipe.title }}
         <br>
-		<img src="{{recipe.pictureLink}}">
+		<img src="{{recipe.picture_link}}">
 		<br>
-		{% if recipe.submittedBy %}
-			Submitted by: {{ recipe.submittedBy}}
-		{% endif %}
-		Views: {{ recipe.views }}		
+			{% if recipe.submittedBy %}
+				Submitted by: {{ recipe.submittedBy}}
+			{% endif %}
+			Views: {{ recipe.views }}	
+		<br>
+		<div>
+			Favourites: 
+			<div id = "favourite_count">
+				{{recipe.favourites}}
+			</div>
+			<button id="favourite" data-recipeid="{{recipe.id}}" class="btn btn-primary btn-sm" type="button">{% check_favourited recipe user %}</button>
+		</div>	
         <br>
         {% if recipe.recipeText %}
         	Recipe: {{ recipe.recipeText}}
         {% endif %}
-
-        <div></div>
 	{% endif %}
+
 
 
 	<br></r>Rate this recipe: <div class="rateit" id="rate"></div>
@@ -45,7 +54,7 @@
 	{%else%}
 		<div id="notRated">Not yet rated. Why not rate the recipe?</div>
 	{% endif %}
-	<script type="text/javascript">
+<!-- 	<script type="text/javascript">
 		$("#rate").bind('rated', function (event, value) {
 			$('#rateValue').text('You\'ve rated the recipe: ' + value + " out of 5 stars"); 
 			var recID = $(document).find("#recID").html();
@@ -56,5 +65,5 @@
 			});
 		});
 		$("#rate").bind('reset', function () { $('#rateValue').text('You reset your rating'); });
-</script>     
+</script>      -->
 {% endblock %}

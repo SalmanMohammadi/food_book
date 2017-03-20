@@ -14,5 +14,9 @@
 		You're not logged in. 
 		<a href="{% url 'index' %}">Click here</a> to go back to the indexpage
 	{% endif %}
-	{{user.userprofile.picture}}
+	{% if user.userprofile.picture %}
+		<img src="{{MEDIA_URL}}{{user.userprofile.picture}}"/>
+	{% else %}
+		<img src="{% static "images/default.png" %}">
+	{% endif %}
 {% endblock %}

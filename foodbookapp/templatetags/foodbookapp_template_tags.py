@@ -15,5 +15,13 @@ def get_thumbnail(recipe):
 		pictureLink = pictureLink + 'b.jpg'
 	return pictureLink
 
+@register.simple_tag
+def check_favourited(recipe, user):
+	if user in recipe.favourited_by.all():
+		return "Unfavourite"
+	else:
+		return "Favourite"
+
+
 
 

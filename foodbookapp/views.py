@@ -6,29 +6,46 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from foodbookapp.models import Recipe, UserProfile
+from django.db.models import Count
 from datetime import datetime
 from imgurAPI import get_images
+from requests import exceptions
 # Create your views here.
+
 
 #View for the home page. Defaults to new.
 def home(request, page_name = None):
 	try:
-		get_images()
-	except:
-		print("Unable to connect to API.")
-	print(page_name)
-	# if(page_name == "new"):
-	# 	recipes = Recipe.objects.sort()
-	# else if(page_name == "trending"):
-	# 	recipes = Recipe.objects.sort()
-	# else if(page_name == "favourited"):
-	# 	recipes = Recipe.objects.sort()
-	recipes = Recipe.objects.all()
+		X = 1
+		# get_images()
+	except exceptions.RequestException as e:
+		print("unable to connect to api.")
+
+	if(page_name == "new"):
+		print(page_name)
+		recipes = Recipe.objects.order_by('submit_date')
+	elif(page_name == "trending"):
+		recipes = Recipe.objects.order_by('-views')
+	else:
+		print("none")
+		recipes = Recipe.objects.all()
+
+	print(Recipe.objects.order_by('submit_date'))
+	print("all")
+	print(Recipe.objects.all())
+	print(recipes)
 	return render(request, 'foodbookapp/home.html', {'recipes': recipes})
 
 @login_required
 def favourited(request):
-	home(request, "favourited")
+	print(request.user)
+	error = None
+	try:
+		recipes = Recipe.objects.filter(favourited_by=request.user)
+	except Recipe.DoesNotExist:
+		recipes = None
+		error = "You haven't favourited anything."
+	return render(request, 'foodbookapp/home.html', {"recipes": recipes, "error_messages" : error})
 
 #View for the /about page.
 def about(request):
@@ -36,15 +53,15 @@ def about(request):
 
 #View for the /recipe/<recipe-name> page.
 def show_recipe(request, recipe_slug):
-
 	context_dict = {}
 	try:
 		recipe = Recipe.objects.get(slug = recipe_slug)
-		tags = Tags.objects.get(recipe = recipe)
+		print(recipe.favourites)
 		context_dict['recipe'] = recipe
 	except Recipe.DoesNotExist:
 		context_dict['recipe'] = None
 
+	context_dict["user"] = request.user
 	return render(request, 'foodbookapp/recipe.html', context_dict)
 
 # View for adding a recipe
@@ -55,16 +72,16 @@ def add_recipe(request):
 		form = RecipeForm(data=request.POST)
 
 		if form.is_valid():
-			form.save(commit = False)
+			recipe = form.save(commit = False)
 			data = form.cleaned_data
-			recipe = Recipe.objects.get_or_create(title = data["title"],
-				views = data["views"], recipeText = data["recipeText"],
-				picture = data["picture"], pictureLink = data["pictureLink"],
-				submittedBy = request.user, submitDate = datetime.now())[0]
+			print(Recipe.objects.filter(title = data["title"]).exists())
+			recipe.submitted_by = request.user
+			recipe.submit_date = datetime.now()
 			recipe.save()
 			return show_recipe(request, recipe.recipe_slug)
 		else:
 			print(form.errors)
+
 
 	return render(request, 'foodbookapp/add_recipe.html', {'form': form})
 
@@ -128,6 +145,23 @@ def user_login(request):
 	else:
 		return render(request, 'foodbookapp/login.html', {})
 
+def fav_recipe(request, type):
+	recipe_id = None
+	if request.method == 'GET':
+		recipe_id = request.GET['recipe_id']
+		if recipe_id:
+			recipe = Recipe.objects.get(id = int(recipe_id))
+			if recipe:
+				if type == "true":
+					recipe.favourited_by.add(request.user)
+					recipe.favourites = recipe.favourites + 1
+					recipe.save()
+				elif type == "false":
+					recipe.favourited_by.remove(request.user)
+					recipe.favourites = recipe.favourites - 1
+					recipe.save()
+	return HttpResponse(recipe.favourites)
+
 
 @login_required
 def user_logout(request):
@@ -138,3 +172,4 @@ def user_logout(request):
 @login_required
 def user_profile(request):
 	return render(request, 'foodbookapp/profile.html', {})
+
