@@ -30,29 +30,15 @@
 		<!--Menu bar. -->
 		<div class="header">
             <nav>
-<<<<<<< HEAD
-                <ul class="nav nav-pills float-right">
-                	<li class="nav-item">
-					  <a class="nav-link" href="{% url 'home' %}">Home</a>
-					<li class="nav-item">
-					  <a class="nav-link" href="{% url 'home' page_name='new' %}">New</a>
-					</li>
-					<li class="nav-item">
-					  <a class="nav-link" href="{% url 'home' page_name='trending' %}">Trending</a>
-					</li>
-		
-=======
                 <ul class="nav float-right">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'home' %}">Home
                         <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                           <li><a class="nav-link dropbutton" href="{% url 'home' page_name='new' %}">New</a></li>
-                          <li><a class="nav-link dropbutton" href="#">Trending</a></li>
+                          <li><a class="nav-link dropbutton" href="{% url 'home' page_name='trending' %}">Trending</a></li>
                         </ul>
                     </li>
-
->>>>>>> 801feab198c3eb0710aa93d69ec6ba316cee9644
 					{% if user.is_authenticated %}
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'favourited' %}">Favourited</a>
