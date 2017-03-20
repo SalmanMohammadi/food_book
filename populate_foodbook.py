@@ -49,7 +49,7 @@ def populate():
 		add_recipe(recipe_data["title"],recipe_data["views"], recipe_data["recipeText"], recipe_data["pictureLink"])
 
 	for r in Recipe.objects.all():
-		print((str(r)))
+		print((str(r))).encode('utf-8')
 
 def add_recipe(title, views, recipeText, pictureLink):
 	r = Recipe.objects.get_or_create(title = title)[0]
