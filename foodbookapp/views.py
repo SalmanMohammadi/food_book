@@ -94,12 +94,21 @@ def add_recipe(request):
 		if form.is_valid():
 			form.save(commit = False)
 			data = form.cleaned_data
-			recipe = Recipe.objects.get_or_create(title = data["title"],
-				views = data["views"], recipeText = data["recipeText"],
-				picture = data["picture"], pictureLink = data["pictureLink"],
-				submittedBy = request.user, submitDate = datetime.now())[0]
-			recipe.save()
-			return show_recipe(request, recipe.recipe_slug)
+			try: 
+				rec1 = Recipe.objects.get(title = data["title"]) 
+				rec2 = Recipe.objects.get(recipe_text = data["recipe_text"]) 
+				rec3 = Recipe.objects.get(picture_link = data["picture_link"])
+				rec4 = Recipe.objects.get(picture = data["picture"])
+			except Recipe.DoesNotExist:
+				recipe = Recipe.objects.get_or_create(title = data["title"],
+					views = data["views"], recipe_text = data["recipe_text"],
+					picture = data["picture"], picture_link = data["picture_link"],
+					submitted_by = request.user, submit_date = datetime.now())[0]
+				recipe.save()
+				return show_recipe(request, recipe.slug)
+			except Recipe.MultipleObjectsReturned:
+				messages.add_message(request, messages.ERROR, 'A part of this recipe already exists in our database')
+			print(form.errors)	
 		else:
 			print(form.errors)
 

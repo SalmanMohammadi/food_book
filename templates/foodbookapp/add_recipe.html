@@ -9,6 +9,11 @@
 {% block body_block %}
 	{% if user.is_authenticated %}
 		<h1>Add a new Recipe.</h1>
+		{% for message in messages %}
+			{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
+				Error: {{message}}
+			{% endif %}
+		{% endfor %}
 		<div>
 			<form id = "recipe_form" method = "post" action = "{% url 'add_recipe'%}">
 				{% csrf_token %}
