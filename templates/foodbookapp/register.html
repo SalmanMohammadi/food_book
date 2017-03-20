@@ -15,7 +15,6 @@
 		Thank you for joining FoodBook! You can now log in.
 		<a href="{% url 'home' %}">Return to the main page.</a><br />
 
-
 	{% else %}
 	<form class="form-login" role="form" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
 	{% csrf_token %}

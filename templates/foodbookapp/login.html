@@ -8,11 +8,21 @@
 {% endblock %}
 
 {% block body_block %}
+
 <link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
 
 
 <form class="form-signin" role="form" method="post" action="{% url 'login' %}">
+
 	{% csrf_token %}
+
+	{% for message in messages %}
+		{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
+			Error: {{message}}
+		{% endif %}
+	{% endfor %}
+
+
     <div class = "title">
 		Log in here!
 	</div>

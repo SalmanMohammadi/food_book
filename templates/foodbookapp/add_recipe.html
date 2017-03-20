@@ -15,7 +15,9 @@
 
 {% block body_block %}
 	{% if user.is_authenticated %}
+
 		<h1 class="addrecipe">Add a new recipe!</h1>
+
 		<div>
 			<form id = "recipe_form" method = "post" action = "{% url 'add_recipe'%}">
 				{% csrf_token %}
