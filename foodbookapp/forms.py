@@ -10,14 +10,14 @@ class RecipeForm(forms.ModelForm):
 	views = forms.IntegerField(widget=forms.HiddenInput(), initial = 0)
 	likes = forms.IntegerField(widget=forms.HiddenInput(), initial = 0)
 	
-	recipeText = forms.CharField(widget = forms.TextInput(), 
+	recipe_text = forms.CharField(widget = forms.TextInput(), 
 		required=False,help_text = "Please enter the recipe text.")
 	picture = forms.ImageField(required=False, help_text = "Upload an image of your recipe.")
-	pictureLink = forms.URLField(required=False, help_text = "Submit a url to the image link of.")	
+	picture_link  = forms.URLField(required=False, help_text = "Submit a url to the image link of.")	
 
 	class Meta:
 		model = Recipe
-		exclude = ('slug', 'favouritedBy', 'submittedBy', 'submitDate', 'score', 'raters')
+		exclude = ('slug', 'favourited_by', 'submitted_by', 'submit_date', 'score', 'raters')
 
  	#Ensures a correctly formatted url is passed into the model.
 	def clean(self):
@@ -37,7 +37,7 @@ class RecipeForm(forms.ModelForm):
 
 	class Meta:
 		model = Recipe
-		exclude = ('slug', 'favouritedBy', 'submittedBy', 'submitDate','score','raters')
+		exclude = ('slug', 'favourited_by', 'submitted_by', 'submit_date','score','raters', 'tags','comments')
     
 class UserForm(forms.ModelForm):
 	password = forms.CharField(widget = forms.PasswordInput())

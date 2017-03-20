@@ -65,7 +65,7 @@
 			var recID = $(document).find("#recID").html();
 			var theRecipeSlug = $(document).find("#recipeSlug").html();
 			$(document).find("#rated").html("testing");
-			$.post('/foodbook/update_rating/', {'rec_id': recID}) ; 
+			$.post("recipe.html", {'rec_id': recID}, function(data){alert("Success!");}); 
 		});
 		$("#rate").on('reset', function () { $('#rateValue').text('You reset your rating'); });
 </script>
