@@ -1,8 +1,4 @@
-html {
-    background-image: url(images/background1.jpg);
-    background-repeat: repeat;
 
-}
 /*Displays the logo in the top left.*/
 .logo{
     display:inline-block;
@@ -26,10 +22,8 @@ padding: 40px 0 0 0;
 /*Displays page content in the center.*/
 .center {
     margin: auto;
-    width: 55%;
+    width: 80%;
     padding: 40px 10px 40px 10px;
-    background-image: url(images/background1.jpg);
-    background-repeat: no-repeat;
 }
 
 /*BOOTSRAP STYLING.*/

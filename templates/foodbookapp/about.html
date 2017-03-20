@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 {% extends 'foodbookapp/base.html' %}
 {% load staticfiles %}
 
@@ -19,8 +17,32 @@
         <br>
         <br>
         Created by Salman Mohammadi, Matus Mikus, Jimmy Tang and Laura Moreby.
-
-
+        <br>
+        <br>
+        
+		<div id="teamphotos">
+			<table>
+				<tr>
+					<td>
+                        <img id="salman" src="{% static "images/salman.JPG" %}" alt="Salman"/>
+					</td>
+					<td>
+						<img id="matus" src="{% static "images/matus.JPG" %}" alt="Matus"/>
+					</td>
+					<td>
+						<img id="jimmy" src="{% static "images/jimmy.JPG" %}" alt="Jimmy"/>
+					</td>
+					<td>
+						<img id="laura" src="{% static "images/laura.JPG" %}" alt="Laura"/>
+					</td>
+				</tr>
+				<tr>
+					<td> Salman </td>
+					<td> Matus </td>
+					<td> Jimmy </td>
+					<td> Laura </td>
+				</tr>
+			</table>
     </div>
 {% endblock %}
 
