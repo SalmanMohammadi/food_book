@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 {% extends 'foodbookapp/base.html' %}
 {% load staticfiles %}
 
@@ -5,22 +7,31 @@
 	<link rel="stylesheet" type="text/css" href="{% static "css/loginAndSignupStyle.css" %}">
 {% endblock %}
 
-
 {% block body_block %}
-	<div class = "border">
-	<div class = "title">
+
+<link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+
+
+<form class="form-signin" role="form" method="post" action="{% url 'login' %}">
+
+	{% csrf_token %}
+
+	{% for message in messages %}
+		{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
+			Error: {{message}}
+		{% endif %}
+	{% endfor %}
+
+
+    <div class = "title">
 		Log in here!
 	</div>
+	<label for="inputUsername" class="sr-only">Username</label>
+	<input type="text" name="username" id="id_username" class="form-control" placeholder="Username" required autofocus>
+	<label for="inputPassword" class="sr-only">Password</label>
+	<input type="password" name="password" id="id_password" class="form-control" placeholder="Password" required>
+	<button class="btn btn-lg btn-primary btn-block" type="submit" value="submit" />Log in</button>
+</form>
 
-	<form id="login_form" method="post" action="{% url 'login' %}">
-	{% csrf_token %}
-	Username: <input type="text" name="username" value="" size="50" />
-	<br />
-	Password: <input type="password" name="password" value="" size="50" />
-	<br />
-	<input type="submit" value="submit" />
-	</form>
-	<br>
-	</div>
 {% endblock %}
 

@@ -1,13 +1,6 @@
 
-div.border {
-    border-style: solid;
-    border-width: 2px;
-    border-color: black;
-    border-radius: 20px;
-}
 
-
-div.title {
+.recipe-title {
     text-align: center;
     margin-top: 80px;
     font-family: 'Lobster', cursive;
@@ -17,16 +10,15 @@ div.title {
 }
 
 
-div.picture {
+.recipe-picture {
     margin: auto;
     width: 50%;
 }
 
-
-div.stats {
+.recipe-stats {
     text-align: center;
-    font-decoration: bold;
 }
 
-div.text {
+.recipe-text {
+    text-align: center;
 }

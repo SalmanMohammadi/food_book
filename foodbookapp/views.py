@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from foodbookapp.forms import UserForm, UserProfileForm, RecipeForm
+from foodbookapp.forms import UserForm, UserProfileForm, RecipeForm, CommentForm, TagForm
+from django.contrib import messages 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from foodbookapp.models import Recipe, UserProfile
-from django.db.models import Count
+from foodbookapp.models import Recipe, UserProfile, Tag, Comment
 from datetime import datetime
 from imgurAPI import get_images
 from requests import exceptions
@@ -53,17 +53,47 @@ def about(request):
 
 #View for the /recipe/<recipe-name> page.
 def show_recipe(request, recipe_slug):
+	com_form = CommentForm()
+	tag_form = TagForm()
 	context_dict = {}
 	try:
 		recipe = Recipe.objects.get(slug = recipe_slug)
-		print(recipe.favourites)
 		context_dict['recipe'] = recipe
+		context_dict['comments'] = Comment.objects.filter(com_recipe = recipe)
+	#DISPLAY ALL COMMENTS
 	except Recipe.DoesNotExist:
 		context_dict['recipe'] = None
-
 	context_dict["user"] = request.user
+	
+	#if we have a recipe and post a comment/tag
+	if context_dict['recipe'] != None:
+		if request.method == 'POST' and 'com_form' in request.POST:
+			com_form = CommentForm(data=request.POST)
+			if com_form.is_valid():
+				com_form.save(commit = False)
+				data = com_form.cleaned_data
+				comment, created = Comment.objects.get_or_create(com_body = data["comment"], com_recipe = recipe, com_user = request.user)
+				comment.save()
+				request.method = 'GET'
+				return show_recipe(request, recipe.slug)
+			else:
+				print(com_form.errors)
+		if request.method == 'POST' and 'tag_form' in request.POST:
+			tag_form = TagForm(data=request.POST)
+			if tag_form.is_valid():
+				tag_form.save(commit = False)
+				data = tag_form.cleaned_data
+				tag, created = Tag.objects.get_or_create(tagTitle = data["tag"])
+				tag.save()
+				if tag not in recipe.tags.all():
+					recipe.tags.add(tag)
+					recipe.save()
+				request.method = 'GET'
+				return show_recipe(request, recipe.slug)
+			else:
+				print(tag_form.errors)
 	return render(request, 'foodbookapp/recipe.html', context_dict)
-
+	
 # View for adding a recipe
 @login_required
 def add_recipe(request):
@@ -74,33 +104,13 @@ def add_recipe(request):
 		if form.is_valid():
 			recipe = form.save(commit = False)
 			data = form.cleaned_data
-			print(Recipe.objects.filter(title = data["title"]).exists())
 			recipe.submitted_by = request.user
 			recipe.submit_date = datetime.now()
 			recipe.save()
 			return show_recipe(request, recipe.recipe_slug)
 		else:
 			print(form.errors)
-
-
 	return render(request, 'foodbookapp/add_recipe.html', {'form': form})
-
-@login_required	
-def update_rating(request):
-	rec_id = request.POST["rec_id"]
-	rec = Recipe.objects.get(id=int(rec_id))
-	rec.raters = 500 #raters
-	rec.score = 1.0 #score
-	rec.save()	
-		#Algorithm to update the ratings
-		# raters = theRecipe.raters
-		# score = theRecipe.score
-		# score = score * raters
-		# score + request.POST["score"]
-		# raters+=1
-		# score = score/raters
-		#Algorithm end
-	return HttpResponse("Update successful!")
 
 #View for registration, the /register page.
 def register(request):
@@ -114,8 +124,8 @@ def register(request):
 			user.save()
 			profile = profile_form.save(commit=False)
 			profile.user = user
-			if 'picture' in request.FILES:
-				profile.picture = request.FILES['picture']
+			if 'Picture' in request.FILES:
+				profile.picture = request.FILES['Picture']
 			profile.save()
 			registered = True
 		else:
@@ -138,12 +148,16 @@ def user_login(request):
 				return HttpResponseRedirect(reverse('home'))
 			else:
 				# An inactive account was used.
-				return HttpResponse("Your account is disabled.")
+				print("Your account is disabled")
+				return HttpResponseRedirect(reverse('login'))
 		else: # Bad login details were provided. 
 			print("Invalid login details: {0}, {1}".format(username, password))
-			return HttpResponse("Invalid login details supplied.")
+			messages.add_message(request, messages.ERROR, 'Invalid login credentials')
+			return HttpResponseRedirect(reverse('login'))
 	else:
 		return render(request, 'foodbookapp/login.html', {})
+	return render(request, 'foodbookapp/login.html', {'dets':'invalid'})
+
 
 def fav_recipe(request, type):
 	recipe_id = None

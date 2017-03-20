@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from foodbookapp.models import Recipe,UserProfile
+from foodbookapp.models import Recipe, UserProfile, Comment, Tag
 
 class RecipeForm(forms.ModelForm):
 	maxLengthTitle = Recipe._meta.get_field('title').max_length
@@ -34,9 +34,8 @@ class RecipeForm(forms.ModelForm):
 
 	class Meta:
 		model = Recipe
-		exclude = ('favourited_by', 'submitted_by', 'score','raters', 'submit_date', )
+		exclude = ('favourited_by', 'submitted_by', 'submit_date','tags', 'comments' )
 
-        
 class UserForm(forms.ModelForm):
 	password = forms.CharField(widget = forms.PasswordInput())
 
@@ -50,4 +49,16 @@ class UserProfileForm(forms.ModelForm):
 		model = UserProfile
 		fields = ('picture',) 
 
-
+class CommentForm(forms.ModelForm):
+	comment = forms.CharField(min_length=10)
+	
+	class Meta(object):
+		model = Comment
+		fields = ('comment',)
+		
+class TagForm(forms.ModelForm):
+	tag = forms.CharField(min_length=3)
+	
+	class Meta(object):
+		model = Tag
+		fields = ('tag',)

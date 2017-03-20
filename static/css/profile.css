@@ -1,0 +1,10 @@
+.profileintro {
+    text-transform: capitalize;
+    font-family: 'Lobster', cursive;
+    text-align: center;
+}
+
+.faves {
+    padding: 30px 0 0 0;
+
+}

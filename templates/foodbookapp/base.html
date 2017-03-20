@@ -16,13 +16,10 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="{% static 'css/basestyle.css' %}">
         <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-        <!-- <script src="{% static "js/jquery-3.2.0.min.js" %}"></script> -->
-        <!-- <script src="{% static "js/foodbook-ajax.js" %}"></script> -->
-		<!-- <script src="{% static "js/foodbook-jquery.js" %}"></script> -->
-		<!-- <script src="{% static "js/jquery.rateit.js" %}"></script> -->
 	</head>
 
 	<body>
+        <div class="jumbotron">
 		<!-- Holds the logo and the site name. -->
 		<div class = "logo">
 			<div class = "logoimg">
@@ -33,6 +30,7 @@
 		<!--Menu bar. -->
 		<div class="header">
             <nav>
+<<<<<<< HEAD
                 <ul class="nav nav-pills float-right">
                 	<li class="nav-item">
 					  <a class="nav-link" href="{% url 'home' %}">Home</a>
@@ -43,6 +41,18 @@
 					  <a class="nav-link" href="{% url 'home' page_name='trending' %}">Trending</a>
 					</li>
 		
+=======
+                <ul class="nav float-right">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'home' %}">Home
+                        <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a class="nav-link dropbutton" href="{% url 'home' page_name='new' %}">New</a></li>
+                          <li><a class="nav-link dropbutton" href="#">Trending</a></li>
+                        </ul>
+                    </li>
+
+>>>>>>> 801feab198c3eb0710aa93d69ec6ba316cee9644
 					{% if user.is_authenticated %}
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'favourited' %}">Favourited</a>
@@ -51,10 +61,13 @@
 							<a class="nav-link" href="{% url 'profile' %}">My Profile</a>
 						</li>
 						<li class="nav-item">
+							<a class="nav-link" href="{% url 'add_recipe' %}">Submit Recipe</a>
+						</li>
+					    <li class="nav-item">
 							<a class="nav-link" href="{% url 'logout' %}">Log out</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'add_recipe' %}">Submit Recipe</a>
+							<a class="nav-link" href="{% url 'about' %}">About</a>
 						</li>
 					{% else %}
 						<li class="nav-item">
@@ -63,10 +76,15 @@
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'login' %}">Login</a>
 						</li>
+					    <li class="nav-item">
+							<a class="nav-link" href="{% url 'about' %}">About</a>
+						</li>
 					{%endif%}
                 </ul>
             </nav>
-            <div>
+			<br>
+			<br>
+            <div class="usernamehello">
             	{% if user.is_authenticated %}
 				Hello {{ user.username }}
 			    {% else %}
@@ -74,15 +92,13 @@
 			    {% endif %}
             </div>
         </div>
-
-        <div class="jumbotron">
-			<h1 class="display-3">FoodBook</h1>
+		<h1 class="display-3">FoodBook</h1>
         </div>
+
 
 		<!-- The main content body of the site. -->
 		<div class = "center">
 			{% block body_block %}
-				This is body_block's default content.
 			{% endblock %}
 		</div>
 		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>

@@ -1,10 +1,14 @@
 
-div.title {
+.title {
     text-align: center;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: 40px;
     font-family: 'Lobster', cursive;
     font-decoration: bold;
     font-size: xx-large;
     text-transform: capitalize;
+}
+
+.text {
+    text-align: center;
+    font-style: italic;
 }

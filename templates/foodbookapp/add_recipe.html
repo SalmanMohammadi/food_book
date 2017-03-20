@@ -1,21 +1,29 @@
+<!DOCTYPE html>
+
 {% extends 'foodbookapp/base.html' %}
 {% load staticfiles %}
+
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/add_recipe.css" %}">
+{% endblock %}
 
 {% block title_block %}
 	Submit Your Own Recipe!
 {% endblock %}
 
 
+
 {% block body_block %}
 	{% if user.is_authenticated %}
-		<h1>Add a new Recipe.</h1>
+
+		<h1 class="addrecipe">Add a new recipe!</h1>
+
 		<div>
 			<form id = "recipe_form" method = "post" action = "{% url 'add_recipe'%}">
 				{% csrf_token %}
 				{% for hidden in form.hidden_fields %}
 					{{ hidden }}
 				{% endfor %}
-				<!-- table done by: Jimmy Tang, 2301714t@student.gla.ac.uk -->
 				<table>
 					{% for field in form.visible_fields %}
 						<tr>
@@ -39,3 +47,7 @@
 		</div>
 	{%endif%}
 {% endblock %}
+
+<form>
+
+</form>
