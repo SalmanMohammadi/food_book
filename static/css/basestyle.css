@@ -1,26 +1,30 @@
+html {
+    background-image: url(images/background1.jpg);
+    background-repeat: repeat;
 
+}
 /*Displays the logo in the top left.*/
-div.logo{
+.logo{
     display:inline-block;
     position: absolute;
     left:20px;
 	padding: 0px 10px 10px 10px;
 }
 
-div.logoimg{
+.logoimg{
 padding: 40px 0 0 0;
 	margin:0px;
 	float:left;
 	width:40%;
 }
 
-div.logo img{
+.logo img{
 	width: 100%;
     height: auto;
 }
 
 /*Displays page content in the center.*/
-div.center {
+.center {
     margin: auto;
     width: 55%;
     padding: 40px 10px 40px 10px;
@@ -122,7 +126,7 @@ body {
   .jumbotron {
     border-bottom: 0;
     margin: 0px;
-    padding: 30px 0px 80px 0px;
+    padding: 10px 0px 50px 0px;
   }
 
   .display-3 {
