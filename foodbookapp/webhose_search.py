@@ -1,4 +1,4 @@
-import json
+import json # database manipulation.
 import urllib
 import urllib2
 
@@ -18,7 +18,7 @@ def read_webhose_key():
 	except:
 		raise IOError('search.key file not found')
 		
-	return wbhose_api_key
+	return webhose_api_key
 	
 def run_query(search_terms, size=10):
 	"""
@@ -44,7 +44,6 @@ def run_query(search_terms, size=10):
 					key=webhose_api_key,
 					query=query_string,
 					size=size)
-					
 	results = []
 	
 	try:
@@ -57,7 +56,7 @@ def run_query(search_terms, size=10):
 		# a dictionary. We restrict the summary to the first 200
 		# characters, as summary responses from the Webhose can be long!
 		for post in json_response['posts']:
-			results.append({'title': post['title',
+			results.append({'title': post['title'],
 							'link': post['url'],
 							'summary': post['text'][:200]})
 	except:

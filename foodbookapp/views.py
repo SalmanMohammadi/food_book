@@ -10,6 +10,7 @@ from foodbookapp.models import Recipe, UserProfile, Tag, Comment
 from datetime import datetime
 from imgurAPI import get_images
 from requests import exceptions
+from foodbookapp.webhose_search import run_query
 # Create your views here.
 
 
@@ -169,7 +170,6 @@ def fav_recipe(request, type):
 					recipe.save()
 	return HttpResponse(recipe.favourites)
 
-
 @login_required
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
@@ -179,4 +179,15 @@ def user_logout(request):
 @login_required
 def user_profile(request):
 	return render(request, 'foodbookapp/profile.html', {})
+	
+def search(request):
+	result_list =[]
+	
+	if request.method == 'POST':
+		query = request.POST['query'].strip()
+		if query:
+			# Run our Webhose search function to get the results list!
+			result_list = run_query(query)
+			
+	return render(request, 'foodbookapp/search.html', {'result_list': result_list})
 

@@ -15,5 +15,6 @@ urlpatterns = [
 	url(r'^logout/$', views.user_logout, name='logout'),
 	url(r'^profile/$', views.user_profile, name='profile'),
 	url(r'^favourite/(?P<type>[\w]+)$', views.fav_recipe, name = 'favourite'),
+	url(r'^search/$', views.search, name = 'search'),
 	
 ]
