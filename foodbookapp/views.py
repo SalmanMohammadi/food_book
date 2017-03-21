@@ -182,7 +182,7 @@ def user_profile(request):
 	
 def search(request):
 	result_list =[]
-	
+	query = ""
 	if request.method == 'POST':
 		query = request.POST['query'].strip()
 		if query:
