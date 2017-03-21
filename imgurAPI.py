@@ -29,7 +29,7 @@ def get_images():
 
 			curRecipe["picture_link"] = pictureLink
 			curRecipe["submit_date"] = time.strftime('%Y-%m-%d', time.localtime(item.datetime))
-			print item.title
+			print (item.title)
 			print(curRecipe["submit_date"])
 			recipes[item.title] = curRecipe
 
