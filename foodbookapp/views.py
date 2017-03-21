@@ -10,7 +10,7 @@ from foodbookapp.models import Recipe, UserProfile, Tag, Comment
 from datetime import datetime
 from imgurAPI import get_images
 from requests import exceptions
-from foodbookapp.webhose_search import run_query
+from foodbookapp.webhose_search import run_query # searching functionality.
 # Create your views here.
 
 
@@ -189,5 +189,6 @@ def search(request):
 			# Run our Webhose search function to get the results list!
 			result_list = run_query(query)
 			
-	return render(request, 'foodbookapp/search.html', {'result_list': result_list})
+	return render(request, 'foodbookapp/search.html', {'result_list': result_list, 'query': query})
+
 
