@@ -41,8 +41,6 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 		
-
-
 class Comment(models.Model):
     user = models.ForeignKey(User)
     recipe = models.ForeignKey(Recipe, related_name='on_recipe')

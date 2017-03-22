@@ -1,6 +1,6 @@
 import json # database manipulation.
 import urllib
-import urllib2
+#import urllib2
 
 def read_webhose_key():
 	"""
