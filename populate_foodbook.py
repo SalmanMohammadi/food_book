@@ -49,25 +49,16 @@ def populate():
 
 	# for r in Recipe.objects.all():
 		# print((str(r))).encode('utf-8')
-
+	
 def add_recipe(title, views, recipeText, pictureLink, comments):
 	r = Recipe.objects.get_or_create(title = title)[0]
 	r.views = views
 	r.recipeText = recipeText
 	r.pictureLink = pictureLink
 	r.save()
+	user = User.objects.get_or_create(username = "admin", password = "foodbook")[0]
+	user.save
 	for comment in comments:
-<<<<<<< Updated upstream
-		user = User.objects.get_or_create(username = "admin", password = "foodbook")[0]
-		user.save()
-=======
-<<<<<<< HEAD
-		user = User.objects.get_or_create(username = "foodbook", password = "foodbook")[0]
-=======
-		user = User.objects.get_or_create(username = "admin", password = "foodbook")
-		user.save
->>>>>>> master
->>>>>>> Stashed changes
 		c = Comment.objects.create(body = comment, user = user, recipe = r)
 	return r
 
