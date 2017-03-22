@@ -21,7 +21,6 @@ Sign up
 	{% else %}
 
 	<form class="form-login" role="form" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
-	{% csrf_token %}
 
 	{% for message in messages %}
 		{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
@@ -32,7 +31,15 @@ Sign up
     <div class = "title">
 		Sign up here!
 	</div>
-
+	
+	{% csrf_token %}
+	
+	{% for message in messages %}
+		{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
+			Error: {{message}}
+		{% endif %}
+	{% endfor %}
+	
 	<label for="inputUsername" class="sr-only">Username</label>
 	<input type="text" name="username" id="id_username" class="form-control" placeholder="Username (up to 30 characters, letters, digits and @+-_. only)" required autofocus>
 	<label for="inputPassword" class="sr-only">Password</label>
