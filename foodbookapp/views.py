@@ -209,7 +209,7 @@ def tag_search(request):
 			except Tag.DoesNotExist:
 				tag = None
 				error = "Sorry, this tag doesn't exist."
-			except Recipe.DoesNotExist:
+			if not recipes:
 				recipe = None
 				error = "Sorry, this tag has no recipes."
 			return render(request, 'foodbookapp/home.html', {"recipes": recipes, "error_messages" : error})
