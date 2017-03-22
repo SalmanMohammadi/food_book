@@ -100,7 +100,6 @@ def add_comment(request, recipe_slug):
 	return show_recipe(request, recipe.slug)
 
 
-
 #View for registration, the /register page.
 def register(request):
 	registered = False
@@ -119,6 +118,8 @@ def register(request):
 			registered = True
 		else:
 			print(user_form.errors, profile_form.errors)
+			messages.add_message(request, messages.ERROR, 'Either the user already exists, or you entered invalid credentials')
+			return HttpResponseRedirect(reverse('register'))
 	else:
 		user_form = UserForm()
 		profile_form = UserProfileForm()
