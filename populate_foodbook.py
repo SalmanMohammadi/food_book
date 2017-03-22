@@ -37,7 +37,7 @@ def populate():
 			recipe_data["comments"])
 
 	for r in Recipe.objects.all():
-		print((str(r)))
+		print((str(r))).encode('utf-8')
 
 def add_recipe(title, views, recipeText, pictureLink, comments):
 	r = Recipe.objects.get_or_create(title = title)[0]

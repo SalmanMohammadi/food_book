@@ -27,7 +27,10 @@ SECRET_KEY = '8wi#k^4_ttqp%8*+sfa!+j81@hw@ibkx$tqxzv&8#plb$(gr&2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+				'CoffeeDrinker22302.pythonanywhere.com',
+				'127.0.0.1'
+]
 
 
 # Application definition
