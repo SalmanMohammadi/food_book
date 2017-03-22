@@ -20,7 +20,7 @@ def home(request, page_name = None):
 		X = 1
 	        # get_images()
 	except exceptions.RequestException as e:
-		print("unable to connect to api.")
+		print("Unable to connect to api.")
 	if(page_name == "new"):
 		recipes = Recipe.objects.order_by('submit_date')
 	elif(page_name == "trending"):
