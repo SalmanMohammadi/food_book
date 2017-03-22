@@ -4,11 +4,11 @@
 {% block css_block %}
 	<link rel="stylesheet" type="text/css" href="{% static "css/profile.css" %}">
 {% endblock %}
-
+	
 {% block title_block %}
 	Profile
 {% endblock %}
-
+	
 {% block body_block %}
 	{% if user.is_authenticated %}
 		<h1 class="profileintro">{{ user.username }}'s Profile</br></h1>
@@ -18,8 +18,17 @@
 			<img src="{% static "images/default.png" %}">
 		{% endif %}
 		{% if recipes %}
+			<h2> My Recipes </h2>
 			{% for recipe in recipes %}
-				<a href="{{ recipe.slug }}">{{recipe.title}}</a>
+				<a href="{% url 'show_recipe' recipe_slug=recipe.slug %}">{{recipe.title}}</a>
+				<br>
+			{% endfor %}
+		{% endif %}
+		{% if comments %}
+			<h2> My Comments</h2>
+			{% for comment in comments %}
+				<b>{{comment.body}}</b> on <a href="{% url 'show_recipe' recipe_slug=comment.recipe.slug %}">{{ comment.recipe.title }}</a>
+				<br>
 			{% endfor %}
 		{% endif %}
 	{% else %}

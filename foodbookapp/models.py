@@ -17,7 +17,7 @@ class Recipe(models.Model):
     recipe_text = models.TextField(null = True)
     favourited_by = models.ManyToManyField(User, related_name='user_recipe_favourites',blank = True)
     favourites = models.IntegerField(default = 0)
-    picture = models.ImageField(blank = True)
+    picture = models.ImageField(upload_to = 'recipe_images', blank = True)
     picture_link = models.URLField(blank = True)
     submitted_by = models.ForeignKey(User, null = True)
     submit_date = models.DateField(null=True)

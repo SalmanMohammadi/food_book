@@ -71,6 +71,10 @@ def add_recipe(request):
 			recipe = form.save(commit = False)
 			recipe.submitted_by = request.user
 			recipe.submit_date = datetime.now()
+			print "test"
+			print(request.FILES)
+			if 'picture' in request.FILES:
+				recipe.picture = request.FILES['picture']
 			recipe.save()
 			return show_recipe(request, recipe.slug)
 		else:
@@ -113,8 +117,8 @@ def register(request):
 			user.save()
 			profile = profile_form.save(commit=False)
 			profile.user = user
-			if 'Picture' in request.FILES:
-				profile.picture = request.FILES['Picture']
+			if 'picture' in request.FILES:
+				profile.picture = request.FILES['picture']
 			profile.save()
 			registered = True
 		else:
@@ -176,7 +180,8 @@ def user_logout(request):
 def user_profile(request):
 	context_dict = {}
 	try:
-		context_dict["recipes"] = recipes = Recipe.objects.filter(submitted_by = request.user)
+		context_dict["recipes"] = Recipe.objects.filter(submitted_by = request.user)
+		context_dict["comments"] = Comment.objects.filter(user = request.user)
 	except Recipe.DoesNotExist:
 		context_dict["recipes"] = none
 

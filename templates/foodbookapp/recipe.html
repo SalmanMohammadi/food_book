@@ -24,7 +24,14 @@
        	<h1 class="recipe-title">{{ recipe.title }}</h1>
         <br>
         <div class="recipe-picture">
-		<img src="{{recipe.picture_link}}">
+        {% if recipe.picture_link %}
+			<img src="{{recipe.picture_link}}">
+		{% endif %}
+		{% if recipe.picture%}
+			{{recipe.picture}}
+			{{MEDIA_URL}}{{recipe.picture}}
+				<img src="{{MEDIA_URL}}{{recipe.picture}}"/>
+		{% endif %}	
         </div>
 		<br>
         <div class="recipe-stats">
