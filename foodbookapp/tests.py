@@ -39,7 +39,7 @@ class ModelTests(TestCase):
 		self.client.login(username='testuser', password='test1234')
 
 		# Access index page
-		response = self.client.get(reverse('index'))
+		response = self.client.get(reverse('home'))
 
 		# Check links that appear for logged person only
 		self.assertIn(reverse('home'), response.content)
