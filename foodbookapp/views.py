@@ -101,7 +101,7 @@ def add_comment(request, recipe_slug):
 		else:
 			print(form.errors)
 
-	return show_recipe(request, recipe.slug)
+	return show_recipe(request, recipe_slug)
 
 
 #View for registration, the /register page.
