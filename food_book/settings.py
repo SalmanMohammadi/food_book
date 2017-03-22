@@ -28,7 +28,7 @@ SECRET_KEY = '8wi#k^4_ttqp%8*+sfa!+j81@hw@ibkx$tqxzv&8#plb$(gr&2'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-				'coffeedrinker22302.pythonanywhere.com',
+				'CoffeeDrinker22302.pythonanywhere.com',
 ]
 
 
