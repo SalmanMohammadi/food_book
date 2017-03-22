@@ -41,10 +41,9 @@
             Views: {{ recipe.views }}
 			<br>
 			<div>
-				Favourites: 
-				<div id = "favourite_count">
-					{{recipe.favourites}}
-				</div>
+				 Favourites: <p id = "favourite_count"> {{recipe.favourites}} </p>
+				<br>
+				<br>
 				{% if user.is_authenticated %}
 				<button id="favourite" data-recipeid="{{recipe.id}}" class="btn btn-primary btn-sm" type="button">{% check_favourited recipe user %}</button>
 				{% endif %}
@@ -100,14 +99,5 @@
 		<input type = "submit" name = "submit" value = "add comment" />
 	</form>
 
-	<br>
-	<br>
-
-	<form id="tag_form" method="post" action=".">
-		{% csrf_token %}
-		<input type="text" name="tag" value="add a tag" />
-		<br />
-		<input type="submit" name="tag_form" value="add tag" />
-	</form>
 {% endif %}
 {% endblock %}

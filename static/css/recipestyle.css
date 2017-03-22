@@ -23,4 +23,7 @@
     text-align: center;
 }
 
+#favourite_count {
+    display: inline;
+}
 
