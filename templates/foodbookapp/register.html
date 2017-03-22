@@ -5,12 +5,19 @@
 	<link rel="stylesheet" type="text/css" href="{% static "css/loginAndSignupStyle.css" %}">
 {% endblock %}
 
+
+{% block title_block %}
+Sign up
+{% endblock %}
+
 {% block body_block %}
-<link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
 
 	{% if registered %}
 		Thank you for joining FoodBook! You can now log in.
-		<a href="{% url 'home' %}">Return to the main page.</a><br />
+		<a href="{% url 'home' %}">Return to the main page</a>
+        or
+        <a href="{% url 'login' %}"> log in here.</a><br />
+
 	{% else %}
 	<form class="form-login" role="form" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
 	{% csrf_token %}

@@ -101,8 +101,8 @@ body {
     background-color: #ffffff;
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 48em) {
+/* CSS Responsiveness */
+@media screen and (min-width: 0em) {
   /* Remove the padding we set earlier */
   .header,
   .marketing,
