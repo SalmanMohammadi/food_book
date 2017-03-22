@@ -50,14 +50,14 @@ class UserProfileForm(forms.ModelForm):
 		fields = ('picture',) 
 
 class CommentForm(forms.ModelForm):
-	comment = forms.CharField(min_length=10)
+	body = forms.CharField(help_text = "Submit a comment. Inappropriate comments will be dealt with severely.")
 	
 	class Meta(object):
 		model = Comment
-		fields = ('comment',)
+		fields = ('body',)
 		
 class TagForm(forms.ModelForm):
-	tag = forms.CharField(min_length=3)
+	tag = forms.CharField(help_text = "Tag this recipe.")
 	
 	class Meta(object):
 		model = Tag

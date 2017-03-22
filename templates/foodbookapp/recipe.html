@@ -38,7 +38,9 @@
 				<div id = "favourite_count">
 					{{recipe.favourites}}
 				</div>
+				{% if user.is_authenticated %}
 				<button id="favourite" data-recipeid="{{recipe.id}}" class="btn btn-primary btn-sm" type="button">{% check_favourited recipe user %}</button>
+				{% endif %}
 			</div>	
         </div>
         <br>
@@ -54,17 +56,44 @@
         {% endif %}
 </div>
 
-<form id="comment_form" method="post" action=".">
-	{% csrf_token %}
-	<input type="text" name="comment" value="comment here" height="500" />
-	<br />
-	<input type="submit" name="com_form" value="post comment" />
-</form>
+<div class = "comments">
+	{% if comments %}
+		{% for comment in comments %}
+			{{comment.user.username}}
+			{% if comment.user.userprofile.picture %}
+			<img src="{{MEDIA_URL}}{{user.userprofile.picture}}"/>
+			{% else %}
+				<img src="{% static "images/default.png" %}">
+			{% endif %}
+			{{comment.body}}
+		{% endfor %}
+	{% endif %}
+</div>
 
-<form id="tag_form" method="post" action=".">
-	{% csrf_token %}
-	<input type="text" name="tag" value="add a tag" />
-	<br />
-	<input type="submit" name="tag_form" value="add tag" />
-</form>
+{% if user.is_authenticated %}
+	<form id="comment_form" method="post" action="{% url 'add_comment' recipe_slug=recipe.slug %}">
+		{% csrf_token %}
+		<table>
+			{% for field in form.visible_fields %}
+				<tr>
+					{{ field.errors }}
+					<th>
+						{{ field.help_text }}
+					</th>
+					<th>
+						{{ field }}
+					</th>
+				</tr>
+			{% endfor %}
+		</table>
+		<input type = "submit" name = "submit" value = "add comment" />
+	</form>
+
+	<form id="tag_form" method="post" action=".">
+		{% csrf_token %}
+		<input type="text" name="tag" value="add a tag" />
+		<br />
+		<input type="submit" name="tag_form" value="add tag" />
+	</form>
+{% endif %}
 {% endblock %}

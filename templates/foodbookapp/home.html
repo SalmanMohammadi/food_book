@@ -14,10 +14,10 @@
 	{% if recipes %}
 		<ul>
 			{% for recipe in recipes %}
-			<div class = "img">
+
+			<div class = "img"  >
 				<a href="{% url 'show_recipe' recipe.slug %}">
-				<img class = "thumb" src="{% get_thumbnail recipe %}">	
-				<!-- <img class = "gif" src="{{recipe.pictureLink}}">  -->
+				<img data-toggle="popover" title="{{recipe.title}}" content = "none" class = "thumb" src="{% get_thumbnail recipe %}">
 				</a>
 			</div>
 			{% endfor %}

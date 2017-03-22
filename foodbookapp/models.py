@@ -5,9 +5,10 @@ from django.template.defaultfilters import slugify
 from django.db import models
 
 class Tag(models.Model):
-    tagTitle = models.CharField(max_length=128, unique = True, default = "")
+    title = models.CharField(max_length=20, unique = True)
+
     def __str__(self):
-        return self.tagTitle
+        return self.title
 
 class Recipe(models.Model):
     title = models.CharField(max_length=128)
@@ -34,7 +35,6 @@ class UserProfile(models.Model):
     slug = models.SlugField(blank = True)
     picture = models.ImageField(upload_to = 'profile_images', blank = True)
 
-
     def save(self, *args, **kwargs):
         self.slug = slugify(self.user.username)
         super(UserProfile, self).save(*args, **kwargs)
@@ -43,8 +43,8 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Comment(models.Model):
-    com_user = models.ForeignKey(User)
-    com_recipe = models.ForeignKey(Recipe, related_name='onRecipe')
-    com_body  = models.CharField(max_length=512)
+    user = models.ForeignKey(User)
+    recipe = models.ForeignKey(Recipe, related_name='on_recipe')
+    body  = models.CharField(max_length=512)
     def __str__(self):
-        return self.com_body
+        return self.body

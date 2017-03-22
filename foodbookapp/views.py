@@ -31,7 +31,6 @@ def home(request, page_name = None):
 
 @login_required
 def favourited(request):
-	print(request.user)
 	error = None
 	try:
 		recipes = Recipe.objects.filter(favourited_by=request.user)
@@ -46,45 +45,19 @@ def about(request):
 
 #View for the /recipe/<recipe-name> page.
 def show_recipe(request, recipe_slug):
-	com_form = CommentForm()
+	form = CommentForm()
 	tag_form = TagForm()
 	context_dict = {}
+	context_dict["form"] = CommentForm()
 	try:
 		recipe = Recipe.objects.get(slug = recipe_slug)
 		context_dict['recipe'] = recipe
-		context_dict['comments'] = Comment.objects.filter(com_recipe = recipe)
-	#DISPLAY ALL COMMENTS
+		context_dict['comments'] = Comment.objects.filter(recipe = recipe)
 	except Recipe.DoesNotExist:
 		context_dict['recipe'] = None
-	context_dict["user"] = request.user
-	
-	#if we have a recipe and post a comment/tag
-	if context_dict['recipe'] != None:
-		if request.method == 'POST' and 'com_form' in request.POST:
-			com_form = CommentForm(data=request.POST)
-			if com_form.is_valid():
-				com_form.save(commit = False)
-				data = com_form.cleaned_data
-				comment, created = Comment.objects.get_or_create(com_body = data["comment"], com_recipe = recipe, com_user = request.user)
-				comment.save()
-				request.method = 'GET'
-				return show_recipe(request, recipe.slug)
-			else:
-				print(com_form.errors)
-		if request.method == 'POST' and 'tag_form' in request.POST:
-			tag_form = TagForm(data=request.POST)
-			if tag_form.is_valid():
-				tag_form.save(commit = False)
-				data = tag_form.cleaned_data
-				tag, created = Tag.objects.get_or_create(tagTitle = data["tag"])
-				tag.save()
-				if tag not in recipe.tags.all():
-					recipe.tags.add(tag)
-					recipe.save()
-				request.method = 'GET'
-				return show_recipe(request, recipe.slug)
-			else:
-				print(tag_form.errors)
+	except Recipe.comment.DoesNotExist:
+		context_dict['comments'] = None
+
 	return render(request, 'foodbookapp/recipe.html', context_dict)
 	
 # View for adding a recipe
@@ -96,14 +69,37 @@ def add_recipe(request):
 
 		if form.is_valid():
 			recipe = form.save(commit = False)
-			data = form.cleaned_data
 			recipe.submitted_by = request.user
 			recipe.submit_date = datetime.now()
 			recipe.save()
-			return show_recipe(request, recipe.recipe_slug)
+			return show_recipe(request, recipe.slug)
 		else:
 			print(form.errors)
+
 	return render(request, 'foodbookapp/add_recipe.html', {'form': form})
+
+@login_required
+def add_comment(request, recipe_slug):
+	try:
+		recipe = Recipe.objects.get(slug = recipe_slug)
+	except Recipe.DoesNotExist:
+		print("Could not find recipe.")
+		return home(request)
+
+	if request.method == 'POST':
+		form = CommentForm(data=request.POST)
+
+		if form.is_valid() and recipe:
+			comment = form.save(commit = False)
+			comment.user = request.user
+			comment.recipe = recipe
+			comment.save()
+		else:
+			print(form.errors)
+
+	return show_recipe(request, recipe.slug)
+
+
 
 #View for registration, the /register page.
 def register(request):
@@ -178,5 +174,11 @@ def user_logout(request):
 
 @login_required
 def user_profile(request):
-	return render(request, 'foodbookapp/profile.html', {})
+	context_dict = {}
+	try:
+		context_dict["recipes"] = recipes = Recipe.objects.filter(submitted_by = request.user)
+	except Recipe.DoesNotExist:
+		context_dict["recipes"] = none
+
+	return render(request, 'foodbookapp/profile.html', context_dict)
 

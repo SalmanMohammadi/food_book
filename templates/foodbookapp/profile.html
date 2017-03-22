@@ -12,14 +12,19 @@
 {% block body_block %}
 	{% if user.is_authenticated %}
 		<h1 class="profileintro">{{ user.username }}'s Profile</br></h1>
-		<h3 class="faves">My favourites: *Blank*</h3>
+		{% if user.userprofile.picture %}
+		<img src="{{MEDIA_URL}}{{user.userprofile.picture}}"/>
+		{% else %}
+			<img src="{% static "images/default.png" %}">
+		{% endif %}
+		{% if recipes %}
+			{% for recipe in recipes %}
+				<a href="{{ recipe.slug }}">{{recipe.title}}</a>
+			{% endfor %}
+		{% endif %}
 	{% else %}
 		<h1 class="profileintro">You're not logged in. </h1>
 		<a href="{% url 'home' %}">Click here</a> to go back to the indexpage
 	{% endif %}
-	{% if user.userprofile.picture %}
-		<img src="{{MEDIA_URL}}{{user.userprofile.picture}}"/>
-	{% else %}
-		<img src="{% static "images/default.png" %}">
-	{% endif %}]
-{% endblock %}]
+	
+{% endblock %}
