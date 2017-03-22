@@ -14,17 +14,16 @@
 
 {% block body_block %}
 	<div>
-		<h1>Search with Foodbookapp</h1>
+		<h1>Search by tags with FoodBook</h1>
 		<br/>
-		<form class="form-inline" id="user_form"
-				method="post" action="{% url 'search' %}">
+		<form class="form-inline" id="tag_form"
+				method="get" action="{% url 'tag_search' %}">
 			{% csrf_token %}
 			<div class="form-group">
 				<input class="form-control" type="text" size ="50"
-						name="query" value="{{ query }}" id="query" />
+						name="tag_title" value="{{ query }}" id="query" />
 			</div>
-			<button class="btn btn-primary" type="submit" name="submit"
-					value="Search">Search</button>
+			<button class="btn btn-primary" type="submit" name="submit" value="Search">Search</button>
 		</form>
 		<div>
 			{% if results_list %}

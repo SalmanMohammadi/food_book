@@ -72,7 +72,6 @@ def add_recipe(request):
 			recipe = form.save(commit = False)
 			recipe.submitted_by = request.user
 			recipe.submit_date = datetime.now()
-			print "test"
 			print(request.FILES)
 			if 'picture' in request.FILES:
 				recipe.picture = request.FILES['picture']
@@ -103,7 +102,6 @@ def add_comment(request, recipe_slug):
 			print(form.errors)
 
 	return show_recipe(request, recipe_slug)
-
 
 #View for registration, the /register page.
 def register(request):
@@ -171,6 +169,17 @@ def fav_recipe(request, type):
 					recipe.save()
 	return HttpResponse(recipe.favourites)
 
+def tag_search(request):
+	if request.method == 'GET':
+	form = SearchForm(data=request.GET)
+	if form.is_valid():
+		try:
+			tags = Recipe.objects.filter(tags=tag_title)
+		except Recipe.DoesNotExist:
+			tags = None
+			error = "Sorry, no recipes with this tag found anything."
+	return render(request, 'foodbookapp/home.html', {"recipes": recipes, "error_messages" : error})
+			
 @login_required
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
