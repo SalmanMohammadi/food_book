@@ -18,7 +18,7 @@ from foodbookapp.webhose_search import run_query # searching functionality.
 def home(request, page_name = None):
 	try:
 		X = 1
-		# get_images()
+	        # get_images()
 	except exceptions.RequestException as e:
 		print("unable to connect to api.")
 	if(page_name == "new"):
