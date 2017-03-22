@@ -8,7 +8,7 @@ class ModelTests(TestCase):
 
 	def setUp(self):
 		try:
-			from populate_foodbook import populate
+			from populate_foodbook import *
 			populate()
 		except ImportError:
 			print('The module populate_rango does not exist')
@@ -19,7 +19,7 @@ class ModelTests(TestCase):
 	   
 	def get_recipe(self, title):
 		from foodbookapp.models import Recipe
-		try:				  
+		try:
 			recipe = Recipe.objects.get(title=title)
 		except Recipe.DoesNotExist:	   
 			recipe = None
@@ -29,10 +29,6 @@ class ModelTests(TestCase):
 		recipe = self.get_recipe('Cannabis Infused Brownies')  
 		self.assertIsNotNone(recipe)
 		 
-	def test_python_cat_with_views(self):
-		cat = self.get_category('Python')
-		self.assertEquals(cat.views, 128)
-		
 	def test_url_reference_in_index_page_when_logged(self):
 		# Create user and log in
 		test_utils.create_user()
@@ -47,4 +43,11 @@ class ModelTests(TestCase):
 		self.assertIn(reverse('about'), response.content)
 		self.assertIn(reverse('logout'), response.content)
 		self.assertIn(reverse('profile'), response.content)
+		
+	def test_about_contain_image(self):
+		self.client.get(reverse('home'))
+		response = self.client.get(reverse('about'))
+
+		# Check if is there an image in index page
+		self.assertIn('img src="/static/images/', response.content)
 		
