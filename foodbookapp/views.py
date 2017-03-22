@@ -171,14 +171,19 @@ def fav_recipe(request, type):
 
 def tag_search(request):
 	if request.method == 'GET':
-	form = SearchForm(data=request.GET)
-	if form.is_valid():
-		try:
-			tags = Recipe.objects.filter(tags=tag_title)
-		except Recipe.DoesNotExist:
-			tags = None
-			error = "Sorry, no recipes with this tag found anything."
-	return render(request, 'foodbookapp/home.html', {"recipes": recipes, "error_messages" : error})
+		form = SearchForm(data=request.GET)
+		if form.is_valid():
+			try:
+				tag = Tag.objects.get(title=tag_title)
+				recipes = Recipe.object.filter(tags = tag)
+			except Tag.DoesNotExist:
+				tag = None
+				recipe = None
+				error = "Sorry, this tag doesn't exist."
+			except Recipe.DoesNotExist:
+				recipe = None
+				error = "Sorry, this tag has no recipes."
+		return render(request, 'foodbookapp/home.html', {"recipes": recipes, "error_messages" : error, "tag" : tag})
 			
 @login_required
 def user_logout(request):

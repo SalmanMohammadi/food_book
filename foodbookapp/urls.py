@@ -17,4 +17,4 @@ urlpatterns = [
 	url(r'^favourite/(?P<type>[\w]+)$', views.fav_recipe, name = 'favourite'),
 	url(r'^recipe/(?P<recipe_slug>[\w\-]+)/comment/$', views.add_comment, name = 'add_comment'),
 	url(r'^search/$', views.search, name = 'search'),
-	url(r'^tagsearch/?P<tag_name>[\w\-]+)$',views.tag_search,name='tag_search'),
+	url(r'^tagsearch/$',views.tag_search,name='tag_search')]
