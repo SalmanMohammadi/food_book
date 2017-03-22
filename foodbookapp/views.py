@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from foodbookapp.forms import UserForm, UserProfileForm, RecipeForm, CommentForm, TagForm
-from django.contrib import messages 
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -10,6 +10,7 @@ from foodbookapp.models import Recipe, UserProfile, Tag, Comment
 from datetime import datetime
 from imgurAPI import get_images
 from requests import exceptions
+from foodbookapp.webhose_search import run_query # searching functionality.
 # Create your views here.
 
 
@@ -17,7 +18,7 @@ from requests import exceptions
 def home(request, page_name = None):
 	try:
 		X = 1
-		# get_images()
+	        # get_images()
 	except exceptions.RequestException as e:
 		print("unable to connect to api.")
 	if(page_name == "new"):
@@ -59,7 +60,7 @@ def show_recipe(request, recipe_slug):
 		context_dict['comments'] = None
 
 	return render(request, 'foodbookapp/recipe.html', context_dict)
-	
+
 # View for adding a recipe
 @login_required
 def add_recipe(request):
@@ -137,14 +138,14 @@ def user_login(request):
 		password = request.POST.get('password')
 		user = authenticate(username=username, password=password)
 		if user:
-			if user.is_active: # If the account is valid and active, we log the user in.	
+			if user.is_active: # If the account is valid and active, we log the user in.
 				login(request, user)
 				return HttpResponseRedirect(reverse('home'))
 			else:
 				# An inactive account was used.
 				print("Your account is disabled")
 				return HttpResponseRedirect(reverse('login'))
-		else: # Bad login details were provided. 
+		else: # Bad login details were provided.
 			print("Invalid login details: {0}, {1}".format(username, password))
 			messages.add_message(request, messages.ERROR, 'Invalid login credentials')
 			return HttpResponseRedirect(reverse('login'))
@@ -170,7 +171,6 @@ def fav_recipe(request, type):
 					recipe.save()
 	return HttpResponse(recipe.favourites)
 
-
 @login_required
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
@@ -187,4 +187,15 @@ def user_profile(request):
 		context_dict["recipes"] = none
 
 	return render(request, 'foodbookapp/profile.html', context_dict)
+
+def search(request):
+	result_list =[]
+	query = ""
+	if request.method == 'POST':
+		query = request.POST['query'].strip()
+		if query:
+			# Run our Webhose search function to get the results list!
+			result_list = run_query(query)
+
+	return render(request, 'foodbookapp/search.html', {'result_list': result_list, 'query': query})
 
