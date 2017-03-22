@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from foodbookapp.forms import UserForm, UserProfileForm, RecipeForm, CommentForm, TagForm
+from foodbookapp.forms import UserForm, UserProfileForm, RecipeForm, CommentForm, TagForm, SearchForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -46,19 +46,22 @@ def about(request):
 
 #View for the /recipe/<recipe-name> page.
 def show_recipe(request, recipe_slug):
-	form = CommentForm()
+	com_form = CommentForm()
 	tag_form = TagForm()
 	context_dict = {}
-	context_dict["form"] = CommentForm()
+	context_dict["comment_form"] = CommentForm()
+	context_dict["tag_form"] = TagForm()
 	try:
 		recipe = Recipe.objects.get(slug = recipe_slug)
 		context_dict['recipe'] = recipe
 		context_dict['comments'] = Comment.objects.filter(recipe = recipe)
+		context_dict['tags'] = recipe.tags
 	except Recipe.DoesNotExist:
 		context_dict['recipe'] = None
 	except Recipe.comment.DoesNotExist:
 		context_dict['comments'] = None
-
+	except Recipe.tag.DoesNotExist:
+		context_dict['tags'] = None
 	return render(request, 'foodbookapp/recipe.html', context_dict)
 
 # View for adding a recipe
@@ -103,6 +106,29 @@ def add_comment(request, recipe_slug):
 
 	return show_recipe(request, recipe_slug)
 
+def add_tag(request, recipe_slug):
+	try:
+		recipe = Recipe.objects.get(slug = recipe_slug)
+	except Recipe.DoesNotExist:
+		print("Could not find recipe.")
+		return home(request)
+
+	if request.method == 'POST':
+		form = TagForm(data=request.POST)
+		if form.is_valid() and recipe:
+			tag = form.save(commit = False)
+			data = form.cleaned_data
+			tag, created = Tag.objects.get_or_create(title = data["tag"])
+			if created:
+				tag.save()
+			if tag not in recipe.tags.all():
+				recipe.tags.add(tag)
+				recipe.save()
+		else:
+			print(form.errors)
+
+	return show_recipe(request, recipe_slug)	
+	
 #View for registration, the /register page.
 def register(request):
 	registered = False
@@ -172,19 +198,25 @@ def fav_recipe(request, type):
 def tag_search(request):
 	if request.method == 'GET':
 		form = SearchForm(data=request.GET)
+		recipes = None
+		error = None	
 		if form.is_valid():
+			form.save(commit = False)
+			data = form.cleaned_data
 			try:
-				tag = Tag.objects.get(title=tag_title)
-				recipes = Recipe.object.filter(tags = tag)
+				tag = Tag.objects.get(title=data["tag"])
+				recipes = Recipe.objects.filter(tags = tag)
 			except Tag.DoesNotExist:
 				tag = None
-				recipe = None
 				error = "Sorry, this tag doesn't exist."
 			except Recipe.DoesNotExist:
 				recipe = None
 				error = "Sorry, this tag has no recipes."
-		return render(request, 'foodbookapp/home.html', {"recipes": recipes, "error_messages" : error, "tag" : tag})
-			
+			return render(request, 'foodbookapp/home.html', {"recipes": recipes, "error_messages" : error})
+		else:
+			print(form.errors)
+			return render(request, 'foodbookapp/home.html', {"recipes": recipes, "error_messages" : "form isn't valid"})
+
 @login_required
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
