@@ -1,4 +1,7 @@
 
+background-color {
+    background: #e5e5e5;
+}
 /*Displays the logo in the top left.*/
 .logo{
     display:inline-block;

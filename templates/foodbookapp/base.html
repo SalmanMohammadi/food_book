@@ -18,7 +18,7 @@
         <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 	</head>
 
-	<body>
+	<body style="background-color: #d9d9d9;">
         <div class="jumbotron">
 		<!-- Holds the logo and the site name. -->
 		<div class = "logo">
@@ -58,7 +58,7 @@
 						</li>
 						<li class="nav-item"> 
 							<a class="nav-link" href="{% url 'search' %}">Search</a> 
-						</li> 	
+						</li>
 					{% else %}
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'home' %}">Home</a>
@@ -78,6 +78,7 @@
 					    <li class="nav-item">
 							<a class="nav-link" href="{% url 'about' %}">About</a>
 						</li>
+
 					{%endif%}
                 </ul>
             </nav>
