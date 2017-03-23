@@ -11,14 +11,19 @@
 {% endblock %}
 
 {% block body_block %}
+
 	{% if recipes %}
 		<ul>
 			{% for recipe in recipes %}
 
-			<div class = "img"  >
+			<div class = "img" >
 				<a href="{% url 'show_recipe' recipe.slug %}">
 				<img class = "thumb" src="{% get_thumbnail recipe %}">
-				<p class = "title ">{{ recipe.title }}</p>
+				</a>
+				<a href="{% url 'show_recipe' recipe.slug %}">
+				<div class="overlay">
+						<div class="text">{{ recipe.title }}</div>
+  				</div>
 				</a>
 			</div>
 			{% endfor %}
@@ -32,5 +37,8 @@
 				{% endif %}
 			</strong>
 		{% endif %}
+
 {% endblock %}
+
+
 

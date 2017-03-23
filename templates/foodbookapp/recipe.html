@@ -13,7 +13,6 @@
 
 {% block css_block %}
 	<link rel="stylesheet" type="text/css" href="{% static "css/recipestyle.css" %}">
-	<link rel="stylesheet" type="text/css" href="{% static "css/rateit.css" %}">
 {% endblock %}
 
 {% block body_block %}
@@ -23,6 +22,7 @@
 		
        	<h1 class="recipe-title">{{ recipe.title }}</h1>
         <br>
+		<center>
         <div class="recipe-picture">
         {% if recipe.picture_link %}
 			<img src="{{recipe.picture_link}}">
@@ -33,6 +33,7 @@
 				<img src="{{MEDIA_URL}}{{recipe.picture}}"/>
 		{% endif %}	
         </div>
+		</center>
 		<br>
         <div class="recipe-stats">
             {% if recipe.submittedBy %}
@@ -69,16 +70,21 @@
 		<br>
 		{% for comment in comments %}
 			{% if comment.user.userprofile.picture %}
-			<img src="{{MEDIA_URL}}{{user.userprofile.picture}}" height="60" width="60"/> <strong>{{comment.user.username}}:</strong> {{comment.body}}
+			<div class = "comment"></div>
+			<img src="{{MEDIA_URL}}{{user.userprofile.picture}}" height="60" width="60"/> <strong> {{comment.user.username}}:</strong> {{comment.body}}
+			</div>
 			<br>
 			{% else %}
+				<div class = "comment">
 				<img src="{% static "images/default.png" %}" height="60" width="60"/> <strong> {{comment.user.username}}:</strong> {{comment.body}}
+				</div>
 				<br>
 			{% endif %}
-			<br>
+
 		{% endfor %}
 	{% endif %}
 </div>
+<br>
 
 {% if user.is_authenticated %}
 	<form id="comment_form" method="post" action="{% url 'add_comment' recipe_slug=recipe.slug %}">
@@ -86,7 +92,7 @@
 		<div class ="form-group">
 			<textarea class = "form-control" form = "comment_form" rows = "3" name = "body" required></textarea>
 		</div>
-		<input type = "submit" name = "submit" value = "add comment" />
+		<input type = "submit" name = "submit" value = "Add comment" />
 	</form>
 
 {% endif %}

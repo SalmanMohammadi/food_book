@@ -8,3 +8,12 @@
     padding: 30px 0 0 0;
 
 }
+
+.userpic {
+    float: left;
+    padding: 40px;
+}
+
+.comments {
+    float: center;
+}
