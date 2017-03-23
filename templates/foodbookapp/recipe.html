@@ -81,6 +81,7 @@
 	{% endif %}
 </div>
 <br>
+{{recipe.slug}}
 
 {% if user.is_authenticated %}
 	<form id="comment_form" method="post" action="{% url 'add_comment' recipe_slug=recipe.slug %}">
@@ -94,10 +95,9 @@
 	<form id="tag_form" method="post" action="{% url 'add_tag' recipe_slug=recipe.slug %}">
 		{% csrf_token %}
 		<div class ="form-group">
-		Tag This Recipe : <input type="text" name="title" form = "add_tag">
-		
+			Tag This Recipe : <input type="text" name="tag" form = "tag_form">
 		</div>
-		<input type="submit" name="tag_form" value="add tag" />
+		<input type="submit" name="submit" value="add tag" />
 	</form>
 {% endif %}
 {% endblock %}

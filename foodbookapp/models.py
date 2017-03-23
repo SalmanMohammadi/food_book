@@ -4,10 +4,10 @@ from django.template.defaultfilters import slugify
 import itertools
 from django.db import models
 
-#Model for the Tag object.
-class Tag(models.Model):
+#Model for the Tag object. 
+class Tag(models.Model): 
     title = models.CharField(max_length=20, unique = True)
-
+	
     def __str__(self):
         return self.title
 
@@ -39,7 +39,7 @@ class Recipe(models.Model):
         super(Recipe, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.title.encode('utf-8')
+        return str(self.title.encode('utf-8'))
 
 #Model for the UserProfile object.
 class UserProfile(models.Model):
@@ -61,5 +61,4 @@ class Comment(models.Model):
     body  = models.CharField(max_length=512)
     def __str__(self):
         return self.body
-
 
