@@ -57,7 +57,7 @@ def add_recipe(title, views, recipeText, pictureLink, comments):
 	r.pictureLink = pictureLink
 	r.save()
 	user = User.objects.get_or_create(username = "populate", password = "foodbook")[0]
-	user.save
+	user.save()
 	for comment in comments:
 		c = Comment.objects.create(body = comment, user = user, recipe = r)
 	return r

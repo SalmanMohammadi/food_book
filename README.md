@@ -29,5 +29,4 @@ Deploying and submitting
 		Github repository URL for the app
 		    https://github.com/2194437m/food_book.git
         PythonAnywhere URL for the app
-            http://coffeedrinker22302.pythonanywhere.com/home/
-            https://www.pythonanywhere.com/user/CoffeeDrinker22302/webapps/#tab_id_coffeedrinker22302_pythonanywhere_com
+	    http://foodbookapp.pythonanywhere.com#tab_id_coffeedrinker22302_pythonanywhere_com
