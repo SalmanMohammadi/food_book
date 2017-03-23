@@ -81,7 +81,6 @@
 	{% endif %}
 </div>
 <br>
-{{recipe.slug}}
 
 {% if user.is_authenticated %}
 	<form id="comment_form" method="post" action="{% url 'add_comment' recipe_slug=recipe.slug %}">
