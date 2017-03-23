@@ -18,7 +18,7 @@ def populate():
 				"4200000000000 life!"]}
 
 	cake_recipe = {"title": "simple cake",
-	"views": 1200000,
+	"views": 12000,
 	"favourites": 0,
 	"submit_date": datetime.now(),
 	"recipeText": "You makedeacake.",
@@ -27,19 +27,19 @@ def populate():
 				"Who gives a **** about your mom? LOSER",
 				"I give a **** about his mom XD lel"]}
 				
-	cake_recipe2 = {"title": "simple cake2",
+	pork_ribs = {"title": "Pork Ribs",
 	"views": 120000,
 	"favourites": 0,
 	"submit_date": datetime.now(),
-	"recipeText": "You makedeacake.",
-	"pictureLink": "http://i.imgur.com/N2C2WFI.gif",
+	"recipeText": "MEAAAT",
+	"pictureLink": "http://i.imgur.com/54Suxpd.gif",
 	"comments": ["My mom doesn't love me.",
 				"Who gives a **** about your mom? LOSER",
 				"I give a **** about his mom XD lel"]}
 
 	recipes = {"Cannabis Infused Brownies": cannabis_recipe,
 				"Cake Recipe": cake_recipe,
-				"Cake Recipe2": cake_recipe2,
+				"Pork Ribs": pork_ribs,
 				}
 
 	for r, recipe_data in recipes.items():
@@ -48,7 +48,7 @@ def populate():
 			recipe_data["comments"])
 
 	# for r in Recipe.objects.all():
-		# print((str(r))).encode('utf-8')
+	# 	print((str(r))).encode('utf-8')
 	
 def add_recipe(title, views, recipeText, pictureLink, comments):
 	r = Recipe.objects.get_or_create(title = title)[0]
@@ -56,7 +56,7 @@ def add_recipe(title, views, recipeText, pictureLink, comments):
 	r.recipeText = recipeText
 	r.pictureLink = pictureLink
 	r.save()
-	user = User.objects.get_or_create(username = "admin", password = "foodbook")[0]
+	user = User.objects.get_or_create(username = "populate", password = "foodbook")[0]
 	user.save
 	for comment in comments:
 		c = Comment.objects.create(body = comment, user = user, recipe = r)

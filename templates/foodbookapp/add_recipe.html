@@ -15,7 +15,7 @@
 		<h1 class="addrecipe">Add a new recipe!</h1>
 
 		<div>
-			<form id = "recipe_form" method = "post" action = "{% url 'add_recipe'%}">
+			<form id = "recipe_form" method = "post" action = "{% url 'add_recipe'%}" enctype="multipart/form-data">
 				{% csrf_token %}
 				{% for hidden in form.hidden_fields %}
 					{{ hidden }}
@@ -28,7 +28,11 @@
 								{{ field.help_text }}
 							</th>
 							<th>
+							{% if field %}
 								{{ field }}
+								{{ field }}
+								
+							{% endif %}
 							</th>
 						</tr>
 					{% endfor %}

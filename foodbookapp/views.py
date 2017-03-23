@@ -14,26 +14,33 @@ from foodbookapp.webhose_search import run_query # searching functionality.
 # Create your views here.
 
 
-#View for the home page. Defaults to new.
+#View for the home page. 
 def home(request, page_name = None):
 	try:
-		X = 1
-	        # get_images()
+		get_images() #Attempts to retrieve gifs from IMGUR.
 	except exceptions.RequestException as e:
 		print("Unable to connect to api.")
+
+	#Sorts the recipes depending on whether the user accessed
+	# /new, /trending, or /
 	if(page_name == "new"):
-		recipes = Recipe.objects.order_by('submit_date')
+		#Sorts on submit date, most recent first.
+		recipes = Recipe.objects.order_by('-submit_date')
 	elif(page_name == "trending"):
+		#Sorts on likes, descending.
 		recipes = Recipe.objects.order_by('-views')
 	else:
-		recipes = Recipe.objects.all()
+		#Sorts on title, alphabetically ascending.
+		recipes = Recipe.objects.order_by('title')
 
 	return render(request, 'foodbookapp/home.html', {'recipes': recipes})
 
+#View for /favourited. Only available to logged in users.
 @login_required
 def favourited(request):
 	error = None
 	try:
+		#Queries the database for all recipes favourited by the user.
 		recipes = Recipe.objects.filter(favourited_by=request.user)
 	except Recipe.DoesNotExist:
 		recipes = None
@@ -75,7 +82,6 @@ def add_recipe(request):
 			recipe = form.save(commit = False)
 			recipe.submitted_by = request.user
 			recipe.submit_date = datetime.now()
-			print(request.FILES)
 			if 'picture' in request.FILES:
 				recipe.picture = request.FILES['picture']
 			recipe.save()
@@ -85,6 +91,7 @@ def add_recipe(request):
 
 	return render(request, 'foodbookapp/add_recipe.html', {'form': form})
 
+#View for submitting a comment for a recipe.
 @login_required
 def add_comment(request, recipe_slug):
 	try:
@@ -106,6 +113,8 @@ def add_comment(request, recipe_slug):
 
 	return show_recipe(request, recipe_slug)
 
+#View for tagging a recipe
+@login_required
 def add_tag(request, recipe_slug):
 	try:
 		recipe = Recipe.objects.get(slug = recipe_slug)
@@ -156,6 +165,7 @@ def register(request):
 														'profile_form': profile_form,
 														'registered':registered})
 
+#View for logging a user in.
 def user_login(request):
 	if request.method == 'POST':
 		username = request.POST.get('username')
@@ -177,6 +187,7 @@ def user_login(request):
 		return render(request, 'foodbookapp/login.html', {})
 	return render(request, 'foodbookapp/login.html', {'dets':'invalid'})
 
+#Handles the AJAX request for a logged in user un/favouriting a recipe.
 @login_required
 def fav_recipe(request, type):
 	recipe_id = None
@@ -185,16 +196,20 @@ def fav_recipe(request, type):
 		if recipe_id:
 			recipe = Recipe.objects.get(id = int(recipe_id))
 			if recipe:
+				#Favourites the recipe if the AJAX request is for favourite.
 				if type == "true":
 					recipe.favourited_by.add(request.user)
 					recipe.favourites = recipe.favourites + 1
 					recipe.save()
 				elif type == "false":
+				#Unavourites the recipe if the AJAX request is for unfavourite.
 					recipe.favourited_by.remove(request.user)
 					recipe.favourites = recipe.favourites - 1
 					recipe.save()
 	return HttpResponse(recipe.favourites)
 
+#Handles searching by tags.
+@login_required
 def tag_search(request):
 	if request.method == 'GET':
 		form = SearchForm(data=request.GET)
@@ -217,12 +232,13 @@ def tag_search(request):
 			print(form.errors)
 			return render(request, 'foodbookapp/home.html', {"recipes": recipes, "error_messages" : "form isn't valid"})
 
+#Logs the user out.
 @login_required
 def user_logout(request):
-	# Since we know the user is logged in, we can now just log them out.
 	logout(request)
 	return HttpResponseRedirect(reverse('home'))
 
+#Shows the user profile for a logged in user.
 @login_required
 def user_profile(request):
 	context_dict = {}
@@ -234,6 +250,8 @@ def user_profile(request):
 
 	return render(request, 'foodbookapp/profile.html', context_dict)
 
+#Handles searching.
+@login_required
 def search(request):
 	result_list =[]
 	query = ""

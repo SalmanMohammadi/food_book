@@ -28,8 +28,6 @@
 			<img src="{{recipe.picture_link}}">
 		{% endif %}
 		{% if recipe.picture%}
-			{{recipe.picture}}
-			{{MEDIA_URL}}{{recipe.picture}}
 				<img src="{{MEDIA_URL}}{{recipe.picture}}"/>
 		{% endif %}	
         </div>
@@ -50,16 +48,14 @@
 				{% endif %}
 			</div>	
         </div>
-        <br>
-		<br>
         <div></div>
 	{% endif %}
        <br>
 		<br>
 
 <div class="recipe-text">
-        {% if recipe.recipeText %}
-        	Recipe Instructions: {{ recipe.recipeText}}
+        {% if recipe.recipe_text %}
+        	Recipe Instructions: {{ recipe.recipe_text}}
         {% endif %}
 </div>
 

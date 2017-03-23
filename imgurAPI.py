@@ -18,7 +18,7 @@ def get_images():
 	recipes = {}
 	for item in items:
 		curRecipe = {}
-		if not Recipe.objects.filter(title = item.title).exists():
+		if "removed" not in item.link:
 			curRecipe["title"] = item.title
 			curRecipe["views"] = item.views
 
@@ -29,8 +29,6 @@ def get_images():
 
 			curRecipe["picture_link"] = pictureLink
 			curRecipe["submit_date"] = time.strftime('%Y-%m-%d', time.localtime(item.datetime))
-			print (item.title)
-			print(curRecipe["submit_date"])
 			recipes[item.title] = curRecipe
 
 	for r, recipe_data in recipes.items():

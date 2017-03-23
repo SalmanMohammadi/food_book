@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from foodbookapp.models import Recipe, UserProfile, Comment, Tag
 
+#Handles the form for the Recipe model.
 class RecipeForm(forms.ModelForm):
 	maxLengthTitle = Recipe._meta.get_field('title').max_length
 	title = forms.CharField(max_length = maxLengthTitle, 
@@ -32,10 +33,12 @@ class RecipeForm(forms.ModelForm):
 
 		return cleaned_data
 
+	#Excludes fields in the form that we want to set in the view.
 	class Meta:
 		model = Recipe
 		exclude = ('favourited_by', 'submitted_by', 'submit_date','tags', 'comments' )
 
+#Handles the form for the Django User model.
 class UserForm(forms.ModelForm):
 	password = forms.CharField(widget = forms.PasswordInput())
 
@@ -43,12 +46,14 @@ class UserForm(forms.ModelForm):
 		model = User
 		fields = ('username','password')
 
+#Handles the form for the UserProfile model.
 class UserProfileForm(forms.ModelForm):
-	
+
 	class Meta:
 		model = UserProfile
 		fields = ('picture',) 
 
+#Handles the form for the Comment model.
 class CommentForm(forms.ModelForm):
 	body = forms.CharField(help_text = "Submit a comment. Inappropriate comments will be dealt with severely.")
 	
@@ -56,6 +61,7 @@ class CommentForm(forms.ModelForm):
 		model = Comment
 		fields = ('body',)
 		
+#Handles the form for the Tag model.
 class TagForm(forms.ModelForm):
 	tag = forms.CharField(help_text = "Tag this recipe.")
 	

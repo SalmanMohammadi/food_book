@@ -1,4 +1,4 @@
-#FoodbookApp url config. Handles all /foodbook/ urls.
+#FoodbookApp url config. Handles all urls that aren't /media, /static or /admin.
 
 from django.conf.urls import url
 from foodbookapp import views
@@ -18,4 +18,5 @@ urlpatterns = [
 	url(r'^recipe/(?P<recipe_slug>[\w\-]+)/comment/$', views.add_comment, name = 'add_comment'),
 	url(r'^recipe/(?P<recipe_slug>[\w\-]+)/tag/$', views.add_tag, name = 'add_tag'),
 	url(r'^search/$', views.search, name = 'search'),
-	url(r'^tagsearch/$',views.tag_search,name='tag_search')]
+	url(r'^tagsearch/$',views.tag_search,name='tag_search'),
+	]

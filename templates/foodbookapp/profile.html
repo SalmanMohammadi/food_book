@@ -20,21 +20,25 @@
 			<img src="{% static "images/default.png" %}" height="300" width="300"/>
 		{% endif %}
 		</div>
+		<h2> My Recipes </h2>
 		{% if recipes %}
-			<h2> My Recipes </h2>
 			{% for recipe in recipes %}
 				<a href="{% url 'show_recipe' recipe_slug=recipe.slug %}">{{recipe.title}}</a>
 				<br>
 			{% endfor %}
+		{% else %}
+			Go submit some recipes fool!
 		{% endif %}
 		<br>
 		<br>
+		<h2> My Comments</h2>
 		{% if comments %}
-			<h2> My Comments</h2>
 			{% for comment in comments %}
 				<div class = "comments"><b>{{comment.body}}</b> on <a href="{% url 'show_recipe' recipe_slug=comment.recipe.slug %}">{{ comment.recipe.title }}</a></div>
 				<br>
 			{% endfor %}
+		{% else %}
+			Go comment fool!
 		{% endif %}
 	{% else %}
 		<h1 class="profileintro">You're not logged in. </h1>

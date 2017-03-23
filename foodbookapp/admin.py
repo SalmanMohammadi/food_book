@@ -1,9 +1,7 @@
 from django.contrib import admin
 from foodbookapp.models import UserProfile, Recipe, Tag, Comment
 
-# Register your models here.
-# class RecipeAdmin(admin.ModelAdmin):
-# 	list_display = ('title',)
+#Registers models for editing and viewing in the admin interface.
 
 admin.site.register(Recipe)
 admin.site.register(UserProfile)
