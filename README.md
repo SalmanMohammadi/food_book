@@ -22,10 +22,10 @@ Deploying and submitting
 		Team letter / team name
             Team A (4)
 		Team members (names and student numbers)
-            Laura Moreby, 2167714M
-            Matus Mikus, 
-            Salman Mohammadi, 2194437M
-            Jimmy Tang, 2301714t
+            Laura Moreby, 2167714m
+			Matus Mikus, 2147274m
+			Salman Mohammadi, 2194437m
+			Jimmy Tang, 2301714t
 		Github repository URL for the app
 		    https://github.com/2194437m/food_book.git
         PythonAnywhere URL for the app

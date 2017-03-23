@@ -62,3 +62,10 @@ class TagForm(forms.ModelForm):
 	class Meta(object):
 		model = Tag
 		fields = ('tag',)
+
+class SearchForm(forms.ModelForm):
+	tag = forms.CharField(help_text = "Find by tag.")
+	
+	class Meta(object):
+		model = Tag
+		fields = ('tag',)

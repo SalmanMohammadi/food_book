@@ -22,12 +22,6 @@
 
 	<form class="form-login" role="form" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
 
-	{% for message in messages %}
-		{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
-			Error: {{message}}
-		{% endif %}
-	{% endfor %}
-
     <div class = "title">
 		Sign up here!
 	</div>
