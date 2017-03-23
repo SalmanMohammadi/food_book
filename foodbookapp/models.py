@@ -4,6 +4,13 @@ from django.template.defaultfilters import slugify
 import itertools
 from django.db import models
 
+#Model for the Tag object.
+class Tag(models.Model):
+    title = models.CharField(max_length=20, unique = True)
+
+    def __str__(self):
+        return self.title
+
 #Model for the Recipe object.
 class Recipe(models.Model):
     title = models.CharField(max_length=128)
@@ -55,9 +62,4 @@ class Comment(models.Model):
     def __str__(self):
         return self.body
 
-#Model for the Tag object.
-class Tag(models.Model):
-    title = models.CharField(max_length=20, unique = True)
 
-    def __str__(self):
-        return self.title
