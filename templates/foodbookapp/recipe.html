@@ -94,9 +94,12 @@
 	<br>
 	<form id="tag_form" method="post" action="{% url 'add_tag' recipe_slug=recipe.slug %}">
 		{% csrf_token %}
-		<input type="text" name="tag" value="add a tag" />
-			<br />
-		<input type="submit" name="tag_form" value="add tag" />
+		Tag This Recipe : <input type="text" name="title" form = "add_tag">
+
+		<div class ="form-group">
+			Tag This Recipe : <input type="text" name="tag" form = "tag_form">
+		</div>
+		<input type="submit" name="submit" value="add tag" />
 	</form>
 {% endif %}
 {% endblock %}

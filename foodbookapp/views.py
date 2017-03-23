@@ -111,7 +111,7 @@ def add_comment(request, recipe_slug):
 		else:
 			print(form.errors)
 
-	return show_recipe(request, recipe_slug)
+	return show_recipe(request, recipe.slug)
 
 #View for tagging a recipe
 @login_required
@@ -123,6 +123,8 @@ def add_tag(request, recipe_slug):
 		return home(request)
 
 	if request.method == 'POST':
+		print(request)
+		print(request.POST)
 		form = TagForm(data=request.POST)
 		if form.is_valid() and recipe:
 			tag = form.save(commit = False)
@@ -135,8 +137,8 @@ def add_tag(request, recipe_slug):
 				recipe.save()
 		else:
 			print(form.errors)
-
-	return show_recipe(request, recipe_slug)	
+	print(recipe.slug)
+	return show_recipe(request, recipe.slug)	
 	
 #View for registration, the /register page.
 def register(request):
