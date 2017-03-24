@@ -28,6 +28,7 @@ def populate():
 				"I give a **** about his mom XD lel"]}
 				
 	pork_ribs = {"title": "Pork Ribs",
+
 	"views": 120000,
 	"favourites": 0,
 	"submit_date": datetime.now(),
