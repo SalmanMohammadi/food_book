@@ -1,3 +1,4 @@
+appdirs==1.4.3
 Django==1.10.5
 django-crispy-forms==1.6.1
 django-filter==1.0.1
@@ -5,5 +6,9 @@ djangorestframework==3.5.4
 imgurpython==1.1.7
 Markdown==2.6.8
 olefile==0.44
+packaging==16.8
 Pillow==4.0.0
+pyparsing==2.2.0
 requests==2.13.0
+six==1.10.0
+test-utils==0.1.0
