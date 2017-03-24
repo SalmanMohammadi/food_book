@@ -60,6 +60,8 @@ def show_recipe(request, recipe_slug):
 	context_dict["tag_form"] = TagForm()
 	try:
 		recipe = Recipe.objects.get(slug = recipe_slug)
+		recipe.views = recipe.views + 1
+		recipe.save()
 		context_dict['recipe'] = recipe
 		context_dict['comments'] = Comment.objects.filter(recipe = recipe)
 		context_dict['tags'] = recipe.tags
